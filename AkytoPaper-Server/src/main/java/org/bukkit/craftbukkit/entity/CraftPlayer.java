@@ -1,5 +1,6 @@
 package org.bukkit.craftbukkit.entity;
 
+import akyto.spigot.aSpigot;
 import com.google.common.base.Objects;
 import com.google.common.base.Preconditions;
 import com.google.common.collect.ImmutableSet;
@@ -587,7 +588,7 @@ public class CraftPlayer extends CraftHumanEntity implements Player {
         }
         getHandle().listName = name.equals(getName()) ? null : CraftChatMessage.fromString(name)[0];
         for (EntityPlayer player : (List<EntityPlayer>)server.getHandle().players) {
-            if (player.getBukkitEntity().canSee(this)) {
+            if (!aSpigot.INSTANCE.getConfig().isHidePlayersFromTab() && player.getBukkitEntity().canSee(this)) {
                 player.playerConnection.sendPacket(new PacketPlayOutPlayerInfo(PacketPlayOutPlayerInfo.EnumPlayerInfoAction.UPDATE_DISPLAY_NAME, getHandle()));
             }
         }
@@ -1288,8 +1289,41 @@ public class CraftPlayer extends CraftHumanEntity implements Player {
             entry.clear(getHandle());
         }
 
-        //remove the hidden player from this player user list
-        getHandle().playerConnection.sendPacket(new PacketPlayOutPlayerInfo(PacketPlayOutPlayerInfo.EnumPlayerInfoAction.REMOVE_PLAYER, other));
+        //aSpigot - remove player from tablist when is hidden!
+        if (aSpigot.INSTANCE.getConfig().isHidePlayersFromTab()){
+            getHandle().playerConnection.sendPacket(new PacketPlayOutPlayerInfo(PacketPlayOutPlayerInfo.EnumPlayerInfoAction.REMOVE_PLAYER, other));
+        }
+        //aSpigot - end
+    }
+
+    public boolean canSeeEntity(org.bukkit.entity.Entity entity) {
+        Entity nmsEntity = ((CraftEntity) entity).getHandle();
+
+        if (nmsEntity instanceof EntityProjectile) {
+            EntityProjectile entityProjectile = (EntityProjectile) nmsEntity;
+
+            if (entityProjectile.getShooter() instanceof EntityPlayer) {
+                return this.canSee(((EntityPlayer) entityProjectile.getShooter()).getBukkitEntity());
+            }
+        }
+
+        if (nmsEntity instanceof EntityItem) {
+            EntityItem entityItem = (EntityItem) nmsEntity;
+
+            if (entityItem.owner instanceof EntityPlayer) {
+                return this.canSee(((EntityPlayer) entityItem.owner).getBukkitEntity());
+            }
+        }
+
+        if (nmsEntity instanceof EntityArrow) {
+            EntityArrow entityProjectile = (EntityArrow) nmsEntity;
+
+            if (entityProjectile.shooter instanceof EntityPlayer) {
+                return this.canSee(((EntityPlayer) entityProjectile.shooter).getBukkitEntity());
+            }
+        }
+
+        return !(entity instanceof Player) || this.canSee((Player) entity);
     }
 
     @Override
@@ -1303,7 +1337,11 @@ public class CraftPlayer extends CraftHumanEntity implements Player {
         EntityTracker tracker = ((WorldServer) entity.world).tracker;
         EntityPlayer other = ((CraftPlayer) player).getHandle();
 
-        getHandle().playerConnection.sendPacket(((CraftPlayer) other.getBukkitEntity()).makePlayerListAddPacket(this));
+        //aSpigot - send the packet if the player was hidden!
+        if (aSpigot.INSTANCE.getConfig().isHidePlayersFromTab()){
+            getHandle().playerConnection.sendPacket(((CraftPlayer) other.getBukkitEntity()).makePlayerListAddPacket(this));
+        }
+        //aSpigot - end
 
         EntityTrackerEntry entry = (EntityTrackerEntry) tracker.trackedEntities.get(other.getId());
         if (entry != null && !entry.trackedPlayers.contains(getHandle())) {

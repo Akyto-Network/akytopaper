@@ -1492,6 +1492,8 @@ public class Chunk {
         this.u = i;
     }
 
+    public void setDone(boolean done) {  this.done = done; }
+
     public static enum EnumTileEntityState {
 
         IMMEDIATE, QUEUED, CHECK;

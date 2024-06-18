@@ -1,6 +1,10 @@
 package org.github.paperspigot;
 
+import akyto.spigot.aSpigot;
 import akyto.spigot.aSpigotConfig;
+import akyto.spigot.command.FlyCommand;
+import akyto.spigot.command.KbCommand;
+import akyto.spigot.command.PingCommand;
 import com.google.common.base.Throwables;
 import net.minecraft.server.MinecraftServer;
 import org.bukkit.Bukkit;
@@ -51,6 +55,9 @@ public class SharedConfig {
         SpigotWorldConfig.init();
         PaperSpigotWorldConfig.init();
         new aSpigotConfig();
+        commands.put("ping", new PingCommand());
+        commands.put("fly", new FlyCommand());
+        commands.put("kb", new KbCommand());
     }
 
     public static void registerCommands() {

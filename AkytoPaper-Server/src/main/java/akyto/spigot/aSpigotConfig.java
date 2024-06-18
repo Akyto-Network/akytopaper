@@ -40,6 +40,7 @@ public class aSpigotConfig {
     private int latency;
     private int hitDelay;
     private boolean smoothPotting;
+    private boolean hidePlayersFromTab;
 
     public aSpigotConfig() {
         this.configFile = new File("settings.yml");
@@ -74,9 +75,9 @@ public class aSpigotConfig {
         this.allowLimitVertical = this.getBoolean("allowLimitVertical", true);
         this.verticalLimit = this.getDouble("verticalLimit", 0.4d);
         this.slowdown = this.getDouble("slowdown", 0.1d);
-        this.latency = this.getInt("latency", 47);
         this.hitDelay = this.getInt("hitDelay", 20);
         this.smoothPotting = this.getBoolean("smooth-potting", false);
+        this.hidePlayersFromTab = this.getBoolean("hidePlayersFromTab", false);
         SpigotBridge.disableOpPermissions = this.getBoolean("disable-op", false);
 
         save();

@@ -604,7 +604,6 @@ org\bukkit\craftbukkit\entity\CraftSmallFireball.class
 org\bukkit\craftbukkit\generator\NormalChunkGenerator.class
 net\minecraft\server\DedicatedServer$5.class
 org\spigotmc\SpigotWorldConfig.class
-akyto\spigot\runnable\DelayedKnockback.class
 org\bukkit\craftbukkit\CraftChunk.class
 net\minecraft\server\WorldGenVillagePieces$WorldGenVillageHouse.class
 net\minecraft\server\TileEntityHopper.class
@@ -742,7 +741,6 @@ net\minecraft\server\BlockMinecartDetector.class
 net\minecraft\server\RegionFileCache.class
 net\minecraft\server\ChunkProviderGenerate.class
 org\bukkit\craftbukkit\inventory\CraftMetaSkull$1.class
-akyto\spigot\chunk\ChunkPreLoadEvent.class
 net\minecraft\server\EntityEnderDragon.class
 org\bukkit\craftbukkit\util\LongObjectHashMap.class
 org\bukkit\craftbukkit\inventory\CraftMetaLeatherArmor.class

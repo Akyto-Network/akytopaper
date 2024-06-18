@@ -1,7 +1,6 @@
 package net.minecraft.server;
 
 import akyto.spigot.aSpigot;
-import akyto.spigot.runnable.DelayedKnockback;
 import com.google.common.base.Charsets;
 import com.google.common.collect.Lists;
 import com.mojang.authlib.GameProfile;
@@ -11,6 +10,7 @@ import java.util.List;
 import java.util.UUID;
 
 // CraftBukkit start
+import org.bukkit.Bukkit;
 import org.bukkit.craftbukkit.entity.CraftHumanEntity;
 import org.bukkit.craftbukkit.entity.CraftItem;
 import org.bukkit.craftbukkit.inventory.CraftItemStack;
@@ -1095,8 +1095,15 @@ public abstract class EntityHuman extends EntityLiving {
                                     velY = aSpigot.INSTANCE.getConfig().getVerticalLimit();
                                 }
                             }
-                            DelayedKnockback task = new DelayedKnockback((long) aSpigot.INSTANCE.getConfig().getLatency() ,victim, velX, velY, velZ);
-                            task.runTaskLaterAsync();
+                            PlayerVelocityEvent event = new PlayerVelocityEvent(victim.getBukkitEntity(), new Vector(velX, velY, velZ));
+                            Bukkit.getPluginManager().callEvent(event);
+                            if (!event.isCancelled()) {
+                                victim.playerConnection.sendPacket(new PacketPlayOutEntityVelocity(victim.getId(), velX, velY, velZ));
+                            }
+                            victim.velocityChanged = false;
+                            victim.motX = velX;
+                            victim.motY = velY;
+                            victim.motZ = velZ;
                         } catch (Exception e) {
                             e.printStackTrace();
                         }

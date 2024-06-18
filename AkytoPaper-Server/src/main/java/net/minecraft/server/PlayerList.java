@@ -1,5 +1,6 @@
 package net.minecraft.server;
 
+import akyto.spigot.aSpigot;
 import com.google.common.collect.Lists;
 import com.google.common.collect.Maps;
 import com.google.common.collect.Sets;
@@ -333,19 +334,18 @@ public abstract class PlayerList {
         PacketPlayOutPlayerInfo packet = new PacketPlayOutPlayerInfo(PacketPlayOutPlayerInfo.EnumPlayerInfoAction.ADD_PLAYER, entityplayer);
         CraftPlayer joiner = entityplayer.getBukkitEntity();
 
-        for (int i = 0; i < this.players.size(); ++i) {
-            EntityPlayer entityplayer1 = (EntityPlayer) this.players.get(i);
-            CraftPlayer viewer = entityplayer1.getBukkitEntity();
+        for (EntityPlayer player : this.players) {
+            CraftPlayer viewer = player.getBukkitEntity();
 
-            if (viewer.canSee(joiner)) {
+            if (!aSpigot.INSTANCE.getConfig().isHidePlayersFromTab() || viewer.canSee(joiner)) {
                 if(joiner.hasFakeName(viewer) || joiner.hasFakeSkin(viewer)) {
-                    entityplayer1.playerConnection.sendPacket(joiner.makePlayerListAddPacket(viewer));
+                    player.playerConnection.sendPacket(joiner.makePlayerListAddPacket(viewer));
                 } else {
-                    entityplayer1.playerConnection.sendPacket(packet);
+                    player.playerConnection.sendPacket(packet);
                 }
             }
 
-            if (joiner.canSee(viewer)) {
+            if (!aSpigot.INSTANCE.getConfig().isHidePlayersFromTab() && joiner.canSee(viewer)) {
                 entityplayer.playerConnection.sendPacket(viewer.makePlayerListAddPacket(joiner));
             }
         }

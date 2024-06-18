@@ -1,5 +1,6 @@
 package net.minecraft.server;
 
+import akyto.spigot.aSpigot;
 import org.github.paperspigot.event.entity.ProjectileCollideEvent;
 
 import java.util.List;
@@ -133,6 +134,12 @@ public abstract class EntityProjectile extends Entity implements IProjectile {
                     AxisAlignedBB axisalignedbb = entity1.getBoundingBox().grow((double) f, (double) f, (double) f);
                     MovingObjectPosition movingobjectposition1 = axisalignedbb.a(vec3d, vec3d1);
 
+                    if (aSpigot.INSTANCE.getConfig().isSmoothPotting() &&
+                            this instanceof EntityPotion &&
+                            movingobjectposition1 == null &&
+                            getBoundingBox().b(entity1.getBoundingBox())) {
+                        movingobjectposition1 = new MovingObjectPosition(entity1);
+                    }
                     if (movingobjectposition1 != null) {
                         double d1 = vec3d.distanceSquared(movingobjectposition1.pos);
 

@@ -33,17 +33,4 @@ public enum aSpigot {
 		this.movementHandlers.add(handler);
 	}
 
-	public void registerCommands() {
-		Map<String, Command> commands = new HashMap<>();
-
-		commands.put("ping", new PingCommand());
-		commands.put("fly", new FlyCommand());
-		commands.put("kb", new KbCommand());
-//		commands.put("misplace", new MisplaceCommand());
-
-		for (Map.Entry<String, Command> entry : commands.entrySet()) {
-			MinecraftServer.getServer().server.getCommandMap().register(entry.getKey(), "Spigot", entry.getValue());
-		}
-	}
-
 }

@@ -154,7 +154,6 @@ public class ChunkProviderServer implements IChunkProvider {
         if (chunk == null && loader != null && loader.chunkExists(world, i, j)) {
             if (runnable != null) {
                 ChunkIOExecutor.queueChunkLoad(world, loader, this, i, j, runnable);
-                return null;
             } else {
                 chunk = ChunkIOExecutor.syncChunkLoad(world, loader, this, i, j);
             }
@@ -171,7 +170,8 @@ public class ChunkProviderServer implements IChunkProvider {
         return chunk;
     }
     public Chunk originalGetChunkAt(int i, int j) {
-        Chunk chunk = (Chunk) this.chunks.get(LongHash.toLong(i, j));
+        long key = LongHash.toLong(i, j); // IonSpigot - Only create key once
+        Chunk chunk = this.chunks.get(key);
         boolean newChunk = false;
         // CraftBukkit end
 
@@ -200,8 +200,6 @@ public class ChunkProviderServer implements IChunkProvider {
             this.chunks.put(LongHash.toLong(i, j), chunk);
             
             chunk.addEntities();
-            
-            // CraftBukkit start
             Server server = world.getServer();
             if (server != null) {
                 /*

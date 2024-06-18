@@ -1,5 +1,6 @@
 package net.minecraft.server;
 
+import akyto.spigot.aSpigot;
 import com.google.common.base.Predicate;
 import com.google.common.base.Predicates;
 import com.google.common.collect.Maps;
@@ -763,7 +764,10 @@ public abstract class EntityLiving extends Entity {
                 this.aB = 1.5F;
                 boolean flag = true;
 
-                if ((float) this.noDamageTicks > (float) this.maxNoDamageTicks / 2.0F) {
+                //aSpigot - add HitDelay
+                int maxNoDamageTicks = (this instanceof EntityHuman ? aSpigot.INSTANCE.getConfig().getHitDelay() : this.maxNoDamageTicks);
+
+                if ((float) this.noDamageTicks > maxNoDamageTicks / 2.0F) {
                     if (f <= this.lastDamage) {
                         this.forceExplosionKnockback = true; // CraftBukkit - SPIGOT-949 - for vanilla consistency, cooldown does not prevent explosion knockback
                         return false;
@@ -783,7 +787,7 @@ public abstract class EntityLiving extends Entity {
                         return false;
                     }
                     this.lastDamage = f;
-                    this.noDamageTicks = this.maxNoDamageTicks;
+                    this.noDamageTicks = maxNoDamageTicks;
                     // CraftBukkit end
                     this.hurtTicks = this.av = 10;
                 }
