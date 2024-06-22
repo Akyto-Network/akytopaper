@@ -853,6 +853,8 @@ public class CraftPlayer extends CraftHumanEntity implements Player {
             return false;
         }
 
+        aSpigot.INSTANCE.getLagCompensator().registerMovement(this, to); // Nacho
+
         // If this player is riding another entity, we must dismount before teleporting.
         entity.mount(null);
 

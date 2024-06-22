@@ -1,6 +1,7 @@
 package net.minecraft.server;
 
 // CraftBukkit start
+import akyto.spigot.aSpigot;
 import akyto.spigot.util.PearlUtils;
 import org.bukkit.Bukkit;
 import org.bukkit.Location;
@@ -71,6 +72,7 @@ public class EntityEnderPearl extends EntityProjectile {
                         }
                         this.addToLocation(PearlUtils.direction(location), location, 0.85d);
                         entityplayer.enderTeleportTo(location.getX(), location.getY(), location.getZ());
+                        aSpigot.INSTANCE.getLagCompensator().registerMovement(player, location); // Nacho
                         entityliving.fallDistance = 0.0F;
                         CraftEventFactory.entityDamage = this;
                         entityliving.damageEntity(DamageSource.FALL, 5.0F);

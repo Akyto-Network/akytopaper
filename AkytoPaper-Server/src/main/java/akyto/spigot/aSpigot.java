@@ -5,6 +5,7 @@ import akyto.spigot.command.KbCommand;
 import akyto.spigot.command.PingCommand;
 import akyto.spigot.handler.MovementHandler;
 import akyto.spigot.handler.PacketHandler;
+import akyto.spigot.hitdetection.LagCompensator;
 import lombok.Getter;
 import lombok.Setter;
 import net.minecraft.server.MinecraftServer;
@@ -24,8 +25,11 @@ public enum aSpigot {
     private aSpigotConfig config;
     private final Set<PacketHandler> packetHandlers = new HashSet<>();
     private final Set<MovementHandler> movementHandlers = new HashSet<>();
+	private LagCompensator lagCompensator = new LagCompensator();
 
-    public void addPacketHandler(PacketHandler handler) {
+	public LagCompensator getLagCompensator() { return this.lagCompensator; }
+
+	public void addPacketHandler(PacketHandler handler) {
 		this.packetHandlers.add(handler);
 	}
 

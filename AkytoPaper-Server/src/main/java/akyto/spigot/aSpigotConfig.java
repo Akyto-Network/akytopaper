@@ -37,8 +37,8 @@ public class aSpigotConfig {
     private boolean allowLimitVertical;
     private double verticalLimit;
     private double slowdown;
-    private int latency;
     private int hitDelay;
+    private boolean hitDetect;
     private boolean smoothPotting;
     private boolean hidePlayersFromTab;
 
@@ -77,6 +77,7 @@ public class aSpigotConfig {
         this.slowdown = this.getDouble("slowdown", 0.1d);
         this.hitDelay = this.getInt("hitDelay", 20);
         this.smoothPotting = this.getBoolean("smooth-potting", false);
+        this.hitDetect = this.getBoolean("hitDetect", true);
         this.hidePlayersFromTab = this.getBoolean("hidePlayersFromTab", false);
         SpigotBridge.disableOpPermissions = this.getBoolean("disable-op", false);
 
@@ -96,7 +97,6 @@ public class aSpigotConfig {
             config.set("allowLimitVertical", allowLimitVertical);
             config.set("verticalLimit", verticalLimit);
             config.set("slowdown", slowdown);
-            config.set("latency", latency);
             config.save(configFile);
         } catch (Exception ex) {
             Bukkit.getLogger().log(Level.SEVERE, "Could not save " + configFile, ex);

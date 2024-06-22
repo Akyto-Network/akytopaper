@@ -6,6 +6,7 @@ C:\Users\Theo\Documents\AkytoPaper\AkytoPaper-Server\src\main\java\akyto\spigot\
 C:\Users\Theo\Documents\AkytoPaper\AkytoPaper-Server\src\main\java\akyto\spigot\command\PingCommand.java
 C:\Users\Theo\Documents\AkytoPaper\AkytoPaper-Server\src\main\java\akyto\spigot\handler\MovementHandler.java
 C:\Users\Theo\Documents\AkytoPaper\AkytoPaper-Server\src\main\java\akyto\spigot\handler\PacketHandler.java
+C:\Users\Theo\Documents\AkytoPaper\AkytoPaper-Server\src\main\java\akyto\spigot\hitdetection\LagCompensator.java
 C:\Users\Theo\Documents\AkytoPaper\AkytoPaper-Server\src\main\java\akyto\spigot\math\FastRandom.java
 C:\Users\Theo\Documents\AkytoPaper\AkytoPaper-Server\src\main\java\app\ashcon\sportpaper\server\WorldGenSettingsManager.java
 C:\Users\Theo\Documents\AkytoPaper\AkytoPaper-Server\src\main\java\co\aikar\timings\SpigotTimings.java

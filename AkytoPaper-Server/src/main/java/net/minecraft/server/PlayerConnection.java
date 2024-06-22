@@ -292,6 +292,7 @@ public class PlayerConnection implements PacketListenerPlayIn, IUpdatePlayerList
 
                         // If the event is cancelled we move the player back to their old location.
                         if (event.isCancelled()) {
+                            aSpigot.INSTANCE.getLagCompensator().registerMovement(player, to);
                             this.player.playerConnection.sendPacket(new PacketPlayOutPosition(from.getX(), from.getY(), from.getZ(), from.getYaw(), from.getPitch(), Collections.<PacketPlayOutPosition.EnumPlayerTeleportFlags>emptySet()));
                             return;
                         }
@@ -311,8 +312,8 @@ public class PlayerConnection implements PacketListenerPlayIn, IUpdatePlayerList
                             return;
                         }
                     }
+                    aSpigot.INSTANCE.getLagCompensator().registerMovement(player, to); // Nacho - register movement
                 }
-
                 if (this.checkMovement && !this.player.dead) {
                     // CraftBukkit end
                     this.f = this.e;
@@ -543,7 +544,7 @@ public class PlayerConnection implements PacketListenerPlayIn, IUpdatePlayerList
             f = to.getYaw();
             f1 = to.getPitch();
         }
-
+        aSpigot.INSTANCE.getLagCompensator().registerMovement(player, to); // Nacho
         this.internalTeleport(d0, d1, d2, f, f1, set);
     }
 
@@ -1486,10 +1487,10 @@ public class PlayerConnection implements PacketListenerPlayIn, IUpdatePlayerList
             double d0 = 36.0D;
 
             if (!flag) {
-                d0 = 9.0D;
+                d0 = (aSpigot.INSTANCE.getConfig().isHitDetect()) ? 12.75D : 9.0D;
             }
 
-            if (this.player.h(entity) < d0) {
+            if (this.player.distanceSqrdAccurate(entity) <= d0) {
                 ItemStack itemInHand = this.player.inventory.getItemInHand(); // CraftBukkit
 
                 if (packetplayinuseentity.a() == PacketPlayInUseEntity.EnumEntityUseAction.INTERACT
@@ -1552,6 +1553,9 @@ public class PlayerConnection implements PacketListenerPlayIn, IUpdatePlayerList
                     // CraftBukkit end
 
                     this.player.attack(entity);
+                    if (this.player.isBlocking()) {
+                        this.player.bU();
+                    }
 
                     // CraftBukkit start
                     if (itemInHand != null && itemInHand.count <= -1) {

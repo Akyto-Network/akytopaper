@@ -41,7 +41,6 @@ public class KbCommand extends Command {
             subCommands.put("setallowlimit", aSpigotConfig.class.getMethod("setAllowLimitVertical", boolean.class));
             subCommands.put("setverlimit", aSpigotConfig.class.getMethod("setVerticalLimit", double.class));
             subCommands.put("setslowdown", aSpigotConfig.class.getMethod("setSlowdown", double.class));
-            subCommands.put("setlatency", aSpigotConfig.class.getMethod("setLatency", int.class));
         } catch (NoSuchMethodException ex) {
             System.err.println("Failed to init kb command table");
             ex.printStackTrace();
@@ -100,8 +99,7 @@ public class KbCommand extends Command {
                 ChatColor.GRAY + String.format("Ground Vertical: %s%.4f\n", ChatColor.RESET, config.getGroundVertical()) +
                 ChatColor.GRAY + String.format("Allow Limit Vertical: %s%b\n", ChatColor.RESET, config.isAllowLimitVertical()) +
                 ChatColor.GRAY + String.format("Vertical limit: %s%.4f\n", ChatColor.RESET, config.getVerticalLimit()) +
-                ChatColor.GRAY + String.format("Slowdown: %s%.4f\n", ChatColor.RESET, config.getSlowdown()) +
-                ChatColor.GRAY + String.format("Latency: %s%d\n", ChatColor.RESET, config.getLatency());
+                ChatColor.GRAY + String.format("Slowdown: %s%.4f\n", ChatColor.RESET, config.getSlowdown());
     }
 
     @Override

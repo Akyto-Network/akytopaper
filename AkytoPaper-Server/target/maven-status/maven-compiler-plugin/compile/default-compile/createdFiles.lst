@@ -79,6 +79,7 @@ org\bukkit\craftbukkit\scoreboard\CraftTeam$1.class
 net\minecraft\server\ServerPing$ServerPingPlayerSample$Serializer.class
 org\bukkit\craftbukkit\help\SimpleHelpMap.class
 org\bukkit\craftbukkit\CraftSound.class
+akyto\spigot\hitdetection\LagCompensator.class
 net\minecraft\server\BlockPoweredRail$1.class
 net\minecraft\server\ServerConnection$1.class
 net\minecraft\server\NameReferencingFileConverter$2.class
