@@ -1,5 +1,7 @@
 package net.minecraft.server;
 
+import akyto.spigot.math.FastRandom;
+
 import java.util.Random;
 
 public class BlockDispenser extends BlockContainer {
@@ -7,7 +9,7 @@ public class BlockDispenser extends BlockContainer {
     public static final BlockStateDirection FACING = BlockStateDirection.of("facing");
     public static final BlockStateBoolean TRIGGERED = BlockStateBoolean.of("triggered");
     public static final RegistryDefault<Item, IDispenseBehavior> REGISTRY = new RegistryDefault(new DispenseBehaviorItem());
-    protected Random O = new Random();
+    protected Random O = new FastRandom();
     public static boolean eventFired = false; // CraftBukkit
 
     protected BlockDispenser() {

@@ -7,6 +7,7 @@ import java.util.UUID;
 import java.util.concurrent.Callable;
 
 // CraftBukkit start
+import akyto.spigot.math.FastRandom;
 import org.apache.logging.log4j.LogManager;
 import org.bukkit.Bukkit;
 import org.bukkit.Location;
@@ -47,7 +48,7 @@ public abstract class Entity implements ICommandListener {
     // CraftBukkit start
     private static final int CURRENT_LEVEL = 2;
     // Paper start
-    public static Random SHARED_RANDOM = new Random() {
+    public static Random SHARED_RANDOM = new FastRandom() {
         private boolean locked = false;
         @Override
         public synchronized void setSeed(long seed) {

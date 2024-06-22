@@ -1,5 +1,6 @@
 package net.minecraft.server;
 
+import akyto.spigot.math.FastRandom;
 import com.google.common.base.Charsets;
 import com.google.common.collect.Lists;
 import com.google.common.collect.Queues;
@@ -72,7 +73,7 @@ public abstract class MinecraftServer implements Runnable, ICommandListener, IAs
     public final MethodProfiler methodProfiler = new MethodProfiler();
     private ServerConnection q; // Spigot
     private final ServerPing r = new ServerPing();
-    private final Random s = new Random();
+    private final Random s = new FastRandom();
     private String serverIp;
     private int u = -1;
     public WorldServer[] worldServer;

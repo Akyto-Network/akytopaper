@@ -1,5 +1,6 @@
 package net.minecraft.server;
 
+import akyto.spigot.math.FastRandom;
 import com.google.common.collect.Lists;
 import com.google.common.collect.Maps;
 import com.google.common.collect.Sets;
@@ -410,8 +411,8 @@ public abstract class BiomeBase {
         BiomeBase.n.remove(BiomeBase.SKY);
         BiomeBase.n.remove(BiomeBase.FROZEN_OCEAN);
         BiomeBase.n.remove(BiomeBase.SMALL_MOUNTAINS);
-        ae = new NoiseGenerator3(new Random(1234L), 1);
-        af = new NoiseGenerator3(new Random(2345L), 1);
+        ae = new NoiseGenerator3(new FastRandom(1234L), 1);
+        af = new NoiseGenerator3(new FastRandom(2345L), 1);
         ag = new WorldGenTallPlant();
     }
 

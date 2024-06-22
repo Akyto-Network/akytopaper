@@ -4,6 +4,7 @@ import java.io.IOException;
 import java.util.Iterator;
 import java.util.List;
 
+import akyto.spigot.math.FastRandom;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
@@ -318,7 +319,7 @@ public class ChunkProviderServer implements IChunkProvider {
 
                 // CraftBukkit start
                 BlockSand.instaFall = true;
-                Random random = new Random();
+                Random random = new FastRandom();
                 random.setSeed(world.getSeed());
                 long xRand = random.nextLong() / 2L * 2L + 1L;
                 long zRand = random.nextLong() / 2L * 2L + 1L;

@@ -1,5 +1,6 @@
 package net.minecraft.server;
 
+import akyto.spigot.math.FastRandom;
 import com.google.common.base.Predicate;
 import com.google.common.collect.Lists;
 import com.google.common.collect.Maps;
@@ -73,14 +74,14 @@ public abstract class World implements IBlockAccess {
     protected final IntHashMap<Entity> entitiesById = new IntHashMap();
     private long d = 16777215L;
     private int I; private int getSkylightSubtracted() { return this.I; } // Paper - OBFHELPER
-    protected int m = (new Random()).nextInt();
+    protected int m = (new FastRandom()).nextInt();
     protected final int n = 1013904223;
     protected float o;
     protected float p;
     protected float q;
     protected float r;
     private int J;
-    public final Random random = new Random();
+    public final Random random = new FastRandom();
     public WorldProvider worldProvider; // CraftBukkit - remove final
     protected List<IWorldAccess> u = Lists.newArrayList();
     protected IChunkProvider chunkProvider;

@@ -1,5 +1,6 @@
 package net.minecraft.server;
 
+import akyto.spigot.math.FastRandom;
 import com.google.common.base.Predicate;
 import com.google.common.collect.Maps;
 import com.google.common.collect.Queues;
@@ -1072,7 +1073,8 @@ public class Chunk {
     }
 
     public Random a(long i) {
-        return new Random(this.world.getSeed() + (long) (this.locX * this.locX * 4987142) + (long) (this.locX * 5947611) + (long) (this.locZ * this.locZ) * 4392871L + (long) (this.locZ * 389711) ^ i);
+        return new FastRandom(this.world.getSeed() + this.locX * this.locX * 4987142 + this.locX * 5947611
+                + this.locZ * this.locZ * 4392871L + this.locZ * 389711 ^ i);
     }
 
     public boolean isEmpty() {

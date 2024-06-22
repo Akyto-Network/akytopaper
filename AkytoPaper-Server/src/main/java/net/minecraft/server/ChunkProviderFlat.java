@@ -1,5 +1,6 @@
 package net.minecraft.server;
 
+import akyto.spigot.math.FastRandom;
 import com.google.common.collect.Lists;
 import java.util.Iterator;
 import java.util.List;
@@ -20,7 +21,7 @@ public class ChunkProviderFlat implements IChunkProvider {
 
     public ChunkProviderFlat(World world, long i, boolean flag, String s) {
         this.a = world;
-        this.b = new Random(i);
+        this.b = new FastRandom(i);
         this.d = WorldGenFlatInfo.a(s);
         if (flag) {
             Map map = this.d.b();

@@ -2,6 +2,7 @@ package net.minecraft.server;
 
 import akyto.spigot.aSpigot;
 import akyto.spigot.aSpigotConfig;
+import akyto.spigot.math.FastRandom;
 import com.google.common.collect.Lists;
 import java.io.BufferedReader;
 import java.io.File;
@@ -252,7 +253,7 @@ public class DedicatedServer extends MinecraftServer implements IMinecraftServer
                 String s = this.propertyManager.getString("level-seed", "");
                 String s1 = this.propertyManager.getString("level-type", "DEFAULT");
                 String s2 = this.propertyManager.getString("generator-settings", "");
-                long k = (new Random()).nextLong();
+                long k = (new FastRandom()).nextLong();
 
                 if (s.length() > 0) {
                     try {

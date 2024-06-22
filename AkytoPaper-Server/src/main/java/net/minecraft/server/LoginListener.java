@@ -1,5 +1,6 @@
 package net.minecraft.server;
 
+import akyto.spigot.math.FastRandom;
 import com.google.common.base.Charsets;
 import com.mojang.authlib.GameProfile;
 import com.mojang.authlib.exceptions.AuthenticationUnavailableException;
@@ -29,7 +30,7 @@ public class LoginListener implements PacketLoginInListener, IUpdatePlayerListBo
 
     private static final AtomicInteger b = new AtomicInteger(0);
     private static final Logger c = LogManager.getLogger();
-    private static final Random random = new Random();
+    private static final Random random = new FastRandom();
     private final byte[] e = new byte[4];
     private final MinecraftServer server;
     public final NetworkManager networkManager;

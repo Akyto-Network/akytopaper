@@ -1,5 +1,6 @@
 package org.bukkit.craftbukkit;
 
+import akyto.spigot.math.FastRandom;
 import com.google.common.base.Preconditions;
 import java.io.File;
 import java.util.ArrayList;
@@ -106,7 +107,7 @@ public class CraftWorld implements World {
     }
     // Paper end
 
-    private static final Random rand = new Random();
+    private static final Random rand = new FastRandom();
 
     public CraftWorld(WorldServer world, ChunkGenerator gen, Environment env) {
         this.world = world;

@@ -3,6 +3,7 @@ package org.bukkit.craftbukkit.generator;
 import java.util.List;
 import java.util.Random;
 
+import akyto.spigot.math.FastRandom;
 import net.minecraft.server.*;
 
 import org.bukkit.block.Biome;
@@ -32,7 +33,7 @@ public class CustomChunkGenerator extends InternalChunkGenerator {
         this.world = (WorldServer) world;
         this.generator = generator;
 
-        this.random = new Random(seed);
+        this.random = new FastRandom(seed);
     }
 
     public boolean isChunkLoaded(int x, int z) {

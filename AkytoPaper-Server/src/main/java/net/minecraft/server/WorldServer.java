@@ -1,5 +1,6 @@
 package net.minecraft.server;
 
+import akyto.spigot.math.FastRandom;
 import com.google.common.base.Predicate;
 import com.google.common.collect.Lists;
 import com.google.common.collect.Maps;
@@ -880,7 +881,7 @@ public class WorldServer extends World implements IAsyncTaskHandler {
             this.isLoading = true;
             WorldChunkManager worldchunkmanager = this.worldProvider.m();
             List list = worldchunkmanager.a();
-            Random random = new Random(this.getSeed());
+            Random random = new FastRandom(this.getSeed());
             BlockPosition blockposition = worldchunkmanager.a(0, 0, 256, list, random);
             int i = 0;
             int j = this.worldProvider.getSeaLevel();
@@ -888,7 +889,7 @@ public class WorldServer extends World implements IAsyncTaskHandler {
 
             // CraftBukkit start
             if (this.generator != null) {
-                Random rand = new Random(this.getSeed());
+                Random rand = new FastRandom(this.getSeed());
                 org.bukkit.Location spawn = this.generator.getFixedSpawnLocation(((WorldServer) this).getWorld(), rand);
 
                 if (spawn != null) {
