@@ -69,7 +69,7 @@ public class EntityEnderPearl extends EntityProjectile {
                         if (entityliving.au()) {
                             entityliving.mount((Entity) null);
                         }
-                        this.addToLocation(PearlUtils.direction(location), location, 0.75d);
+                        this.addToLocation(PearlUtils.direction(location), location, 0.85d);
                         entityplayer.enderTeleportTo(location.getX(), location.getY(), location.getZ());
                         entityliving.fallDistance = 0.0F;
                         CraftEventFactory.entityDamage = this;
