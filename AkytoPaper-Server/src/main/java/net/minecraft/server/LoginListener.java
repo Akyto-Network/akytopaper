@@ -321,7 +321,6 @@ public class LoginListener implements PacketLoginInListener, IUpdatePlayerListBo
                             }
                             // CraftBukkit end
                             LoginListener.c.info("UUID of player " + LoginListener.this.i.getName() + " is " + LoginListener.this.i.getId());
-                            server.setSuspended(false);
                             LoginListener.this.g = LoginListener.EnumProtocolState.READY_TO_ACCEPT;
         }
     }

@@ -137,6 +137,7 @@ org\bukkit\enchantments\EnchantmentTarget$1.class
 org\bukkit\event\entity\EntityChangeBlockEvent.class
 org\bukkit\event\entity\HorseJumpEvent.class
 co\aikar\timings\TimingHistory.class
+akyto\spigot\util\PearlUtils.class
 org\bukkit\command\MultipleCommandAlias.class
 org\bukkit\event\player\PlayerFishEvent.class
 org\bukkit\event\entity\EntityUnleashEvent$UnleashReason.class
@@ -734,7 +735,6 @@ co\aikar\timings\TimingsExport$9.class
 org\bukkit\entity\Fireball.class
 org\bukkit\event\weather\ThunderChangeEvent.class
 org\bukkit\event\server\ServiceEvent.class
-org\bukkit\command\defaults\SuspendCommand.class
 org\bukkit\configuration\file\YamlRepresenter$RepresentConfigurationSection.class
 org\bukkit\material\Pumpkin$1.class
 org\bukkit\event\world\ChunkLoadEvent.class
