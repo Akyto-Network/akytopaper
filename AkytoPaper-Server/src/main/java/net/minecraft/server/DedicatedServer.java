@@ -301,26 +301,16 @@ public class DedicatedServer extends MinecraftServer implements IMinecraftServer
                     this.remoteConsole = new org.bukkit.craftbukkit.command.CraftRemoteConsoleCommandSender(); // CraftBukkit
                 }
 
-        if (org.spigotmc.SpigotConfig.lateBind) {
-            try {
-                this.aq().bind(bindAddress); // Paper - Unix domain socket support
-            } catch (IOException ioexception) {
-                DedicatedServer.LOGGER.warn("**** FAILED TO BIND TO PORT!");
-                DedicatedServer.LOGGER.warn("The exception was: {}", new Object[] { ioexception.toString()});
-                DedicatedServer.LOGGER.warn("Perhaps a server is already running on that port?");
-                return false;
-            }
-        }
-
-                if (false && this.aS() > 0L) {  // Spigot - disable
-                    Thread thread1 = new Thread(new ThreadWatchdog(this));
-
-                    thread1.setName("Server Watchdog");
-                    thread1.setDaemon(true);
-                    thread1.start();
-                    watchdogThread = thread1; // SportBukkit
+                if (org.spigotmc.SpigotConfig.lateBind) {
+                    try {
+                        this.aq().bind(bindAddress); // Paper - Unix domain socket support
+                    } catch (IOException ioexception) {
+                        DedicatedServer.LOGGER.warn("**** FAILED TO BIND TO PORT!");
+                        DedicatedServer.LOGGER.warn("The exception was: {}", new Object[] { ioexception.toString()});
+                        DedicatedServer.LOGGER.warn("Perhaps a server is already running on that port?");
+                        return false;
+                    }
                 }
-
                 return true;
             }
         }
@@ -381,7 +371,7 @@ public class DedicatedServer extends MinecraftServer implements IMinecraftServer
     }
 
     protected void z() {
-        System.exit(abnormalTermination ? 1 : 0);
+        System.exit(0);
     }
 
     public void B() { // CraftBukkit - fix decompile error
@@ -411,7 +401,6 @@ public class DedicatedServer extends MinecraftServer implements IMinecraftServer
 
     public void issueCommand(String s, ICommandListener icommandlistener) {
         this.l.add(new ServerCommand(s, icommandlistener));
-        interrupt(); // SportBukkit
     }
 
     // SportBukkit start

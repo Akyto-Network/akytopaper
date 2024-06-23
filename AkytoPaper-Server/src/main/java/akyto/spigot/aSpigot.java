@@ -25,9 +25,7 @@ public enum aSpigot {
     private aSpigotConfig config;
     private final Set<PacketHandler> packetHandlers = new HashSet<>();
     private final Set<MovementHandler> movementHandlers = new HashSet<>();
-	private LagCompensator lagCompensator = new LagCompensator();
-
-	public LagCompensator getLagCompensator() { return this.lagCompensator; }
+	private final LagCompensator lagCompensator = new LagCompensator();
 
 	public void addPacketHandler(PacketHandler handler) {
 		this.packetHandlers.add(handler);

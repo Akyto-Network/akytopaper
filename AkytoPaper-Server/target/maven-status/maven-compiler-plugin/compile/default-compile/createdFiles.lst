@@ -284,6 +284,7 @@ net\minecraft\server\EntityWither$1.class
 net\minecraft\server\ChatBaseComponent.class
 net\minecraft\server\Explosion.class
 org\bukkit\craftbukkit\entity\CraftHorse.class
+com\destroyko\event\ServerTickStartEvent.class
 net\minecraft\server\EntityItemFrame.class
 net\minecraft\server\EntityVillager$MerchantRecipeOptionBuy.class
 org\bukkit\craftbukkit\CraftEffect.class
@@ -332,6 +333,7 @@ net\minecraft\server\CommandBlockListenerAbstract$2.class
 net\minecraft\server\CrashReport$3.class
 net\minecraft\server\EntityMinecartContainer.class
 org\bukkit\craftbukkit\inventory\CraftMetaEnchantedBook$1.class
+com\destroyko\event\ServerTickEndEvent.class
 net\minecraft\server\BlockPumpkin.class
 org\bukkit\craftbukkit\util\LongObjectHashMap$KeySet.class
 net\minecraft\server\EntityLiving$7.class

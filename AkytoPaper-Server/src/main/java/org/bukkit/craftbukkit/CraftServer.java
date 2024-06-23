@@ -1705,61 +1705,8 @@ public final class CraftServer implements Server {
     }
 
     @Override
-    public boolean isSuspended() {
-        return getServer().isSuspended();
-    }
-
-    @Override
-    public boolean canSuspend() {
-        return getServer().canSuspend();
-    }
-
-    @Override
-    public boolean setSuspended(boolean suspend) {
-        return getServer().setSuspended(suspend);
-    }
-
-    @Override
-    public @Nullable Instant suspendedAt() {
-        return getServer().suspendedAt();
-    }
-
-    @Override
-    public int interruptions() {
-        return getServer().interruptions();
-    }
-
-    @Override
     public int allocateEntityId() {
         return net.minecraft.server.Entity.entityCount++;
-    }
-
-    @Override
-    public @Nullable Instant emptySince() {
-        if(getOnlinePlayers().isEmpty()) {
-            if(emptySince == null) {
-                emptySince = Instant.now();
-            }
-        } else {
-            emptySince = null;
-        }
-        return emptySince;
-    }
-
-    public void resetEmptySince() {
-        emptySince = null;
-    }
-
-    public void checkEmpty() {
-        final Instant since = emptySince();
-        if(since == null) {
-            setSuspended(false);
-        } else {
-            final Duration delay = getEmptyServerSuspendDelay();
-            if(delay != null && canSuspend() && !since.plus(delay).isAfter(Instant.now())) {
-                setSuspended(true);
-            }
-        }
     }
 
     private final Spigot spigot = new Spigot()

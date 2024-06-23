@@ -1,9 +1,10 @@
 package net.minecraft.server;
 
 import akyto.spigot.math.FastRandom;
+import com.destroyko.event.ServerTickEndEvent;
+import com.destroyko.event.ServerTickStartEvent;
 import com.google.common.base.Charsets;
 import com.google.common.collect.Lists;
-import com.google.common.collect.Queues;
 import com.google.common.util.concurrent.Futures;
 import com.google.common.util.concurrent.ListenableFuture;
 import com.google.common.util.concurrent.ListenableFutureTask;
@@ -22,42 +23,33 @@ import java.io.IOException;
 import java.net.Proxy;
 import java.security.KeyPair;
 import java.text.SimpleDateFormat;
-import java.time.Instant;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.Date;
 import java.util.Deque;
-import java.util.Iterator;
 import java.util.List;
-import java.util.Queue;
 import java.util.Random;
 import java.util.UUID;
 import java.util.concurrent.Callable;
 import java.util.concurrent.ConcurrentLinkedDeque;
-import java.util.concurrent.ConcurrentLinkedQueue;
 import java.util.concurrent.Executors;
 import java.util.concurrent.FutureTask;
-import javax.annotation.Nullable;
 import javax.imageio.ImageIO;
+
+import io.netty.util.ResourceLeakDetector;
 import org.apache.commons.lang3.Validate;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
 // CraftBukkit start
-import java.io.IOException;
-import java.util.concurrent.atomic.AtomicBoolean;
 
 import jline.console.ConsoleReader;
 import joptsimple.OptionSet;
 
 import org.bukkit.craftbukkit.Main;
 import co.aikar.timings.SpigotTimings; // Spigot
-import org.bukkit.event.EventCallback;
-import org.bukkit.event.server.ServerSuspendEvent;
 import org.github.paperspigot.PaperSpigotConfig;
-import org.github.paperspigot.utils.CachedSizeConcurrentLinkedQueue;
-import org.spigotmc.WatchdogThread;
 // CraftBukkit end
 
 public abstract class MinecraftServer implements Runnable, ICommandListener, IAsyncTaskHandler, IMojangStatistics {
@@ -128,21 +120,13 @@ public abstract class MinecraftServer implements Runnable, ICommandListener, IAs
     public ConsoleReader reader;
     public static int currentTick = 0; // PaperSpigot - Further improve tick loop
     public final Thread primaryThread;
-    //public java.util.Queue<Runnable> processQueue = new java.util.concurrent.ConcurrentLinkedQueue<Runnable>(); SportBukkit - use Mojang's task queue
+    public java.util.Queue<Runnable> processQueue = new java.util.concurrent.ConcurrentLinkedQueue<Runnable>(); // SportBukkit - use Mojang's task queue
     public int autosavePeriod;
     public boolean serverAutoSave = false; // Paper
     // CraftBukkit end
 
-    // SportBukkit start
-    private final AtomicBoolean suspended = new AtomicBoolean(false);
-    private @Nullable Instant suspendedAt;
-    private int interruptions;
-    protected Thread watchdogThread;
-    protected boolean abnormalTermination;
-    // SportBukkit end
-
     public MinecraftServer(OptionSet options, Proxy proxy, File file1) {
-        io.netty.util.ResourceLeakDetector.setEnabled( false ); // Spigot - disable
+        io.netty.util.ResourceLeakDetector.setLevel(ResourceLeakDetector.Level.DISABLED); // [Nacho-0040] Change deprecated Netty parameter // Spigot - disable
         this.e = proxy;
         MinecraftServer.l = this;
         // this.universe = file; // CraftBukkit
@@ -532,86 +516,6 @@ public abstract class MinecraftServer implements Runnable, ICommandListener, IAs
 
     public void safeShutdown() {
         this.isRunning = false;
-        setSuspended(false); // SportBukkit
-    }
-
-    // SportBukkit start
-    public boolean isSuspended() {
-        return isRunning() && suspended.get();
-    }
-
-    public boolean canSuspend() {
-        return isRunning() && !q.hasClientConnections();
-    }
-
-    public boolean setSuspended(boolean suspend) {
-        if(suspend && !canSuspend()) return false;
-        if (!suspend) {
-            server.resetEmptySince();
-        }
-
-        if(suspended.compareAndSet(!suspend, suspend)) {
-            if(!isMainThread() && !suspend) {
-                synchronized(suspended) {
-                    suspended.notifyAll();
-                }
-            }
-            return true;
-        }
-
-        return false;
-    }
-
-    public @Nullable Instant suspendedAt() {
-        return suspendedAt;
-    }
-
-    public int interruptions() {
-        return interruptions;
-    }
-
-    private boolean doSuspension() {
-        if(isSuspended()) {
-            server.getPluginManager().callEvent(new ServerSuspendEvent(), (EventCallback) ev -> { // Cast needed due to javac bug
-                server.getLogger().info("Suspending server");
-                WatchdogThread.setSuspended(true);
-                suspendedAt = Instant.now();
-                interruptions = 0;
-
-                if(watchdogThread != null) watchdogThread.interrupt();
-
-                while(isSuspended()) {
-                    processTasks(); // Empty the task queue
-                    synchronized(suspended) {
-                        if(isSuspended()) { // Check suspended state again, in case a task resumed
-                            try { suspended.wait(); }
-                            catch(InterruptedException ignored) {}
-                            interruptions++;
-                        }
-                    }
-                }
-
-                if(watchdogThread != null) watchdogThread.interrupt();
-
-                interruptions = 0;
-                suspendedAt = null;
-                setLastTickStart(System.currentTimeMillis());
-                server.getLogger().info("Resuming server");
-                WatchdogThread.setSuspended(false);
-            });
-            return true;
-        }
-        return false;
-    }
-
-    public void interrupt() {
-        if(!isMainThread()) {
-            synchronized(suspended) {
-                if(suspended.get()) {
-                    suspended.notifyAll();
-                }
-            }
-        }
     }
 
     // PaperSpigot start - Further improve tick loop
@@ -697,9 +601,7 @@ public abstract class MinecraftServer implements Runnable, ICommandListener, IAs
                         // SportPaper end
                     }
                     if (wait > 0) {
-                        if (!doSuspension()) {
-                            Thread.sleep(wait / 1000000);
-                        }
+                        Thread.sleep(wait / 1000000);
                         curTime = System.nanoTime();
                         wait = TICK_TIME - (curTime - lastTick);
                     }
@@ -721,13 +623,15 @@ public abstract class MinecraftServer implements Runnable, ICommandListener, IAs
                         // PaperSpigot end
                     }
                     lastTick = curTime;
-
+                    this.server.getPluginManager().callEvent(new ServerTickStartEvent(this.ticks+1));
                     this.A();
+                    long endTime = System.nanoTime();
+                    long remaining = (TICK_TIME - (endTime - lastTick)) - catchupTime;
+                    this.server.getPluginManager().callEvent(new ServerTickEndEvent(this.ticks, ((double)(endTime - lastTick) / 1000000D), remaining));
                     this.Q = true;
                 }
                 // Spigot end
             } else {
-                this.abnormalTermination = true; // SportBukkit
                 this.a((CrashReport) null);
             }
         } catch (Throwable throwable) {
@@ -738,7 +642,6 @@ public abstract class MinecraftServer implements Runnable, ICommandListener, IAs
                 MinecraftServer.LOGGER.error( "\tCause of unexpected exception was", throwable.getCause() );
             }
             // Spigot End
-            this.abnormalTermination = true; // SportBukkit
             CrashReport crashreport = null;
 
             if (throwable instanceof ReportedException) {
@@ -884,15 +787,17 @@ public abstract class MinecraftServer implements Runnable, ICommandListener, IAs
         this.methodProfiler.a("jobs");
         processTasks();
         SpigotTimings.minecraftSchedulerTimer.stopTiming(); // Spigot
-        this.server.checkEmpty();
-        if(suspended.get()) return;
-
         this.methodProfiler.c("levels");
-
         SpigotTimings.bukkitSchedulerTimer.startTiming(); // Spigot
         // CraftBukkit start
         this.server.getScheduler().mainThreadHeartbeat(this.ticks);
         SpigotTimings.bukkitSchedulerTimer.stopTiming(); // Spigot
+
+        SpigotTimings.processQueueTimer.startTiming(); // Spigot
+        while (!processQueue.isEmpty()) {
+            processQueue.remove().run();
+        }
+        SpigotTimings.processQueueTimer.stopTiming();
 
         SpigotTimings.chunkIOTickTimer.startTiming(); // Spigot
         org.bukkit.craftbukkit.chunkio.ChunkIOExecutor.tick();
@@ -1666,7 +1571,6 @@ public abstract class MinecraftServer implements Runnable, ICommandListener, IAs
 
             // Spigot start
             this.j.add(listenablefuturetask);
-            interrupt(); // SportBukkit
             return listenablefuturetask;
             // Spigot end
         } else {
@@ -1701,7 +1605,6 @@ public abstract class MinecraftServer implements Runnable, ICommandListener, IAs
                 taskQueue.addLast(task);
             }
         }
-        interrupt();
     }
 
     public void addMainThreadTask(Runnable task) {

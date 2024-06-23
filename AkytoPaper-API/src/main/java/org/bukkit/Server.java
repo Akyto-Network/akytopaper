@@ -136,12 +136,6 @@ public interface Server extends PluginMessageRecipient {
     public Collection<? extends Player> getOnlinePlayers();
 
     /**
-     * If the server is currently empty of players, return the {@link Instant}
-     * that the last player disconnected. If the server is not empty, return null.
-     */
-    @Nullable Instant emptySince();
-
-    /**
      * Get the maximum amount of players which can login to this server.
      *
      * @return the amount of players this server allows
@@ -1025,68 +1019,6 @@ public interface Server extends PluginMessageRecipient {
      */
     boolean runOnMainThread(Plugin plugin, boolean priority, Runnable task);
 
-    /**
-     * Suspend or resume the server.
-     *
-     * A suspended server does not tick or run scheduled tasks. However, it does
-     * execute console commands, and tasks submitted to {@link #postToMainThread},
-     * while remaining suspended.
-     *
-     * The server can only be suspended when no players are connected. The server
-     * will resume when a player successfully logs in. Failed logins due to bans
-     * or whitelisting do not cause the server to resume.
-     *
-     * @param suspend true to suspend the server, false to resume
-     *
-     * @return true if the suspended state of the server changed,
-     *         false if the state did not change, because the server was already
-     *         in the given state, or because the change is not currently possible.
-     *
-     * @see org.bukkit.event.server.ServerSuspendEvent
-     */
-    boolean setSuspended(boolean suspend);
-
-    /**
-     * Can the server be suspended right now?
-     *
-     * The server can be suspended only when it has no players connected,
-     * and is not in the process of shutting down. This method returns
-     * true if the server is already suspended.
-     *
-     * @see #setSuspended(boolean)
-     */
-    boolean canSuspend();
-
-    /**
-     * Is the server currently suspended?
-     *
-     * @see #setSuspended(boolean)
-     */
-    boolean isSuspended();
-
-    /**
-     * The {@link Instant} that the server entered the suspended state,
-     * or null if the server is not currently suspended.
-     *
-     * @see #setSuspended(boolean)
-     */
-    @Nullable Instant suspendedAt();
-
-    /**
-     * The number of times the server has been interrupted from suspension.
-     *
-     * If the server is not currently suspended, returns 0.
-     *
-     * Interruptions are caused by tasks posted to the main thread through
-     * {@link #postToMainThread}, console commands, and various internal events.
-     * Internal interruptions should be rare. If the server is being interrupted
-     * frequently, it is likely caused by a plugin.
-     *
-     * @see #setSuspended(boolean)
-     */
-    int interruptions();
-
-    // SportPaper start
     /**
      * Broadcasts a translatable component to all {@link Player}s using their {@link CommandSender#getLocale() locale}.
      *

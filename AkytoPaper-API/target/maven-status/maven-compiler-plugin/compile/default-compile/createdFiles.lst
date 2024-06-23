@@ -115,7 +115,6 @@ org\bukkit\event\entity\PotionEffectExpireEvent.class
 org\bukkit\command\defaults\GameModeCommand.class
 co\aikar\util\JSONUtil$JSONPair.class
 org\bukkit\entity\Slime.class
-org\bukkit\event\server\ServerSuspendEvent.class
 org\bukkit\event\hanging\HangingBreakByEntityEvent.class
 org\bukkit\help\HelpTopic.class
 org\bukkit\entity\Entity$Spigot.class
