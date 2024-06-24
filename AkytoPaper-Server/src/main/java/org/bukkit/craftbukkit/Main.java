@@ -173,6 +173,10 @@ public class Main {
                         .defaultsTo("Unknown Server")
                         .describedAs("Name");
                 // Paper end
+
+                // aSpigot Start
+                acceptsAll(asList("debug"), "Enable debug logs");
+                // aSpigot End
             }
         };
 
