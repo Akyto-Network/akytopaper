@@ -57,6 +57,10 @@ public class EntityEnderPearl extends EntityProjectile {
                     location.setYaw(entityplayer.yaw);
                     location.setPitch(entityplayer.pitch);
                     this.addToLocation(PearlUtils.direction(location), location, 0.85d);
+                    System.out.println("blockY-1:" + (location.getBlockY()-1));
+                    System.out.println("blockY:" + location.getBlockY());
+                    System.out.println("blockY+1:" + (location.getBlockY()+1));
+                    System.out.println(location.toBlockLocation().getBlock().getType().toString());
                     PlayerTeleportEvent teleEvent = new PlayerTeleportEvent(player, player.getLocation(), location, PlayerTeleportEvent.TeleportCause.ENDER_PEARL);
                     Bukkit.getPluginManager().callEvent(teleEvent);
 
@@ -107,6 +111,27 @@ public class EntityEnderPearl extends EntityProjectile {
             }
             case "S": {
                 location.setZ(location.getZ() + x);
+                break;
+            }
+        }
+    }
+
+    protected void removeToLocation(final String d, final Location location, final double x) {
+        switch(d) {
+            case "E": {
+                location.setX(location.getX() - x);
+                break;
+            }
+            case "W": {
+                location.setX(location.getX() + x);
+                break;
+            }
+            case "N": {
+                location.setZ(location.getZ() + x);
+                break;
+            }
+            case "S": {
+                location.setZ(location.getZ() - x);
                 break;
             }
         }
