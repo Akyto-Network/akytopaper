@@ -40,10 +40,10 @@ manifest.mf
 *~
 
 # other stuff
-nPaper-Server/target
-nPaper-Server/dependency-reduced-pom.xml
-nPaper-API/target
-nPaper-API/dependency-reduced-pom.xml
+AkytoPaper-Server/target
+AkytoPaper-Server/dependency-reduced-pom.xml
+AkytoPaper-API/target
+AkytoPaper-API/dependency-reduced-pom.xml
 MinecraftServer/target
 MinecraftServer/dependency-reduced-pom.xml
 
