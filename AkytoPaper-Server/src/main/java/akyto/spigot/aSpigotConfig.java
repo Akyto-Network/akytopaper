@@ -41,6 +41,7 @@ public class aSpigotConfig {
     private boolean hitDetect;
     private boolean smoothPotting;
     private boolean hidePlayersFromTab;
+    private boolean antiglitchPearl;
 
     public aSpigotConfig() {
         this.configFile = new File("settings.yml");
@@ -79,6 +80,7 @@ public class aSpigotConfig {
         this.smoothPotting = this.getBoolean("smooth-potting", false);
         this.hitDetect = this.getBoolean("hitDetect", true);
         this.hidePlayersFromTab = this.getBoolean("hidePlayersFromTab", false);
+        this.antiglitchPearl = this.getBoolean("antiglitchPearl", true);
         SpigotBridge.disableOpPermissions = this.getBoolean("disable-op", false);
 
         save();

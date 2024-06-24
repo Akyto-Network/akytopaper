@@ -1,6 +1,8 @@
 package akyto.spigot.util;
 
 import org.bukkit.Location;
+import org.bukkit.block.Block;
+import org.bukkit.material.Openable;
 
 public class PearlUtils {
 
@@ -28,5 +30,4 @@ public class PearlUtils {
             return "W";
         else return null;
     }
-
 }

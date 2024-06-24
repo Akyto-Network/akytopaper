@@ -16,7 +16,6 @@ public class WatchdogThread extends Thread
     private final boolean restart;
     private volatile long lastTick;
     private volatile boolean stopping;
-    private volatile boolean isSuspended;
 
     private WatchdogThread(long timeoutTime, boolean restart)
     {
@@ -47,26 +46,11 @@ public class WatchdogThread extends Thread
         }
     }
 
-    public static void setSuspended(boolean suspended)
-    {
-        instance.isSuspended = suspended;
-    }
-
-    // SportBukkit start
-    synchronized private void doSuspension() {
-        while(this.isSuspended) {
-            try { wait(); } catch(InterruptedException ignored) {}
-        }
-    }
-    // SportBukkit end
-
     @Override
     public void run()
     {
         while ( !stopping )
         {
-            //
-            doSuspension(); // SportBukkit
             if ( lastTick != 0 && System.currentTimeMillis() > lastTick + timeoutTime && !Boolean.getBoolean("disable.watchdog")) // Paper - Add property to disable
             {
                 Logger log = Bukkit.getServer().getLogger();
