@@ -43,10 +43,6 @@ public class EntityEnderPearl extends EntityProjectile {
         }
         // PaperSpigot end
 
-        for (int i = 0; i < 32; ++i) {
-            this.world.addParticle(EnumParticle.PORTAL, this.locX, this.locY + this.random.nextDouble() * 2.0D, this.locZ, this.random.nextGaussian(), 0.0D, this.random.nextGaussian(), new int[0]);
-        }
-
         if (!this.world.isClientSide) {
             if (entityliving instanceof EntityPlayer) {
                 EntityPlayer entityplayer = (EntityPlayer) entityliving;
@@ -61,6 +57,9 @@ public class EntityEnderPearl extends EntityProjectile {
                     System.out.println("blockY:" + location.getBlockY());
                     System.out.println("blockY+1:" + (location.getBlockY()+1));
                     System.out.println(location.toBlockLocation().getBlock().getType().toString());
+                    for (int i = 0; i < 32; ++i) {
+                        this.world.addParticle(EnumParticle.PORTAL, location.getX(), location.getY() + this.random.nextDouble() * 2.0D, location.getZ(), this.random.nextGaussian(), 0.0D, this.random.nextGaussian(), new int[0]);
+                    }
                     PlayerTeleportEvent teleEvent = new PlayerTeleportEvent(player, player.getLocation(), location, PlayerTeleportEvent.TeleportCause.ENDER_PEARL);
                     Bukkit.getPluginManager().callEvent(teleEvent);
 

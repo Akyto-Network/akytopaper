@@ -3,3 +3,4 @@
 *.jar
 AkytoPaper-API/target/aspigot-api-1.8.8-R0.1-SNAPSHOT-shaded.jar
 AkytoPaper-API/target/aspigot-api-1.8.8-R0.1-SNAPSHOT-shaded.jar
+*.lst
