@@ -53,9 +53,10 @@ public class EntityEnderPearl extends EntityProjectile {
                     location.setYaw(entityplayer.yaw);
                     location.setPitch(entityplayer.pitch);
                     this.addToLocation(PearlUtils.direction(location), location, 0.85d);
-                    if (!location.toBlockLocation().getBlock().getType().toString().equalsIgnoreCase("AIR")) {
+                    System.out.println(PearlUtils.direction(location));
+                    if (PearlUtils.risky(location)) {
                         this.getBoundingBox().grow(0.225d, 0.1d, 0.225d);
-                        this.addToLocation(PearlUtils.direction(location), location, -1.35d);
+                        this.removeToLocation(PearlUtils.direction(location), location, 1.5d);
                     }
                     for (int i = 0; i < 32; ++i) {
                         this.world.addParticle(EnumParticle.PORTAL, location.getX(), location.getY() + this.random.nextDouble() * 2.0D, location.getZ(), this.random.nextGaussian(), 0.0D, this.random.nextGaussian(), new int[0]);
@@ -117,13 +118,29 @@ public class EntityEnderPearl extends EntityProjectile {
 
     protected void removeToLocation(final String d, final Location location, final double x) {
         switch(d) {
+            case "SE": {
+                location.setX(location.getX() - x);
+                location.setZ(location.getZ() - x);
+            }
             case "E": {
                 location.setX(location.getX() - x);
                 break;
             }
+            case "NE": {
+                location.setX(location.getX() - x);
+                location.setZ(location.getZ() + x);
+            }
+            case "SW": {
+                location.setX(location.getX() + x);
+                location.setZ(location.getZ() - x);
+            }
             case "W": {
                 location.setX(location.getX() + x);
                 break;
+            }
+            case "NW": {
+                location.setX(location.getX() + x);
+                location.setZ(location.getZ() + x);
             }
             case "N": {
                 location.setZ(location.getZ() + x);

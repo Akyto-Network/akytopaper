@@ -2,6 +2,7 @@ package akyto.spigot.util;
 
 import org.bukkit.Location;
 import org.bukkit.block.Block;
+import org.bukkit.block.BlockFace;
 import org.bukkit.material.Openable;
 
 public class PearlUtils {
@@ -29,5 +30,67 @@ public class PearlUtils {
         else if (337.5 <= d && d < 360)
             return "W";
         else return null;
+    }
+
+    public static boolean risky(final Location loc) {
+        switch (direction(loc)){
+            case "N": {
+                Location left = new Location(loc.getWorld(), loc.getX()-1, loc.getY(), loc.getZ());
+                Location right = new Location(loc.getWorld(), loc.getX()+1, loc.getY(), loc.getZ());
+                if (left.getBlock().getType().toString().contains("GLASS") && right.getBlock().getType().toString().contains("GLASS")){
+                    return true;
+                }
+            }
+            case "W": {
+                Location left = new Location(loc.getWorld(), loc.getX(), loc.getY(), loc.getZ()+1);
+                Location right = new Location(loc.getWorld(), loc.getX(), loc.getY(), loc.getZ()-1);
+                if (left.getBlock().getType().toString().contains("GLASS") && right.getBlock().getType().toString().contains("GLASS")){
+                    return true;
+                }
+            }
+            case "NW": {
+                Location left = new Location(loc.getWorld(), loc.getX()-1, loc.getY(), loc.getZ()-1);
+                Location right = new Location(loc.getWorld(), loc.getX()+1, loc.getY(), loc.getZ()-1);
+                if (left.getBlock().getType().toString().contains("GLASS") && right.getBlock().getType().toString().contains("GLASS")){
+                    return true;
+                }
+            }
+            case "S": {
+                Location left = new Location(loc.getWorld(), loc.getX()+1, loc.getY(), loc.getZ());
+                Location right = new Location(loc.getWorld(), loc.getX()-1, loc.getY(), loc.getZ());
+                if (left.getBlock().getType().toString().contains("GLASS") && right.getBlock().getType().toString().contains("GLASS")){
+                    return true;
+                }
+            }
+            case "SW": {
+                Location left = new Location(loc.getWorld(), loc.getX()-1, loc.getY(), loc.getZ()+1);
+                Location right = new Location(loc.getWorld(), loc.getX()-1, loc.getY(), loc.getZ()-1);
+                if (left.getBlock().getType().toString().contains("GLASS") && right.getBlock().getType().toString().contains("GLASS")){
+                    return true;
+                }
+            }
+            case "E": {
+                Location left = new Location(loc.getWorld(), loc.getX(), loc.getY(), loc.getZ()-1);
+                Location right = new Location(loc.getWorld(), loc.getX(), loc.getY(), loc.getZ()+1);
+                if (left.getBlock().getType().toString().contains("GLASS") && right.getBlock().getType().toString().contains("GLASS")){
+                    return true;
+                }
+            }
+            case "NE": {
+                Location left = new Location(loc.getWorld(), loc.getX()+1, loc.getY(), loc.getZ()-1);
+                Location right = new Location(loc.getWorld(), loc.getX()+1, loc.getY(), loc.getZ()+1);
+                if (left.getBlock().getType().toString().contains("GLASS") && right.getBlock().getType().toString().contains("GLASS")){
+                    return true;
+                }
+            }
+            case "SE": {
+                Location left = new Location(loc.getWorld(), loc.getX()+1, loc.getY(), loc.getZ()+1);
+                Location right = new Location(loc.getWorld(), loc.getX()-1, loc.getY(), loc.getZ()+1);
+                if (left.getBlock().getType().toString().contains("GLASS") && right.getBlock().getType().toString().contains("GLASS")){
+                    return true;
+                }
+            }
+        }
+        return false;
     }
 }
