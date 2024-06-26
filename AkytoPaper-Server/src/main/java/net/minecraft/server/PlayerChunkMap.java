@@ -12,6 +12,8 @@ import java.util.Collections;
 import java.util.Queue;
 import java.util.LinkedList;
 import org.bukkit.craftbukkit.chunkio.ChunkIOExecutor;
+import org.bukkit.event.player.PlayerChunkUnloadEvent;
+
 import java.util.HashMap;
 // CraftBukkit end
 
@@ -428,6 +430,7 @@ public class PlayerChunkMap {
                 this.players.remove(entityplayer); // CraftBukkit
                 this.b.remove(entityplayer);
                 entityplayer.chunkCoordIntPairQueue.remove(this.location);
+                new PlayerChunkUnloadEvent(chunk.bukkitChunk, entityplayer.getBukkitEntity()).callEvent(); // Akyto - Unload Player Chunk
                 if (this.b.isEmpty()) {
                     long i = (long) this.location.x + 2147483647L | (long) this.location.z + 2147483647L << 32;
 

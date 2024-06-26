@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project name="maven-antrun-" default="main">
   <target name="main">
-    <copy file="C:\Users\Theo\Documents\AkytoPaper\AkytoPaper-Server\target/aspigot-server-1.8.8-R0.1-SNAPSHOT.jar" tofile="C:\Users\Theo\Documents\AkytoPaper\AkytoPaper-Server\target/server.jar" />
+    <copy file="C:\Users\Theo\Documents\Akyto-Workspace\akytopaper\AkytoPaper-Server\target/aspigot-server-1.8.8-R0.1-SNAPSHOT.jar" tofile="C:\Users\Theo\Documents\Akyto-Workspace\akytopaper\AkytoPaper-Server\target/server.jar" />
   </target>
 </project>

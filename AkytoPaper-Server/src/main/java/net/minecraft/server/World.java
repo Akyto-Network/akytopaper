@@ -39,7 +39,7 @@ public abstract class World implements IBlockAccess {
     private int a = 63;
     protected boolean e;
     // Spigot start - guard entity list from removals
-    public final List<Entity> entityList = new java.util.ArrayList<Entity>()
+    public final List<Entity> entityList = new ArrayList<>()
     {
         @Override
         public Entity remove(int index)
@@ -59,7 +59,7 @@ public abstract class World implements IBlockAccess {
         {
             if ( guardEntityList )
             {
-                throw new java.util.ConcurrentModificationException();
+                throw new ConcurrentModificationException();
             }
         }
     };
@@ -69,7 +69,7 @@ public abstract class World implements IBlockAccess {
     public final List<TileEntity> tileEntityList = Lists.newArrayList();
     private final List<TileEntity> b = Lists.newArrayList();
     private final Set<TileEntity> c = Sets.newHashSet(); // Paper
-    public final List<EntityHuman> players = Lists.newArrayList();
+    public final List players = new ArrayList<>();
     public final List<Entity> k = Lists.newArrayList();
     protected final IntHashMap<Entity> entitiesById = new IntHashMap();
     private long d = 16777215L;
@@ -2979,20 +2979,22 @@ public abstract class World implements IBlockAccess {
         double d4 = -1.0D;
         EntityHuman entityhuman = null;
 
-        for (int i = 0; i < this.players.size(); ++i) {
-            EntityHuman entityhuman1 = (EntityHuman) this.players.get(i);
-            // CraftBukkit start - Fixed an NPE
-            if (entityhuman1 == null || !entityhuman1.ad()) { // CraftBukkit allow for more complex logic by using the "is alive" method
-                continue;
-            }
-            // CraftBukkit end
+        for (double x = d0 - d3; x <= d0 + d3; x += 16.0D) {
+            for (double z = d2 - d3; z <= d2 + d3; z += 16.0D) {
+                Chunk chunk = getChunkIfLoaded((int)x >> 4, (int)z >> 4);
+                if (chunk == null) continue;
+                for (EntityPlayer entityPlayer : chunk.playersInChunk) {
+                    // CraftBukkit start - Fixed an NPE
+                    if (entityPlayer == null || entityPlayer.dead) {
+                        continue;
+                    }
+                    // CraftBukkit end
+                    double d5 = entityPlayer.e(d0, d1, d2);
 
-            if (IEntitySelector.d.apply(entityhuman1)) {
-                double d5 = entityhuman1.e(d0, d1, d2);
-
-                if ((d3 < 0.0D || d5 < d3 * d3) && (d4 == -1.0D || d5 < d4)) {
-                    d4 = d5;
-                    entityhuman = entityhuman1;
+                    if ((d3 < 0.0D || d5 < d3 * d3) && (d4 == -1.0D || d5 < d4)) {
+                        d4 = d5;
+                        entityhuman = entityPlayer;
+                    }
                 }
             }
         }

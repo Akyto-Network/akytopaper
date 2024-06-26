@@ -48,3 +48,6 @@ MinecraftServer/target
 MinecraftServer/dependency-reduced-pom.xml
 
 *.class
+*.class
+*.class
+*.class

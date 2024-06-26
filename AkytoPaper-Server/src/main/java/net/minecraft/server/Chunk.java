@@ -4,12 +4,8 @@ import akyto.spigot.math.FastRandom;
 import com.google.common.base.Predicate;
 import com.google.common.collect.Maps;
 import com.google.common.collect.Queues;
-import java.util.Arrays;
-import java.util.Collection;
-import java.util.Iterator;
-import java.util.List;
-import java.util.Map;
-import java.util.Random;
+
+import java.util.*;
 import java.util.concurrent.Callable;
 import java.util.concurrent.ConcurrentLinkedQueue;
 import java.util.concurrent.atomic.AtomicInteger; // PaperSpigot
@@ -59,6 +55,7 @@ public class Chunk {
     public AtomicInteger pendingLightUpdates = new AtomicInteger();
     public long lightUpdateTime;
     // PaperSpigot end
+    public HashSet<EntityPlayer> playersInChunk = new HashSet<EntityPlayer>(); // Akyto - Track Players in chunk
 
     // PaperSpigot start - ChunkMap caching
     private PacketPlayOutMapChunk.ChunkMap chunkMap;
@@ -747,6 +744,11 @@ public class Chunk {
         entity.af = k;
         entity.ag = this.locZ;
         this.entitySlices[k].add(entity);
+        //aSpigot - Start
+        if (entity instanceof EntityPlayer) {
+            this.playersInChunk.add((EntityPlayer)entity);
+        }
+        //aSpigot - end
         // PaperSpigot start - update counts
         if (entity instanceof EntityItem) {
             itemCounts[k]++;
@@ -786,6 +788,11 @@ public class Chunk {
         }
 
         this.entitySlices[i].remove(entity);
+        //aSpigot - Start
+        if (entity instanceof EntityPlayer) {
+            this.playersInChunk.remove((EntityPlayer)entity);
+        }
+        //aSpigot - end
         // PaperSpigot start - update counts
         if (entity instanceof EntityItem) {
             itemCounts[i]--;
@@ -918,7 +925,9 @@ public class Chunk {
 
             while (iterator.hasNext()) {
                 Entity entity = (Entity) iterator.next();
-
+                if (entity instanceof EntityPlayer) {
+                    this.playersInChunk.add((EntityPlayer)entity);
+                }
                 entity.ah();
             }
 
@@ -972,6 +981,7 @@ public class Chunk {
                 // (which for example disables inventory icon updates and prevents block breaking)
                 if (entity instanceof EntityPlayer) {
                     iter.remove();
+                    this.playersInChunk.remove(entity);
                 }
             }
 

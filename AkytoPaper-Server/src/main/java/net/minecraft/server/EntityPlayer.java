@@ -25,8 +25,10 @@ import org.bukkit.craftbukkit.event.CraftEventFactory;
 import org.bukkit.craftbukkit.inventory.CraftItemStack;
 import org.bukkit.craftbukkit.util.Skins;
 import org.bukkit.event.inventory.InventoryType;
+import org.bukkit.event.player.PlayerChunkLoadEvent;
 import org.bukkit.event.player.PlayerSkinPartsChangeEvent;
 import org.bukkit.event.player.PlayerTeleportEvent.TeleportCause;
+import org.spigotmc.SpigotWorldConfig;
 // CraftBukkit end
 
 public class EntityPlayer extends EntityHuman implements ICrafting {
@@ -240,7 +242,7 @@ public class EntityPlayer extends EntityHuman implements ICrafting {
 
             Chunk chunk;
 
-            while (iterator1.hasNext() && arraylist.size() < this.world.spigotConfig.maxBulkChunk) { // Spigot
+            while (iterator1.hasNext() && arraylist.size() < SpigotWorldConfig.maxBulkChunk) { // Spigot
                 ChunkCoordIntPair chunkcoordintpair = (ChunkCoordIntPair) iterator1.next();
 
                 if (chunkcoordintpair != null) {
@@ -250,6 +252,7 @@ public class EntityPlayer extends EntityHuman implements ICrafting {
                             arraylist.add(chunk);
                             arraylist1.addAll(chunk.tileEntities.values()); // CraftBukkit - Get tile entities directly from the chunk instead of the world
                             iterator1.remove();
+                            new PlayerChunkLoadEvent(chunk.bukkitChunk, this.getBukkitEntity()).callEvent(); // Akyto - Loading Player Chunk
                         }
                     }
                 } else {

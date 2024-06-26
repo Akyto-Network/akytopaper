@@ -4,6 +4,7 @@ import com.google.common.collect.Lists;
 import com.google.common.collect.Sets;
 import java.util.ArrayList;
 import java.util.Iterator;
+import java.util.List;
 import java.util.Set;
 import java.util.concurrent.Callable;
 import org.apache.logging.log4j.LogManager;
@@ -89,6 +90,21 @@ public class EntityTracker {
 
     }
 
+    // nPaper - start
+    private List<EntityPlayer> getPlayersToTrack(Entity entity, int range) {
+        final List<EntityPlayer> players = new ArrayList<EntityPlayer>();
+        for (double x = entity.locX - range; x <= entity.locX + range; x += 16.0D) {
+            for (double z = entity.locZ - range; z <= entity.locZ + range; z += 16.0D) {
+                final Chunk chunk = entity.world.getChunkIfLoaded((int)x >> 4, (int)z >> 4);
+                if (chunk != null) {
+                    players.addAll(chunk.playersInChunk);
+                }
+            }
+        }
+        return players;
+    }
+    // nPaper - end
+
     public void addEntity(Entity entity, int i, int j) {
         this.addEntity(entity, i, j, false);
     }
@@ -109,7 +125,10 @@ public class EntityTracker {
 
             this.c.add(entitytrackerentry);
             this.trackedEntities.a(entity.getId(), entitytrackerentry);
-            entitytrackerentry.scanPlayers(this.world.players);
+            if (entity instanceof EntityArrow) {
+                return;
+            }
+            entitytrackerentry.scanPlayers(getPlayersToTrack(entity, i));
         } catch (Throwable throwable) {
             CrashReport crashreport = CrashReport.a(throwable, "Adding entity to track");
             CrashReportSystemDetails crashreportsystemdetails = crashreport.a("Entity To Track");

@@ -575,8 +575,7 @@ public class EntityEnderDragon extends EntityInsentient implements IComplex, IMo
                 // this.world.a(1018, new BlockPosition(this), 0);
                 // Paper start
                 //int viewDistance = ((WorldServer) this.world).spigotConfig.viewDistance * 16; // Paper - updated to use worlds actual view distance incase we have to uncomment this due to removal of player view distance API
-                for (EntityHuman human : world.players) {
-                    EntityPlayer player = (EntityPlayer) human;
+                for (EntityPlayer player : (List<EntityPlayer>) this.world.players) {
                     int viewDistance = player.viewDistance;
                     // Paper end
                     double deltaX = this.locX - player.locX;
