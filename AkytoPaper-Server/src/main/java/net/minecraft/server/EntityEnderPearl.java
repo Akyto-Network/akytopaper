@@ -53,10 +53,10 @@ public class EntityEnderPearl extends EntityProjectile {
                     location.setYaw(entityplayer.yaw);
                     location.setPitch(entityplayer.pitch);
                     this.addToLocation(PearlUtils.direction(location), location, 0.85d);
-                    System.out.println("blockY-1:" + (location.getBlockY()-1));
-                    System.out.println("blockY:" + location.getBlockY());
-                    System.out.println("blockY+1:" + (location.getBlockY()+1));
-                    System.out.println(location.toBlockLocation().getBlock().getType().toString());
+                    if (!location.toBlockLocation().getBlock().getType().toString().equalsIgnoreCase("AIR")) {
+                        this.getBoundingBox().grow(0.225d, 0.1d, 0.225d);
+                        this.addToLocation(PearlUtils.direction(location), location, -1.35d);
+                    }
                     for (int i = 0; i < 32; ++i) {
                         this.world.addParticle(EnumParticle.PORTAL, location.getX(), location.getY() + this.random.nextDouble() * 2.0D, location.getZ(), this.random.nextGaussian(), 0.0D, this.random.nextGaussian(), new int[0]);
                     }
