@@ -160,7 +160,7 @@ public class EntityTrackerEntry {
                         // CraftBukkit start - Refresh list of who can see a player before sending teleport packet
                         if (this.tracker instanceof EntityPlayer) {
                             // SportPaper - Fix invisibility on teleport
-                            this.scanPlayers(new ArrayList(this.tracker.world.players));
+                            this.scanPlayers(this.tracker.world.players);
                         }
                         // CraftBukkit end
                         object = new PacketPlayOutEntityTeleport(this.tracker.getId(), i, j, k, (byte) l, (byte) i1, this.tracker.onGround);

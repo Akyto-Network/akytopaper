@@ -979,24 +979,39 @@ public abstract class World implements IBlockAccess {
     }
 
     public void makeSound(Entity entity, String s, float f, float f1) {
-        for (int i = 0; i < this.u.size(); ++i) {
-            ((IWorldAccess) this.u.get(i)).a(s, entity.locX, entity.locY, entity.locZ, f, f1);
+        if (entity instanceof EntityHuman) {
+            for (int i = 0; i < this.u.size(); ++i) {
+                ((IWorldAccess) this.u.get(i)).a((EntityHuman)entity, s, entity.locX, entity.locY, entity.locZ, f, f1);
+            }
+        } else {
+            for (int i = 0; i < this.u.size(); ++i) {
+                ((IWorldAccess) this.u.get(i)).a(s, entity.locX, entity.locY, entity.locZ, f, f1);
+            }
         }
+    }
 
+    public void makeSound(EntityHuman human, Entity entity, String s, float f, float f1) {
+        for (int i = 0; i < this.u.size(); ++i) {
+            ((IWorldAccess) this.u.get(i)).a(human, s, entity.locX, entity.locY, entity.locZ, f, f1);
+        }
     }
 
     public void a(EntityHuman entityhuman, String s, float f, float f1) {
         for (int i = 0; i < this.u.size(); ++i) {
             ((IWorldAccess) this.u.get(i)).a(entityhuman, s, entityhuman.locX, entityhuman.locY, entityhuman.locZ, f, f1);
         }
+    }
 
+    public void makeSound(EntityHuman entityhuman, double d0, double d1, double d2, String s, float f, float f1) {
+        for (int i = 0; i < this.u.size(); ++i) {
+            ((IWorldAccess) this.u.get(i)).a(entityhuman, s, d0, d1, d2, f, f1);
+        }
     }
 
     public void makeSound(double d0, double d1, double d2, String s, float f, float f1) {
         for (int i = 0; i < this.u.size(); ++i) {
             ((IWorldAccess) this.u.get(i)).a(s, d0, d1, d2, f, f1);
         }
-
     }
 
     public void a(double d0, double d1, double d2, String s, float f, float f1, boolean flag) {}
