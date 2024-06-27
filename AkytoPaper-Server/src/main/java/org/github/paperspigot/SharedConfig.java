@@ -1,6 +1,5 @@
 package org.github.paperspigot;
 
-import akyto.spigot.aSpigot;
 import akyto.spigot.aSpigotConfig;
 import akyto.spigot.command.FlyCommand;
 import akyto.spigot.command.KbCommand;

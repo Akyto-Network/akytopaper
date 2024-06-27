@@ -14,6 +14,7 @@ import org.bukkit.event.player.PlayerTeleportEvent;
 public class EntityEnderPearl extends EntityProjectile {
 
     private EntityLiving c;
+    private Location lastValidLocation;
 
     public EntityEnderPearl(World world) {
         super(world);
@@ -24,6 +25,7 @@ public class EntityEnderPearl extends EntityProjectile {
         super(world, entityliving);
         this.c = entityliving;
         this.loadChunks = world.paperSpigotConfig.loadUnloadedEnderPearls; // PaperSpigot
+        if (aSpigot.INSTANCE.getConfig().isAntiglitchPearl()) this.lastValidLocation = entityliving.getBukkitEntity().getLocation(); // nPaper - antipearl glitch - fix nullpointer
     }
 
     protected void a(MovingObjectPosition movingobjectposition) {
@@ -52,11 +54,13 @@ public class EntityEnderPearl extends EntityProjectile {
                     Location location = getBukkitEntity().getLocation();
                     location.setYaw(entityplayer.yaw);
                     location.setPitch(entityplayer.pitch);
-                    this.addToLocation(PearlUtils.direction(location), location, 0.85d);
-                    System.out.println(PearlUtils.direction(location));
-                    if (PearlUtils.risky(location)) {
-                        this.getBoundingBox().grow(0.225d, 0.1d, 0.225d);
-                        this.removeToLocation(PearlUtils.direction(location), location, 1.5d);
+                    if (aSpigot.INSTANCE.getConfig().isAntiglitchPearl()){
+                        this.addToLocation(PearlUtils.direction(location), location, 0.85d);
+                        if (PearlUtils.risky(location)) {
+                            location = lastValidLocation.clone();
+                            location.setYaw(entityplayer.yaw);
+                            location.setPitch(entityplayer.pitch);
+                        }
                     }
                     for (int i = 0; i < 32; ++i) {
                         this.world.addParticle(EnumParticle.PORTAL, location.getX(), location.getY() + this.random.nextDouble() * 2.0D, location.getZ(), this.random.nextGaussian(), 0.0D, this.random.nextGaussian(), new int[0]);
@@ -97,11 +101,31 @@ public class EntityEnderPearl extends EntityProjectile {
 
     protected void addToLocation(final String d, final Location location, final double x) {
         switch(d) {
+            case "SE": {
+                location.setZ(location.getZ() + x);
+                location.setX(location.getX() + x);
+                break;
+            }
             case "E": {
                 location.setX(location.getX() + x);
                 break;
             }
+            case "NE": {
+                location.setZ(location.getZ() - x);
+                location.setX(location.getX() + x);
+                break;
+            }
+            case "SW": {
+                location.setZ(location.getZ() + x);
+                location.setX(location.getX() - x);
+                break;
+            }
             case "W": {
+                location.setX(location.getX() - x);
+                break;
+            }
+            case "NW": {
+                location.setZ(location.getZ() - x);
                 location.setX(location.getX() - x);
                 break;
             }
@@ -120,26 +144,26 @@ public class EntityEnderPearl extends EntityProjectile {
         switch(d) {
             case "SE": {
                 location.setX(location.getX() - x);
-                location.setZ(location.getZ() - x);
+                location.setZ(location.getZ() + x);
             }
             case "E": {
                 location.setX(location.getX() - x);
                 break;
             }
             case "NE": {
-                location.setX(location.getX() - x);
+                location.setX(location.getX() + x);
                 location.setZ(location.getZ() + x);
             }
             case "SW": {
                 location.setX(location.getX() + x);
-                location.setZ(location.getZ() - x);
+                location.setZ(location.getZ() + x);
             }
             case "W": {
                 location.setX(location.getX() + x);
                 break;
             }
             case "NW": {
-                location.setX(location.getX() + x);
+                location.setX(location.getX() - x);
                 location.setZ(location.getZ() + x);
             }
             case "N": {
@@ -158,6 +182,9 @@ public class EntityEnderPearl extends EntityProjectile {
         if (entityliving != null && entityliving instanceof EntityHuman && !entityliving.isAlive()) {
             this.die();
             return;
+        }
+        if (aSpigot.INSTANCE.getConfig().isAntiglitchPearl() && this.world.getCubes(this, this.getBoundingBox().grow(0.225D, 0.1D, 0.225D)).isEmpty()) {
+            this.lastValidLocation = getBukkitEntity().getLocation();
         }
         super.t_();
     }

@@ -32,63 +32,95 @@ public class PearlUtils {
         else return null;
     }
 
+    private static boolean blockRisk(final Block block) {
+        return block.getType().toString().contains("GLASS");
+    }
+
     public static boolean risky(final Location loc) {
+        Location top = new Location(loc.getWorld(), loc.getX(), loc.getY()+1, loc.getZ());
+        if (blockRisk(top.getBlock())) {
+            return true;
+        }
         switch (direction(loc)){
             case "N": {
+                Location forward = new Location(loc.getWorld(), loc.getX(), loc.getY(), loc.getZ()-1);
+                Location back = new Location(loc.getWorld(), loc.getX(), loc.getY(), loc.getZ()+1);
                 Location left = new Location(loc.getWorld(), loc.getX()-1, loc.getY(), loc.getZ());
                 Location right = new Location(loc.getWorld(), loc.getX()+1, loc.getY(), loc.getZ());
-                if (left.getBlock().getType().toString().contains("GLASS") && right.getBlock().getType().toString().contains("GLASS")){
+                if (blockRisk(left.getBlock()) || blockRisk(right.getBlock()) || blockRisk(forward.getBlock()) || blockRisk(back.getBlock())){
                     return true;
                 }
-            }
-            case "W": {
-                Location left = new Location(loc.getWorld(), loc.getX(), loc.getY(), loc.getZ()+1);
-                Location right = new Location(loc.getWorld(), loc.getX(), loc.getY(), loc.getZ()-1);
-                if (left.getBlock().getType().toString().contains("GLASS") && right.getBlock().getType().toString().contains("GLASS")){
-                    return true;
-                }
+                break;
             }
             case "NW": {
-                Location left = new Location(loc.getWorld(), loc.getX()-1, loc.getY(), loc.getZ()-1);
+                Location forward = new Location(loc.getWorld(), loc.getX()-1, loc.getY(), loc.getZ()-1);
+                Location back = new Location(loc.getWorld(), loc.getX()+1, loc.getY(), loc.getZ()+1);
+                Location left = new Location(loc.getWorld(), loc.getX()-1, loc.getY(), loc.getZ()+1);
                 Location right = new Location(loc.getWorld(), loc.getX()+1, loc.getY(), loc.getZ()-1);
-                if (left.getBlock().getType().toString().contains("GLASS") && right.getBlock().getType().toString().contains("GLASS")){
+                if (blockRisk(left.getBlock()) || blockRisk(right.getBlock()) || blockRisk(forward.getBlock()) || blockRisk(back.getBlock())){
                     return true;
                 }
+                break;
             }
-            case "S": {
-                Location left = new Location(loc.getWorld(), loc.getX()+1, loc.getY(), loc.getZ());
-                Location right = new Location(loc.getWorld(), loc.getX()-1, loc.getY(), loc.getZ());
-                if (left.getBlock().getType().toString().contains("GLASS") && right.getBlock().getType().toString().contains("GLASS")){
+            case "W": {
+                Location forward = new Location(loc.getWorld(), loc.getX()-1, loc.getY(), loc.getZ());
+                Location back = new Location(loc.getWorld(), loc.getX()+1, loc.getY(), loc.getZ());
+                Location left = new Location(loc.getWorld(), loc.getX(), loc.getY(), loc.getZ()+1);
+                Location right = new Location(loc.getWorld(), loc.getX(), loc.getY(), loc.getZ()-1);
+                if (blockRisk(left.getBlock()) || blockRisk(right.getBlock()) || blockRisk(forward.getBlock()) || blockRisk(back.getBlock())){
                     return true;
                 }
+                break;
             }
             case "SW": {
-                Location left = new Location(loc.getWorld(), loc.getX()-1, loc.getY(), loc.getZ()+1);
+                Location forward = new Location(loc.getWorld(), loc.getX()-1, loc.getY(), loc.getZ()+1);
+                Location back = new Location(loc.getWorld(), loc.getX()+1, loc.getY(), loc.getZ()-1);
+                Location left = new Location(loc.getWorld(), loc.getX()+1, loc.getY(), loc.getZ()+1);
                 Location right = new Location(loc.getWorld(), loc.getX()-1, loc.getY(), loc.getZ()-1);
-                if (left.getBlock().getType().toString().contains("GLASS") && right.getBlock().getType().toString().contains("GLASS")){
+                if (blockRisk(left.getBlock()) || blockRisk(right.getBlock()) || blockRisk(forward.getBlock()) || blockRisk(back.getBlock())){
                     return true;
                 }
+                break;
             }
-            case "E": {
-                Location left = new Location(loc.getWorld(), loc.getX(), loc.getY(), loc.getZ()-1);
-                Location right = new Location(loc.getWorld(), loc.getX(), loc.getY(), loc.getZ()+1);
-                if (left.getBlock().getType().toString().contains("GLASS") && right.getBlock().getType().toString().contains("GLASS")){
+            case "S": {
+                Location forward = new Location(loc.getWorld(), loc.getX(), loc.getY(), loc.getZ()+1);
+                Location back = new Location(loc.getWorld(), loc.getX(), loc.getY(), loc.getZ()-1);
+                Location left = new Location(loc.getWorld(), loc.getX()+1, loc.getY(), loc.getZ());
+                Location right = new Location(loc.getWorld(), loc.getX()-1, loc.getY(), loc.getZ());
+                if (blockRisk(left.getBlock()) || blockRisk(right.getBlock()) || blockRisk(forward.getBlock()) || blockRisk(back.getBlock())){
                     return true;
                 }
-            }
-            case "NE": {
-                Location left = new Location(loc.getWorld(), loc.getX()+1, loc.getY(), loc.getZ()-1);
-                Location right = new Location(loc.getWorld(), loc.getX()+1, loc.getY(), loc.getZ()+1);
-                if (left.getBlock().getType().toString().contains("GLASS") && right.getBlock().getType().toString().contains("GLASS")){
-                    return true;
-                }
+                break;
             }
             case "SE": {
-                Location left = new Location(loc.getWorld(), loc.getX()+1, loc.getY(), loc.getZ()+1);
+                Location forward = new Location(loc.getWorld(), loc.getX()+1, loc.getY(), loc.getZ()+1);
+                Location back = new Location(loc.getWorld(), loc.getX()-1, loc.getY(), loc.getZ()-1);
+                Location left = new Location(loc.getWorld(), loc.getX()+1, loc.getY(), loc.getZ()-1);
                 Location right = new Location(loc.getWorld(), loc.getX()-1, loc.getY(), loc.getZ()+1);
-                if (left.getBlock().getType().toString().contains("GLASS") && right.getBlock().getType().toString().contains("GLASS")){
+                if (blockRisk(left.getBlock()) || blockRisk(right.getBlock()) || blockRisk(forward.getBlock()) || blockRisk(back.getBlock())){
                     return true;
                 }
+                break;
+            }
+            case "E": {
+                Location forward = new Location(loc.getWorld(), loc.getX()+1, loc.getY(), loc.getZ());
+                Location back = new Location(loc.getWorld(), loc.getX()-1, loc.getY(), loc.getZ());
+                Location left = new Location(loc.getWorld(), loc.getX(), loc.getY(), loc.getZ()-1);
+                Location right = new Location(loc.getWorld(), loc.getX(), loc.getY(), loc.getZ()+1);
+                if (blockRisk(left.getBlock()) || blockRisk(right.getBlock()) || blockRisk(forward.getBlock()) || blockRisk(back.getBlock())){
+                    return true;
+                }
+                break;
+            }
+            case "NE": {
+                Location forward = new Location(loc.getWorld(), loc.getX()+1, loc.getY(), loc.getZ()-1);
+                Location back = new Location(loc.getWorld(), loc.getX()-1, loc.getY(), loc.getZ()+1);
+                Location left = new Location(loc.getWorld(), loc.getX()-1, loc.getY(), loc.getZ()-1);
+                Location right = new Location(loc.getWorld(), loc.getX()+1, loc.getY(), loc.getZ()+1);
+                if (blockRisk(left.getBlock()) || blockRisk(right.getBlock()) || blockRisk(forward.getBlock()) || blockRisk(back.getBlock())){
+                    return true;
+                }
+                break;
             }
         }
         return false;
