@@ -1,6 +1,8 @@
 package net.minecraft.server;
 
 import java.util.Iterator;
+
+import lombok.Setter;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.bukkit.event.player.PlayerPickupItemEvent; // CraftBukkit
@@ -16,6 +18,7 @@ public class EntityItem extends Entity {
     private String g;
     public float a;
     private int lastTick = MinecraftServer.currentTick; // CraftBukkit
+    public boolean onlyVisibleByTheOwner;
     public Entity owner; // Paper
 
     public EntityItem(World world, double d0, double d1, double d2) {

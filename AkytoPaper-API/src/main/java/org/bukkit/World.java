@@ -398,6 +398,16 @@ public interface World extends PluginMessageRecipient, Metadatable, Physical {
     Item dropItemNaturally(Location location, ItemStack item, Player player);
 
     /**
+     * Drops an item at the specified {@link Location} with a random offset
+     *
+     * @param location Location to drop the item
+     * @param item ItemStack to drop
+     * @param player Player dropping the item
+     * @return ItemDrop entity created as a result of this method
+     */
+    Item dropItemNaturally(Location location, ItemStack item, Player player, boolean onlyVisibleByTheOwner);
+
+    /**
      * Creates an {@link Arrow} entity at the given {@link Location}
      *
      * @param location Location to spawn the arrow

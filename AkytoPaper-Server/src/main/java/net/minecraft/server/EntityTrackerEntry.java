@@ -88,6 +88,20 @@ public class EntityTrackerEntry {
             this.broadcast(new PacketPlayOutAttachEntity(0, this.tracker, this.tracker.vehicle));
         }
 
+        if (this.tracker instanceof EntityItem) {
+            final EntityItem item = (EntityItem) this.tracker;
+            if (item.onlyVisibleByTheOwner) {
+                Iterator<EntityPlayer> iterator = this.trackedPlayers.iterator();
+
+                while (iterator.hasNext()) {
+                    EntityPlayer entityPlayer = iterator.next();
+                    if (!(entityPlayer instanceof EntityHuman) || entityPlayer.getBukkitEntity().getUniqueId() != item.owner.getBukkitEntity().getUniqueId()) {
+                        entityPlayer.d(this.tracker);
+                    }
+                }
+            }
+        }
+
         if (this.tracker instanceof EntityItemFrame && this.m % 20 == 0) { // Paper
             EntityItemFrame entityitemframe = (EntityItemFrame) this.tracker;
             ItemStack itemstack = entityitemframe.getItem();

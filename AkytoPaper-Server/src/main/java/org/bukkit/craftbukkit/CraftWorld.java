@@ -394,15 +394,16 @@ public class CraftWorld implements World {
     }
 
     public Item dropItem(Location loc, ItemStack item) {
-        return this.dropItem(loc, item, null);
+        return this.dropItem(loc, item, null, false);
     }
 
-    public Item dropItem(Location loc, ItemStack item, net.minecraft.server.Entity owner) {
+    public Item dropItem(Location loc, ItemStack item, net.minecraft.server.Entity owner, boolean onlyVisibleByTheOwner) {
         org.apache.commons.lang3.Validate.notNull(item, "Cannot drop a Null item.");
         org.apache.commons.lang3.Validate.isTrue(item.getTypeId() != 0, "Cannot drop AIR.");
         EntityItem entity = new EntityItem(world, loc.getX(), loc.getY(), loc.getZ(), CraftItemStack.asNMSCopy(item));
         entity.pickupDelay = 10;
         entity.owner = owner;
+        entity.onlyVisibleByTheOwner = onlyVisibleByTheOwner;
         world.addEntity(entity);
         // TODO this is inconsistent with how Entity.getBukkitEntity() works.
         // However, this entity is not at the moment backed by a server entity class so it may be left.
@@ -439,6 +440,11 @@ public class CraftWorld implements World {
         return dropItemNaturally(location, item, ((CraftPlayer) player).getHandle());
     }
 
+    @Override
+    public Item dropItemNaturally(Location location, ItemStack item, Player player, boolean onlyVisibleByTheOwner) {
+        return dropItemNaturally(location, item, ((CraftPlayer) player).getHandle(), onlyVisibleByTheOwner);
+    }
+
     public Item dropItemNaturally(Location loc, ItemStack item) {
         return dropItemNaturally(loc, item, (net.minecraft.server.Entity) null);
     }
@@ -451,7 +457,18 @@ public class CraftWorld implements World {
         // Makes sure the new item is created within the block the location points to.
         // This prevents item spill in 1-block wide farms.
         randomLocationWithinBlock(loc, xs, ys, zs);
-        return dropItem(loc, item, owner);
+        return dropItem(loc, item, owner, false);
+    }
+
+    public Item dropItemNaturally(Location loc, ItemStack item, net.minecraft.server.Entity owner, boolean onlyVisibleByTheOwner) {
+        double xs = world.random.nextFloat() * 0.7F - 0.35D;
+        double ys = world.random.nextFloat() * 0.7F - 0.35D;
+        double zs = world.random.nextFloat() * 0.7F - 0.35D;
+        loc = loc.clone();
+        // Makes sure the new item is created within the block the location points to.
+        // This prevents item spill in 1-block wide farms.
+        randomLocationWithinBlock(loc, xs, ys, zs);
+        return dropItem(loc, item, owner, onlyVisibleByTheOwner);
     }
 
     public Arrow spawnArrow(Location loc, Vector velocity, float speed, float spread) {

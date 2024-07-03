@@ -25,8 +25,10 @@ import java.util.concurrent.Callable;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 import com.google.common.util.concurrent.ThreadFactoryBuilder;
+import org.github.paperspigot.PaperSpigotWorldConfig;
 import org.github.paperspigot.event.ServerExceptionEvent;
 import org.github.paperspigot.exception.ServerInternalException;
+import org.spigotmc.SpigotWorldConfig;
 
 import javax.annotation.Nullable;
 // PaperSpigot end
@@ -190,8 +192,8 @@ public abstract class World implements IBlockAccess {
     }
 
     protected World(IDataManager idatamanager, WorldData worlddata, WorldProvider worldprovider, MethodProfiler methodprofiler, boolean flag, ChunkGenerator gen, org.bukkit.World.Environment env) {
-        this.spigotConfig = new org.spigotmc.SpigotWorldConfig(); // Spigot
-        this.paperSpigotConfig = new org.github.paperspigot.PaperSpigotWorldConfig(); // PaperSpigot
+        this.spigotConfig = new SpigotWorldConfig(); // Spigot
+        this.paperSpigotConfig = new PaperSpigotWorldConfig(); // PaperSpigot
         this.generator = gen;
         this.world = new CraftWorld((WorldServer) this, gen, env);
         this.ticksPerAnimalSpawns = this.getServer().getTicksPerAnimalSpawns(); // CraftBukkit
