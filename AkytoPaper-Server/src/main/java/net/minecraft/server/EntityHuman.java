@@ -626,6 +626,7 @@ public abstract class EntityHuman extends EntityLiving {
 
             // CraftBukkit start - fire PlayerDropItemEvent
             Player player = (Player) this.getBukkitEntity();
+            entityitem.owner = this;
             CraftItem drop = new CraftItem(this.world.getServer(), entityitem);
 
             PlayerDropItemEvent event = new PlayerDropItemEvent(player, drop);
