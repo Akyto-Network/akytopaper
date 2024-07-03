@@ -229,6 +229,9 @@ public class CraftEventFactory {
         if (cancelledBlock) {
             event.setUseInteractedBlock(Event.Result.DENY);
         }
+        if (itemInHand != null && itemInHand.getOnClick() != null) {
+            itemInHand.getOnClick().accept(event);
+        }
         craftServer.getPluginManager().callEvent(event);
 
         return event;

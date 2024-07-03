@@ -5,6 +5,7 @@ import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
+import java.util.function.Consumer;
 
 import org.apache.commons.lang.Validate;
 import org.bukkit.Bukkit;
@@ -12,6 +13,7 @@ import org.bukkit.Material;
 import org.bukkit.Utility;
 import org.bukkit.configuration.serialization.ConfigurationSerializable;
 import org.bukkit.enchantments.Enchantment;
+import org.bukkit.event.player.PlayerInteractEvent;
 import org.bukkit.inventory.meta.ItemMeta;
 import org.bukkit.material.MaterialData;
 
@@ -24,6 +26,7 @@ public class ItemStack implements Cloneable, ConfigurationSerializable {
     private MaterialData data = null;
     private short durability = 0;
     private ItemMeta meta;
+    private Consumer<PlayerInteractEvent> onClick; // ! Not serialized
 
     @Utility
     protected ItemStack() {}
@@ -798,6 +801,14 @@ public class ItemStack implements Cloneable, ConfigurationSerializable {
     public boolean hasItemFlag(ItemFlag flag) {
         ItemMeta itemMeta = getItemMeta();
         return itemMeta.hasItemFlag(flag);
+    }
+
+    public Consumer<PlayerInteractEvent> getOnClick() {
+        return onClick;
+    }
+
+    public void setOnClick(Consumer<PlayerInteractEvent> listener) {
+        this.onClick = listener;
     }
 
 }
