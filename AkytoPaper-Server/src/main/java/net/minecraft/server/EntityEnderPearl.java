@@ -8,6 +8,7 @@ import org.bukkit.Location;
 import org.bukkit.craftbukkit.entity.CraftPlayer;
 import org.bukkit.craftbukkit.event.CraftEventFactory;
 import org.bukkit.event.player.PlayerTeleportEvent;
+import org.github.paperspigot.PaperSpigotWorldConfig;
 
 // CraftBukkit end
 
@@ -18,14 +19,14 @@ public class EntityEnderPearl extends EntityProjectile {
 
     public EntityEnderPearl(World world) {
         super(world);
-        this.loadChunks = world.paperSpigotConfig.loadUnloadedEnderPearls; // PaperSpigot
+        this.loadChunks = PaperSpigotWorldConfig.loadUnloadedEnderPearls; // PaperSpigot
     }
 
-    public EntityEnderPearl(World world, EntityLiving entityliving) {
-        super(world, entityliving);
-        this.c = entityliving;
-        this.loadChunks = world.paperSpigotConfig.loadUnloadedEnderPearls; // PaperSpigot
-        if (aSpigot.INSTANCE.getConfig().isAntiglitchPearl()) this.lastValidLocation = entityliving.getBukkitEntity().getLocation(); // nPaper - antipearl glitch - fix nullpointer
+    public EntityEnderPearl(World world, EntityLiving entityLiving) {
+        super(world, entityLiving);
+        this.c = entityLiving;
+        this.loadChunks = PaperSpigotWorldConfig.loadUnloadedEnderPearls; // PaperSpigot
+        if (aSpigot.INSTANCE.getConfig().isAntiglitchPearl()) this.lastValidLocation = entityLiving.getBukkitEntity().getLocation(); // nPaper - antipearl glitch - fix nullpointer
     }
 
     protected void a(MovingObjectPosition movingobjectposition) {
@@ -40,7 +41,7 @@ public class EntityEnderPearl extends EntityProjectile {
         }
 
         // PaperSpigot start - Remove entities in unloaded chunks
-        if (this.inUnloadedChunk && world.paperSpigotConfig.removeUnloadedEnderPearls) {
+        if (this.inUnloadedChunk && PaperSpigotWorldConfig.removeUnloadedEnderPearls) {
             this.die();
         }
         // PaperSpigot end
@@ -65,10 +66,10 @@ public class EntityEnderPearl extends EntityProjectile {
                     for (int i = 0; i < 32; ++i) {
                         this.world.addParticle(EnumParticle.PORTAL, location.getX(), location.getY() + this.random.nextDouble() * 2.0D, location.getZ(), this.random.nextGaussian(), 0.0D, this.random.nextGaussian(), new int[0]);
                     }
-                    PlayerTeleportEvent teleEvent = new PlayerTeleportEvent(player, player.getLocation(), location, PlayerTeleportEvent.TeleportCause.ENDER_PEARL);
-                    Bukkit.getPluginManager().callEvent(teleEvent);
+                    PlayerTeleportEvent tpEvent = new PlayerTeleportEvent(player, player.getLocation(), location, PlayerTeleportEvent.TeleportCause.ENDER_PEARL);
+                    Bukkit.getPluginManager().callEvent(tpEvent);
 
-                    if (!teleEvent.isCancelled() && !entityplayer.playerConnection.isDisconnected()) {
+                    if (!tpEvent.isCancelled() && !entityplayer.playerConnection.isDisconnected()) {
                         if (this.random.nextFloat() < 0.05F && this.world.getGameRules().getBoolean("doMobSpawning")) {
                             EntityEndermite entityendermite = new EntityEndermite(this.world);
 
@@ -80,7 +81,7 @@ public class EntityEnderPearl extends EntityProjectile {
                         if (entityliving.au()) {
                             entityliving.mount((Entity) null);
                         }
-                        entityplayer.playerConnection.teleport(teleEvent.getTo());
+                        entityplayer.playerConnection.teleport(tpEvent.getTo());
                         aSpigot.INSTANCE.getLagCompensator().registerMovement(player, location); // Nacho
                         entityliving.fallDistance = 0.0F;
                         CraftEventFactory.entityDamage = this;

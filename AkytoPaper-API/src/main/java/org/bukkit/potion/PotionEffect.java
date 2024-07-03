@@ -4,13 +4,14 @@ import java.util.Map;
 import java.util.NoSuchElementException;
 
 import org.apache.commons.lang.Validate;
-import org.bukkit.Color;
+import org.apache.commons.lang.WordUtils;
 import org.bukkit.configuration.serialization.ConfigurationSerializable;
 import org.bukkit.configuration.serialization.SerializableAs;
 import org.bukkit.entity.LivingEntity;
 
 import com.google.common.collect.ImmutableMap;
 import org.bukkit.event.entity.PotionEffectAddEvent.EffectAddReason;
+import org.bukkit.util.RomanNumber;
 
 /**
  * Represents a potion effect, that can be added to a {@link LivingEntity}. A
@@ -220,5 +221,10 @@ public class PotionEffect implements ConfigurationSerializable {
     @Override
     public String toString() {
         return type.getName() + (ambient ? ":(" : ":") + duration + "t-x" + amplifier + (ambient ? ")" : "");
+    }
+
+    public String formatted() {
+        String name = WordUtils.capitalizeFully(type.getName().replace('_', ' '));
+        return name + " " + RomanNumber.toRoman(amplifier + 1);
     }
 }
