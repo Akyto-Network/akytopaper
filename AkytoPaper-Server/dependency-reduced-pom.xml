@@ -30,8 +30,8 @@
           </dependency>
         </dependencies>
         <configuration>
-          <source>11</source>
-          <target>11</target>
+          <source>22</source>
+          <target>22</target>
         </configuration>
       </plugin>
       <plugin>
@@ -198,9 +198,9 @@
   </dependencies>
   <properties>
     <api.version>unknown</api.version>
-    <maven.compiler.source>11</maven.compiler.source>
+    <maven.compiler.source>22</maven.compiler.source>
     <minecraft_version>1_8_R3</minecraft_version>
-    <maven.compiler.target>11</maven.compiler.target>
+    <maven.compiler.target>22</maven.compiler.target>
     <buildtag.prefix>git-Bukkit-</buildtag.prefix>
     <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
     <minecraft.version>1.8.8</minecraft.version>

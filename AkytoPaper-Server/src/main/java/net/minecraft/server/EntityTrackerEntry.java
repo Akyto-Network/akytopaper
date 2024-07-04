@@ -90,23 +90,25 @@ public class EntityTrackerEntry {
 
         if (this.tracker instanceof EntityItem) {
             final EntityItem item = (EntityItem) this.tracker;
-            // For Settings Drops
-            if (item.onlyVisibleByTheOwner) {
-                Iterator<EntityPlayer> iterator = this.trackedPlayers.iterator();
+            if (item.owner != null) {
+                // For Settings Drops
+                if (item.onlyVisibleByTheOwner) {
+                    Iterator<EntityPlayer> iterator = this.trackedPlayers.iterator();
 
-                while (iterator.hasNext()) {
-                    EntityPlayer entityPlayer = iterator.next();
-                    if (!(entityPlayer instanceof EntityHuman) || entityPlayer.getBukkitEntity().getUniqueId() != item.owner.getBukkitEntity().getUniqueId()) {
-                        entityPlayer.d(this.tracker);
+                    while (iterator.hasNext()) {
+                        EntityPlayer entityPlayer = iterator.next();
+                        if (!(entityPlayer instanceof EntityHuman) || entityPlayer.getBukkitEntity().getUniqueId() != item.owner.getBukkitEntity().getUniqueId()) {
+                            entityPlayer.d(this.tracker);
+                        }
                     }
                 }
-            }
-            // Multi-Arena Drops
-            Iterator<EntityPlayer> iterator = this.trackedPlayers.iterator();
-            while (iterator.hasNext()) {
-                EntityPlayer entityPlayer = iterator.next();
-                if (!(entityPlayer instanceof EntityHuman) || !entityPlayer.getBukkitEntity().canSeeEntity(item.owner.getBukkitEntity())) {
-                    entityPlayer.d(this.tracker);
+                // Multi-Arena Drops
+                Iterator<EntityPlayer> iterator = this.trackedPlayers.iterator();
+                while (iterator.hasNext()) {
+                    EntityPlayer entityPlayer = iterator.next();
+                    if (!(entityPlayer instanceof EntityHuman) || !entityPlayer.getBukkitEntity().canSeeEntity(item.owner.getBukkitEntity())) {
+                        entityPlayer.d(this.tracker);
+                    }
                 }
             }
         }
