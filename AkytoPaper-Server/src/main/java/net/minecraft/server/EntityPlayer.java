@@ -28,6 +28,7 @@ import org.bukkit.event.inventory.InventoryType;
 import org.bukkit.event.player.PlayerChunkLoadEvent;
 import org.bukkit.event.player.PlayerSkinPartsChangeEvent;
 import org.bukkit.event.player.PlayerTeleportEvent.TeleportCause;
+import org.github.paperspigot.PaperSpigotWorldConfig;
 import org.spigotmc.SpigotWorldConfig;
 // CraftBukkit end
 
@@ -91,7 +92,7 @@ public class EntityPlayer extends EntityHuman implements ICrafting {
 
     public EntityPlayer(MinecraftServer minecraftserver, WorldServer worldserver, GameProfile gameprofile, PlayerInteractManager playerinteractmanager) {
         super(worldserver, gameprofile);
-        this.viewDistance = world.spigotConfig.viewDistance; // PaperSpigot - Player view distance API
+        this.viewDistance = SpigotWorldConfig.viewDistance; // PaperSpigot - Player view distance API
         playerinteractmanager.player = this;
         this.playerInteractManager = playerinteractmanager;
         BlockPosition blockposition = worldserver.getSpawn();
@@ -212,7 +213,7 @@ public class EntityPlayer extends EntityHuman implements ICrafting {
         // PaperSpigot start - Configurable container update tick rate
         if (--containerUpdateDelay <= 0) {
             this.activeContainer.b();
-            containerUpdateDelay = world.paperSpigotConfig.containerUpdateTickRate;
+            containerUpdateDelay = PaperSpigotWorldConfig.containerUpdateTickRate;
         }
         // PaperSpigot end
         if (!this.world.isClientSide && !this.activeContainer.a((EntityHuman) this)) {
@@ -262,7 +263,7 @@ public class EntityPlayer extends EntityHuman implements ICrafting {
 
             if (!arraylist.isEmpty()) {
                 if (arraylist.size() == 1) {
-                    this.playerConnection.sendPacket(new PacketPlayOutMapChunk((Chunk) arraylist.get(0), true, '\uffff'));
+                    this.playerConnection.sendPacket(new PacketPlayOutMapChunk((Chunk) arraylist.getFirst(), true, '\uffff'));
                 } else {
                     this.playerConnection.sendPacket(new PacketPlayOutMapChunkBulk(arraylist));
                 }
@@ -534,7 +535,7 @@ public class EntityPlayer extends EntityHuman implements ICrafting {
         boolean endPortal = this.dimension == 1 && i == 1;
         if (endPortal) {
             this.b((Statistic) AchievementList.D);
-            if (!world.paperSpigotConfig.disableEndCredits) {
+            if (!PaperSpigotWorldConfig.disableEndCredits) {
                 this.world.kill(this);
                 this.viewingCredits = true;
                 this.playerConnection.sendPacket(new PacketPlayOutGameStateChange(4, 0.0F));
@@ -560,7 +561,7 @@ public class EntityPlayer extends EntityHuman implements ICrafting {
         }
 
         // PaperSpigot start - Allow configurable end portal credits
-        if (!endPortal || world.paperSpigotConfig.disableEndCredits) {
+        if (!endPortal || PaperSpigotWorldConfig.disableEndCredits) {
             // CraftBukkit start
             TeleportCause cause = (endPortal || (this.dimension == 1 || i == 1)) ? TeleportCause.END_PORTAL : TeleportCause.NETHER_PORTAL;
             this.server.getPlayerList().changeDimension(this, i, cause);

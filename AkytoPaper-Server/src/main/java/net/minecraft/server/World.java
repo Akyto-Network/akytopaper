@@ -3403,4 +3403,5 @@ public abstract class World implements IBlockAccess {
 
         return k >= -short0 && k <= short0 && l >= -short0 && l <= short0 && this.keepSpawnInMemory; // CraftBukkit - Added 'this.keepSpawnInMemory'
     }
+
 }

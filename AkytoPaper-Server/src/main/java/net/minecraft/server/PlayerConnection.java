@@ -6,7 +6,6 @@ import akyto.spigot.handler.PacketHandler;
 import com.google.common.collect.Lists;
 import com.google.common.primitives.Doubles;
 import com.google.common.primitives.Floats;
-import com.google.common.util.concurrent.Futures;
 import io.netty.buffer.Unpooled;
 import io.netty.util.concurrent.Future;
 import io.netty.util.concurrent.GenericFutureListener;
@@ -940,7 +939,6 @@ public class PlayerConnection implements PacketListenerPlayIn, IUpdatePlayerList
 
     public void sendPacket(final Packet packet) {
         Packet replacedPacket = packet; // SportBukkit
-
         if (packet instanceof PacketPlayOutChat) {
             PacketPlayOutChat packetplayoutchat = (PacketPlayOutChat) packet;
             EntityHuman.EnumChatVisibility entityhuman_enumchatvisibility = this.player.getChatFlags();
@@ -953,7 +951,6 @@ public class PlayerConnection implements PacketListenerPlayIn, IUpdatePlayerList
                 return;
             }
         }
-
         // CraftBukkit start
         if (packet == null || this.processedDisconnect) { // Spigot
             return;
@@ -961,7 +958,6 @@ public class PlayerConnection implements PacketListenerPlayIn, IUpdatePlayerList
             PacketPlayOutSpawnPosition packet6 = (PacketPlayOutSpawnPosition) packet;
             this.player.compassTarget = new Location(this.getPlayer().getWorld(), packet6.position.getX(), packet6.position.getY(), packet6.position.getZ());
         }
-
 
         if (packet instanceof PacketPlayOutScoreboardTeam) {
             // Translate fake names in team info packets

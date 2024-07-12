@@ -43,8 +43,17 @@ public class VersionCommand extends BukkitCommand {
         if (!testPermission(sender)) return true;
 
         if (args.length == 0) {
-            sender.sendMessage("This server is running " + Bukkit.getName() + " version " + Bukkit.getVersion() + " (Implementing API version " + Bukkit.getBukkitVersion() + ")");
-            sendVersion(sender);
+            sender.sendMessage(new String[] {
+                    ChatColor.GRAY + ChatColor.STRIKETHROUGH.toString() + "------------------------------------",
+                    ChatColor.DARK_GRAY + "Akyto-Spigot" + ChatColor.GRAY + " - " + ChatColor.RED + "version 1.0",
+                    " ",
+                    ChatColor.DARK_RED + "Options" + ChatColor.GRAY + ":",
+                    ChatColor.RED + "Multi-Arena" + ChatColor.GRAY + ": " + ChatColor.GREEN + "enabled",
+                    ChatColor.RED + "Bypass-Packet-Queue" + ChatColor.GRAY + ": " + ChatColor.RED + "disabled",
+                    ChatColor.RED + "Pearls Utils" + ChatColor.GRAY + ": " + ChatColor.GREEN + "enabled",
+                    ChatColor.RED + "Smooth-Potting" + ChatColor.GRAY + ": " + ChatColor.GREEN + "enabled",
+                    ChatColor.GRAY + ChatColor.STRIKETHROUGH.toString() + "------------------------------------"
+            });
         } else {
             StringBuilder name = new StringBuilder();
 
@@ -140,137 +149,5 @@ public class VersionCommand extends BukkitCommand {
             return completions;
         }
         return ImmutableList.of();
-    }
-
-    private final ReentrantLock versionLock = new ReentrantLock();
-    private boolean hasVersion = false;
-    private String versionMessage = null;
-    private final Set<CommandSender> versionWaiters = new HashSet<CommandSender>();
-    private boolean versionTaskStarted = false;
-    private long lastCheck = 0;
-
-    private void sendVersion(CommandSender sender) {
-        if (hasVersion) {
-            if (System.currentTimeMillis() - lastCheck > 21600000) {
-                lastCheck = System.currentTimeMillis();
-                hasVersion = false;
-            } else {
-                sender.sendMessage(versionMessage);
-                return;
-            }
-        }
-        versionLock.lock();
-        try {
-            if (hasVersion) {
-                sender.sendMessage(versionMessage);
-                return;
-            }
-            versionWaiters.add(sender);
-            sender.sendMessage("Checking version, please wait...");
-            if (!versionTaskStarted) {
-                versionTaskStarted = true;
-                new Thread(new Runnable() {
-
-                    @Override
-                    public void run() {
-                        obtainVersion();
-                    }
-                }).start();
-            }
-        } finally {
-            versionLock.unlock();
-        }
-    }
-
-    private void obtainVersion() {
-        String version = Bukkit.getVersion();
-        if (version == null) version = "Custom";
-        // SportPaper start
-        if (version.startsWith("git-SportPaper-")) {
-            setVersionMessage("Unable to check for updates at this time. Visit https://github.com/Electroid/SportPaper/releases for newer versions"); // TODO: Obtain version list and warn of updates
-        // SportPaper end
-        // PaperSpigot start
-        } else if (version.startsWith("git-PaperSpigot-")) {
-            String[] parts = version.substring("git-PaperSpigot-".length()).split("[-\\s]");
-            int paperSpigotVersions = getDistance("paperspigot", parts[0]);
-            if (paperSpigotVersions == -1) {
-                setVersionMessage("Error obtaining version information");
-            } else {
-                if (paperSpigotVersions == 0) {
-                    setVersionMessage("You are running the latest version");
-                } else {
-                    setVersionMessage("You are " + paperSpigotVersions + " version(s) behind");
-                }
-            }
-        } else if (version.startsWith("git-Spigot-")) {
-        // PaperSpigot end
-            String[] parts = version.substring("git-Spigot-".length()).split("-");
-            int cbVersions = getDistance("craftbukkit", parts[1].substring(0, parts[1].indexOf(' ')));
-            int spigotVersions = getDistance("spigot", parts[0]);
-            if (cbVersions == -1 || spigotVersions == -1) {
-                setVersionMessage("Error obtaining version information");
-            } else {
-                if (cbVersions == 0 && spigotVersions == 0) {
-                    setVersionMessage("You are running the latest version");
-                } else {
-                    setVersionMessage("You are " + (cbVersions + spigotVersions) + " version(s) behind");
-                }
-            }
-
-        } else if (version.startsWith("git-Bukkit-")) {
-            version = version.substring("git-Bukkit-".length());
-            int cbVersions = getDistance("craftbukkit", version.substring(0, version.indexOf(' ')));
-            if (cbVersions == -1) {
-                setVersionMessage("Error obtaining version information");
-            } else {
-                if (cbVersions == 0) {
-                    setVersionMessage("You are running the latest version");
-                } else {
-                    setVersionMessage("You are " + cbVersions + " version(s) behind");
-                }
-            }
-        } else {
-            setVersionMessage("Unknown version, custom build?");
-        }
-    }
-
-    private void setVersionMessage(String msg) {
-        lastCheck = System.currentTimeMillis();
-        versionMessage = msg;
-        versionLock.lock();
-        try {
-            hasVersion = true;
-            versionTaskStarted = false;
-            for (CommandSender sender : versionWaiters) {
-                sender.sendMessage(versionMessage);
-            }
-            versionWaiters.clear();
-        } finally {
-            versionLock.unlock();
-        }
-    }
-
-    private static int getDistance(String repo, String currentVerInt) { // PaperSpigot
-        try {
-            BufferedReader reader = Resources.asCharSource(
-                    new URL("https://ci.destroystokyo.com/job/PaperSpigot/lastSuccessfulBuild/buildNumber"), // PaperSpigot
-                    Charsets.UTF_8
-            ).openBufferedStream();
-            try {
-                // PaperSpigot start
-                int newVer = Integer.decode(reader.readLine());
-                int currentVer = Integer.decode(currentVerInt);
-                return newVer - currentVer;
-            } catch (NumberFormatException ex) {
-                //ex.printStackTrace();
-                // PaperSpigot end
-                return -1;
-            } finally {
-                reader.close();
-            }
-        } catch (IOException e) {
-            e.printStackTrace();
-            return -1;
-        }
     }
 }

@@ -22,29 +22,36 @@ public class PluginsCommand extends BukkitCommand {
     public boolean execute(CommandSender sender, String currentAlias, String[] args) {
         if (!testPermission(sender)) return true;
 
-        sender.sendMessage("Plugins " + getPluginList());
+        sender.sendMessage(ChatColor.GRAY + ChatColor.STRIKETHROUGH.toString() + "--------------------------");
+        sender.sendMessage(getPluginList());
+        sender.sendMessage(ChatColor.GRAY + ChatColor.STRIKETHROUGH.toString() + "--------------------------");
         return true;
     }
 
-    private String getPluginList() {
+    private String[] getPluginList() {
         // Paper start
-        TreeMap<String, ChatColor> plugins = new TreeMap<>(String.CASE_INSENSITIVE_ORDER);
+        TreeMap<String, String> plugins = new TreeMap<>(String.CASE_INSENSITIVE_ORDER);
         for (Plugin plugin : Bukkit.getPluginManager().getPlugins()) {
-            plugins.put(plugin.getDescription().getName(), plugin.isEnabled() ? ChatColor.GREEN : ChatColor.RED);
+            plugins.put((plugin.isEnabled() ? ChatColor.GREEN : ChatColor.RED) + plugin.getDescription().getName(),
+                    ChatColor.GRAY + "[" + ChatColor.RED + plugin.getDescription().getAuthors() + ChatColor.GRAY + " - " + ChatColor.DARK_RED + plugin.getDescription().getVersion() + ChatColor.GRAY + "]");
         }
 
         StringBuilder pluginList = new StringBuilder();
-        for (Map.Entry<String, ChatColor> entry : plugins.entrySet()) {
+        for (Map.Entry<String, String> entry : plugins.entrySet()) {
             if (pluginList.length() > 0) {
-                pluginList.append(ChatColor.WHITE);
-                pluginList.append(", ");
+                pluginList.append("\n");
             }
 
-            pluginList.append(entry.getValue());
             pluginList.append(entry.getKey());
+            pluginList.append(" ");
+            pluginList.append(entry.getValue());
         }
 
-        return "(" + plugins.size() + "): " + pluginList.toString();
+        return new String[] {
+                ChatColor.DARK_GRAY + "Plugins " + ChatColor.GRAY + "(" + ChatColor.RED + plugins.size() + ChatColor.GRAY + "):",
+                " ",
+                pluginList.toString()
+        };
         // Paper end
     }
 

@@ -244,7 +244,9 @@ public class Main {
                     System.out.println( "Please see http://www.spigotmc.org/wiki/changing-permgen-size/ for more details and more in-depth instructions." );
                 }
                 // Spigot End
-                System.out.println("Loading libraries, please wait...");
+                System.out.println(" ");
+                System.out.println("AkytoSpigot - Loading libraries, please wait...");
+                System.out.println(" ");
                 MinecraftServer.main(options);
             } catch (Throwable t) {
                 t.printStackTrace();
