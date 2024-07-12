@@ -33,6 +33,12 @@ public class PearlUtils {
     }
 
     private static boolean blockRisk(final Block block) {
+        if (block.getType().isSolid()) {
+            return true;
+        }
+        if (!block.isEmpty()) {
+            return true;
+        }
         return block.getType().toString().contains("GLASS");
     }
 
