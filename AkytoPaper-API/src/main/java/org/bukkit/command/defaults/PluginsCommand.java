@@ -33,7 +33,7 @@ public class PluginsCommand extends BukkitCommand {
         TreeMap<String, String> plugins = new TreeMap<>(String.CASE_INSENSITIVE_ORDER);
         for (Plugin plugin : Bukkit.getPluginManager().getPlugins()) {
             plugins.put((plugin.isEnabled() ? ChatColor.GREEN : ChatColor.RED) + plugin.getDescription().getName(),
-                    ChatColor.GRAY + "[" + ChatColor.RED + plugin.getDescription().getAuthors() + ChatColor.GRAY + " - " + ChatColor.DARK_RED + plugin.getDescription().getVersion() + ChatColor.GRAY + "]");
+                    ChatColor.GRAY + "[" + ChatColor.DARK_RED + plugin.getDescription().getVersion() + ChatColor.GRAY + "]");
         }
 
         StringBuilder pluginList = new StringBuilder();
@@ -42,7 +42,7 @@ public class PluginsCommand extends BukkitCommand {
                 pluginList.append("\n");
             }
 
-            pluginList.append(entry.getKey());
+            pluginList.append(ChatColor.GRAY + " - " + entry.getKey());
             pluginList.append(" ");
             pluginList.append(entry.getValue());
         }
