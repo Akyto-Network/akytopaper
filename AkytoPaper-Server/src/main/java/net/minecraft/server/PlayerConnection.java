@@ -70,6 +70,7 @@ import co.aikar.timings.SpigotTimings; // Spigot
 
 import org.github.paperspigot.PaperSpigotConfig; // PaperSpigot
 import org.github.paperspigot.event.player.PlayerJumpEvent;
+import org.spigotmc.SpigotConfig;
 
 public class PlayerConnection implements PacketListenerPlayIn, IUpdatePlayerListBox {
 
@@ -413,7 +414,7 @@ public class PlayerConnection implements PacketListenerPlayIn, IUpdatePlayerList
                     double d15 = d11 * d11 + d12 * d12 + d13 * d13;
 
                     // Spigot: make "moved too quickly" limit configurable
-                    if (d15 - d14 > org.spigotmc.SpigotConfig.movedTooQuicklyThreshold && this.checkMovement && (!this.minecraftServer.T() || !this.minecraftServer.S().equals(this.player.getName()))) { // CraftBukkit - Added this.checkMovement condition to solve this check being triggered by teleports
+                    if (d15 - d14 > SpigotConfig.movedTooQuicklyThreshold && this.checkMovement && (!this.minecraftServer.T() || !this.minecraftServer.S().equals(this.player.getName()))) { // CraftBukkit - Added this.checkMovement condition to solve this check being triggered by teleports
                         PlayerConnection.c.warn(this.player.getName() + " moved too quickly! " + d11 + "," + d12 + "," + d13 + " (" + d11 + ", " + d12 + ", " + d13 + ")");
                         this.a(this.o, this.p, this.q, this.player.yaw, this.player.pitch);
                         return;

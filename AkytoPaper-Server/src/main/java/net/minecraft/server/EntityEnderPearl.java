@@ -5,8 +5,11 @@ import akyto.spigot.aSpigot;
 import akyto.spigot.util.PearlUtils;
 import org.bukkit.Bukkit;
 import org.bukkit.Location;
+import org.bukkit.craftbukkit.entity.CraftEntity;
 import org.bukkit.craftbukkit.entity.CraftPlayer;
 import org.bukkit.craftbukkit.event.CraftEventFactory;
+import org.bukkit.entity.EnderPearl;
+import org.bukkit.event.entity.EnderpearlLandEvent;
 import org.bukkit.event.player.PlayerTeleportEvent;
 import org.github.paperspigot.PaperSpigotWorldConfig;
 
@@ -47,11 +50,19 @@ public class EntityEnderPearl extends EntityProjectile {
         // PaperSpigot end
 
         if (!this.world.isClientSide) {
-            if (entityliving instanceof EntityPlayer) {
+            if (this.getShooter() != null && this.getShooter() instanceof EntityPlayer) {
                 EntityPlayer entityplayer = (EntityPlayer) entityliving;
                 if (entityplayer.playerConnection.a().g() && entityplayer.world == this.world && !entityplayer.isSleeping()) {
                     // CraftBukkit start - Fire PlayerTeleportEvent
                     CraftPlayer player = entityplayer.getBukkitEntity();
+                    final EnderpearlLandEvent.Reason reason = (movingobjectposition.entity != null) ? EnderpearlLandEvent.Reason.ENTITY : EnderpearlLandEvent.Reason.BLOCK;
+                    final CraftEntity bukkitHitEntity = (movingobjectposition.entity != null) ? movingobjectposition.entity.getBukkitEntity() : null;
+                    final EnderpearlLandEvent landEvent = new EnderpearlLandEvent((EnderPearl)this.getBukkitEntity(), reason, bukkitHitEntity);
+                    Bukkit.getPluginManager().callEvent(landEvent);
+                    if (landEvent.isCancelled()) {
+                        this.die();
+                        return;
+                    }
                     Location location = getBukkitEntity().getLocation();
                     location.setYaw(entityplayer.yaw);
                     location.setPitch(entityplayer.pitch);
@@ -90,11 +101,7 @@ public class EntityEnderPearl extends EntityProjectile {
                     }
                     // CraftBukkit end
                 }
-            } else if (entityliving != null) {
-                entityliving.enderTeleportTo(this.locX-0.5d, this.locY-0.5d, this.locZ-0.5d);
-                entityliving.fallDistance = 0.0F;
             }
-
             this.die();
         }
 

@@ -16,6 +16,7 @@ public abstract class EntityProjectile extends Entity implements IProjectile {
     public int shake;
     public EntityLiving shooter;
     public String shooterName;
+    private UUID shooterUuid; // nPaper - Fix name change pearl teleport
     private int i;
     private int ar;
 
@@ -248,8 +249,11 @@ public abstract class EntityProjectile extends Entity implements IProjectile {
         if ((this.shooterName == null || this.shooterName.length() == 0) && this.shooter instanceof EntityHuman) {
             this.shooterName = this.shooter.getName();
         }
-
+        if (this.shooterUuid == null && this.shooter != null && this.shooter instanceof EntityHuman) {
+            this.shooterUuid = this.shooter.getUniqueID();
+        }
         nbttagcompound.setString("ownerName", this.shooterName == null ? "" : this.shooterName);
+        nbttagcompound.setString("ownerUuid", this.shooterUuid == null ? "" : this.shooterUuid.toString());
     }
 
     public void a(NBTTagCompound nbttagcompound) {
@@ -269,25 +273,28 @@ public abstract class EntityProjectile extends Entity implements IProjectile {
         if (this.shooterName != null && this.shooterName.length() == 0) {
             this.shooterName = null;
         }
-
+        String uuidString = nbttagcompound.getString("ownerUuid");
+        if (uuidString != null && uuidString.length() > 0) {
+            try {
+                this.shooterUuid = UUID.fromString(uuidString);
+            } catch (IllegalArgumentException exception){
+                this.shooterUuid = null;
+            }
+        }
         this.shooter = this.getShooter();
     }
 
     public EntityLiving getShooter() {
-        if (this.shooter == null && this.shooterName != null && this.shooterName.length() > 0) {
-            this.shooter = this.world.a(this.shooterName);
-            if (this.shooter == null && this.world instanceof WorldServer) {
-                try {
-                    Entity entity = ((WorldServer) this.world).getEntity(UUID.fromString(this.shooterName));
-
-                    if (entity instanceof EntityLiving) {
-                        this.shooter = (EntityLiving) entity;
-                    }
-                } catch (Throwable throwable) {
-                    this.shooter = null;
-                }
-            }
+        // nPaper start - Fix name change pearl teleport
+        if (this.shooter == null && this.shooterUuid != null) {
+            this.shooter = this.world.b(this.shooterUuid);
         }
+
+        // nPapert - Use shooterName if shooter is not found by uuid
+        if (this.shooter == null && this.shooterName != null) {
+            this.shooter = this.world.a(shooterName);
+        }
+        // nPaper end
 
         return this.shooter;
     }
