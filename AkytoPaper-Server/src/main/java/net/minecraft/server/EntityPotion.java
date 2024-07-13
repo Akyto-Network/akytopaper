@@ -132,8 +132,12 @@ public class EntityPotion extends EntityProjectile {
                     }
                 }
             }
-
-            this.world.triggerEffect(2002, new BlockPosition(this), this.getPotionValue());
+            if (getShooter() instanceof EntityHuman) {
+                this.world.a((EntityHuman) getShooter(), 2002, new BlockPosition(this), this.getPotionValue());
+            }
+            else {
+                this.world.triggerEffect(2002, new BlockPosition(this), this.getPotionValue());
+            }
             this.die();
         }
 
