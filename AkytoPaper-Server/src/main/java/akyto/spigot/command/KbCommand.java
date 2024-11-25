@@ -10,6 +10,7 @@ import org.bukkit.command.CommandSender;
 
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
+import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -26,7 +27,7 @@ public class KbCommand extends Command {
                 "knockback",
                 "Change the knockback",
                 "/knockback <view | sethor | setver | setfhor | setxhor | setxver | setghor | setgver | setallowlimit | setverlimit | setslowdown | setlatency> <value>",
-                List.of("kb")
+                Arrays.asList("kb")
         );
         this.setPermission("aspigot.knockback");
 
@@ -111,7 +112,7 @@ public class KbCommand extends Command {
         if (args.length < 2) {
             return Stream.of("view", "sethor", "setver", "setfhor", "setxhor", "setxver", "setghor", "setgver", "setallowlimit", "setverlimit", "setslowdown", "setlatency")
                     .filter(sub -> args.length == 0 || sub.startsWith(args[0].toLowerCase()))
-                    .collect(Collectors.toUnmodifiableList());
+                    .collect(Collectors.toList());
         }
 
         return ImmutableList.of();

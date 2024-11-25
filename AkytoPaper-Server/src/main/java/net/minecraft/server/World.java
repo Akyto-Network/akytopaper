@@ -5,6 +5,7 @@ import com.google.common.base.Predicate;
 import com.google.common.collect.Lists;
 import com.google.common.collect.Maps;
 import com.google.common.collect.Sets;
+import it.unimi.dsi.fastutil.objects.ObjectArrayList;
 import org.bukkit.Bukkit;
 import org.bukkit.block.BlockState;
 import org.bukkit.craftbukkit.CraftServer;
@@ -41,27 +42,22 @@ public abstract class World implements IBlockAccess {
     private int a = 63;
     protected boolean e;
     // Spigot start - guard entity list from removals
-    public final List<Entity> entityList = new ArrayList<>()
-    {
+    public final List<Entity> entityList = new ObjectArrayList<Entity>() { // WindSpigot - ArrayList -> ObjectArrayList
         @Override
-        public Entity remove(int index)
-        {
+        public Entity remove(int index) {
             guard();
-            return super.remove( index );
+            return super.remove(index);
         }
 
         @Override
-        public boolean remove(Object o)
-        {
+        public boolean remove(Object o) {
             guard();
-            return super.remove( o );
+            return super.remove(o);
         }
 
-        private void guard()
-        {
-            if ( guardEntityList )
-            {
-                throw new ConcurrentModificationException();
+        private void guard() {
+            if (guardEntityList) {
+                throw new java.util.ConcurrentModificationException();
             }
         }
     };

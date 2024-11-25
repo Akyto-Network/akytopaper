@@ -263,7 +263,7 @@ public class EntityPlayer extends EntityHuman implements ICrafting {
 
             if (!arraylist.isEmpty()) {
                 if (arraylist.size() == 1) {
-                    this.playerConnection.sendPacket(new PacketPlayOutMapChunk((Chunk) arraylist.getFirst(), true, '\uffff'));
+                    this.playerConnection.sendPacket(new PacketPlayOutMapChunk((Chunk) arraylist.get(0), true, '\uffff'));
                 } else {
                     this.playerConnection.sendPacket(new PacketPlayOutMapChunkBulk(arraylist));
                 }
