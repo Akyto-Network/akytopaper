@@ -765,7 +765,7 @@ public abstract class EntityLiving extends Entity {
                 boolean flag = true;
 
                 //aSpigot - add HitDelay
-                int maxNoDamageTicks = (this instanceof EntityHuman ? aSpigot.INSTANCE.getConfig().getHitDelay() : this.maxNoDamageTicks);
+                int maxNoDamageTicks = this.maxNoDamageTicks;
 
                 if ((float) this.noDamageTicks > maxNoDamageTicks / 2.0F) {
                     if (f <= this.lastDamage) {
@@ -932,21 +932,24 @@ public abstract class EntityLiving extends Entity {
 
     protected void dropEquipment(boolean flag, int i) {}
 
-    public void a(Entity entity, float f, double xo, double zo) {
+    public void a(Entity entity, float f, double d0, double d1) {
         if (this.random.nextDouble() >= this.getAttributeInstance(GenericAttributes.c).getValue()) {
             this.ai = true;
-            double magnitude = MathHelper.sqrt(xo * xo + zo * zo);
-            float f2 = 0.4F;
+            // Kohi start - configurable knockback
+            double magnitude = MathHelper.sqrt(d0 * d0 + d1 * d1);
 
-            this.motX /= 2.0D;
-            this.motY /= 2.0D;
-            this.motZ /= 2.0D;
-            this.motX -= (xo / magnitude * (double) f2);
-            this.motY += (double) f2;
-            this.motZ -= (zo / magnitude * (double) f2);
-            if (this.motY > 0.4000000059604645D) {
-                this.motY = 0.4000000059604645D;
+            this.motX /= aSpigot.INSTANCE.getConfig().getFriction();
+            this.motY /= aSpigot.INSTANCE.getConfig().getFriction();
+            this.motZ /= aSpigot.INSTANCE.getConfig().getFriction();
+
+            this.motX -= d0 / magnitude * aSpigot.INSTANCE.getConfig().getHorizontal();
+            this.motY += aSpigot.INSTANCE.getConfig().getVertical();
+            this.motZ -= d1 / magnitude * aSpigot.INSTANCE.getConfig().getHorizontal();
+
+            if (this.motY > aSpigot.INSTANCE.getConfig().getVerticalLimit()) {
+                this.motY = aSpigot.INSTANCE.getConfig().getVerticalLimit();
             }
+            // Kohi end
         }
     }
 

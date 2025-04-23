@@ -28,16 +28,10 @@ public class aSpigotConfig {
 
     private double horizontal;
     private double vertical;
-    private boolean enableFrictionHorizontal;
-    private double frictionHorizontal;
+    private double friction;
     private double extraHorizontal;
     private double extraVertical;
-    private double groundHorizontal;
-    private double groundVertical;
-    private boolean allowLimitVertical;
     private double verticalLimit;
-    private double slowdown;
-    private int hitDelay;
     private boolean hitDetect;
     private boolean smoothPotting;
     private boolean hidePlayersFromTab;
@@ -65,18 +59,12 @@ public class aSpigotConfig {
     }
 
     private void loadConfig() {
-        this.horizontal = this.getDouble("horizontal", 0.36d);
-        this.vertical = this.getDouble("vertical", 0.36d);
-        this.enableFrictionHorizontal = this.getBoolean("enableFrictionHorizontal", true);
-        this.frictionHorizontal = this.getDouble("frictionHorizontal", 1.0d);
+        this.horizontal = this.getDouble("horizontal", 0.35d);
+        this.vertical = this.getDouble("vertical", 0.35d);
+        this.friction = this.getDouble("friction", 2.0d);
         this.extraHorizontal = this.getDouble("extraHorizontal", 0.425d);
         this.extraVertical = this.getDouble("extraVertical", 0.085d);
-        this.groundHorizontal = this.getDouble("groundHorizontal", 1.0d);
-        this.groundVertical = this.getDouble("groundVertical", 1.0d);
-        this.allowLimitVertical = this.getBoolean("allowLimitVertical", true);
         this.verticalLimit = this.getDouble("verticalLimit", 0.4d);
-        this.slowdown = this.getDouble("slowdown", 0.1d);
-        this.hitDelay = this.getInt("hitDelay", 20);
         this.smoothPotting = this.getBoolean("smooth-potting", false);
         this.hitDetect = this.getBoolean("hitDetect", true);
         this.hidePlayersFromTab = this.getBoolean("hidePlayersFromTab", false);
@@ -90,15 +78,9 @@ public class aSpigotConfig {
         try {
             config.set("horizontal", horizontal);
             config.set("vertical", vertical);
-            config.set("enableFrictionHorizontal", enableFrictionHorizontal);
-            config.set("frictionHorizontal", frictionHorizontal);
             config.set("extraHorizontal", extraHorizontal);
             config.set("extraVertical", extraVertical);
-            config.set("groundHorizontal", groundHorizontal);
-            config.set("groundVertical", groundVertical);
-            config.set("allowLimitVertical", allowLimitVertical);
             config.set("verticalLimit", verticalLimit);
-            config.set("slowdown", slowdown);
             config.save(configFile);
         } catch (Exception ex) {
             Bukkit.getLogger().log(Level.SEVERE, "Could not save " + configFile, ex);

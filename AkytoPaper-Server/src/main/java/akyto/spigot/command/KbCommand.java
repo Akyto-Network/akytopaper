@@ -25,7 +25,7 @@ public class KbCommand extends Command {
         super(
                 "knockback",
                 "Change the knockback",
-                "/knockback <view | sethor | setver | setfhor | setxhor | setxver | setghor | setgver | setallowlimit | setverlimit | setslowdown | setlatency> <value>",
+                "/knockback <view | sethor | setver | setfric| setxhor | setxver | setverlimit> <value>",
                 List.of("kb")
         );
         this.setPermission("aspigot.knockback");
@@ -33,14 +33,10 @@ public class KbCommand extends Command {
         try {
             subCommands.put("sethor", aSpigotConfig.class.getMethod("setHorizontal", double.class));
             subCommands.put("setver", aSpigotConfig.class.getMethod("setVertical", double.class));
-            subCommands.put("setfhor", aSpigotConfig.class.getMethod("setFrictionHorizontal", double.class));
+            subCommands.put("setfric", aSpigotConfig.class.getMethod("setFriction", double.class));
             subCommands.put("setxhor", aSpigotConfig.class.getMethod("setExtraHorizontal", double.class));
             subCommands.put("setxver", aSpigotConfig.class.getMethod("setExtraVertical", double.class));
-            subCommands.put("setghor", aSpigotConfig.class.getMethod("setGroundHorizontal", double.class));
-            subCommands.put("setgver", aSpigotConfig.class.getMethod("setGroundVertical", double.class));
-            subCommands.put("setallowlimit", aSpigotConfig.class.getMethod("setAllowLimitVertical", boolean.class));
             subCommands.put("setverlimit", aSpigotConfig.class.getMethod("setVerticalLimit", double.class));
-            subCommands.put("setslowdown", aSpigotConfig.class.getMethod("setSlowdown", double.class));
         } catch (NoSuchMethodException ex) {
             System.err.println("Failed to init kb command table");
             ex.printStackTrace();
@@ -91,15 +87,10 @@ public class KbCommand extends Command {
         return ChatColor.GRAY + "Current knockback:\n" +
                 ChatColor.GRAY + String.format("Horizontal: %s%.4f\n", ChatColor.RESET, config.getHorizontal()) +
                 ChatColor.GRAY + String.format("Vertical: %s%.4f\n", ChatColor.RESET, config.getVertical()) +
-                ChatColor.GRAY + String.format("Allow Friction Horizontal: %s%b\n", ChatColor.RESET, config.isEnableFrictionHorizontal()) +
-                ChatColor.GRAY + String.format("Friction Horizontal: %s%.4f\n", ChatColor.RESET, config.getFrictionHorizontal()) +
-                ChatColor.GRAY + String.format("Horizontal Multiplier: %s%.4f\n", ChatColor.RESET, config.getExtraHorizontal()) +
-                ChatColor.GRAY + String.format("Vertical Multiplier: %s%.4f\n", ChatColor.RESET, config.getExtraVertical()) +
-                ChatColor.GRAY + String.format("Ground Horizontal: %s%.4f\n", ChatColor.RESET, config.getGroundHorizontal()) +
-                ChatColor.GRAY + String.format("Ground Vertical: %s%.4f\n", ChatColor.RESET, config.getGroundVertical()) +
-                ChatColor.GRAY + String.format("Allow Limit Vertical: %s%b\n", ChatColor.RESET, config.isAllowLimitVertical()) +
-                ChatColor.GRAY + String.format("Vertical limit: %s%.4f\n", ChatColor.RESET, config.getVerticalLimit()) +
-                ChatColor.GRAY + String.format("Slowdown: %s%.4f\n", ChatColor.RESET, config.getSlowdown());
+                ChatColor.GRAY + String.format("Friction: %s%.4f\n", ChatColor.RESET, config.getFriction()) +
+                ChatColor.GRAY + String.format("Horizontal Extra: %s%.4f\n", ChatColor.RESET, config.getExtraHorizontal()) +
+                ChatColor.GRAY + String.format("Vertical Extra: %s%.4f\n", ChatColor.RESET, config.getExtraVertical()) +
+                ChatColor.GRAY + String.format("Vertical limit: %s%.4f\n", ChatColor.RESET, config.getVerticalLimit());
     }
 
     @Override
@@ -109,7 +100,7 @@ public class KbCommand extends Command {
         Validate.notNull(alias, "Alias cannot be null");
 
         if (args.length < 2) {
-            return Stream.of("view", "sethor", "setver", "setfhor", "setxhor", "setxver", "setghor", "setgver", "setallowlimit", "setverlimit", "setslowdown", "setlatency")
+            return Stream.of("view", "sethor", "setver", "setfric", "setxhor", "setxver", "setverlimit")
                     .filter(sub -> args.length == 0 || sub.startsWith(args[0].toLowerCase()))
                     .collect(Collectors.toUnmodifiableList());
         }

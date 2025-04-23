@@ -59,10 +59,7 @@ import org.bukkit.craftbukkit.util.CraftMagicNumbers;
 import org.bukkit.craftbukkit.util.Skins;
 import org.bukkit.entity.EntityType;
 import org.bukkit.entity.Player;
-import org.bukkit.event.player.PlayerGameModeChangeEvent;
-import org.bukkit.event.player.PlayerRegisterChannelEvent;
-import org.bukkit.event.player.PlayerTeleportEvent;
-import org.bukkit.event.player.PlayerUnregisterChannelEvent;
+import org.bukkit.event.player.*;
 import org.bukkit.inventory.InventoryView.Property;
 import org.bukkit.map.MapCursor;
 import org.bukkit.map.MapView;
@@ -72,6 +69,7 @@ import org.bukkit.plugin.messaging.StandardMessenger;
 import org.bukkit.scoreboard.Scoreboard;
 // PaperSpigot start
 import org.bukkit.util.RayBlockIntersection;
+import org.bukkit.util.Vector;
 import org.github.paperspigot.Title;
 // PaperSpigot end
 
@@ -2041,6 +2039,7 @@ public class CraftPlayer extends CraftHumanEntity implements Player {
         {
             return getHandle().ping;
         }
+
     };
 
     public Player.Spigot spigot()
@@ -2077,5 +2076,35 @@ public class CraftPlayer extends CraftHumanEntity implements Player {
         // bad locale sent?
         return java.util.Locale.US;
     }
+
+    // Kohi start
+    @Override
+    public void setVelocity(Vector vel) {
+        // To be consistent with old behavior, set the velocity before firing the event
+        this.setVelocityDirect(vel);
+        PlayerVelocityEvent event = new PlayerVelocityEvent(this, vel.clone());
+        this.getServer().getPluginManager().callEvent(event);
+        if(!event.isCancelled()) {
+            // Set the velocity again in case it was changed by event handlers
+            this.setVelocityDirect(event.getVelocity());
+            // Send the new velocity to the player's client immediately, so it isn't affected by
+            // any movement packets from this player that may be processed before the end of the tick.
+            // Without this, player velocity changes tend to be very inconsistent.
+            this.getHandle().playerConnection.sendPacket(new PacketPlayOutEntityVelocity(this.getHandle()));
+        }
+        // Note that cancelling the event does not restore the old velocity, it only prevents
+        // the packet from sending. Again, this is to be consistent with old behavior.
+    }
+
+    public void setVelocityDirect(Vector vel) {
+        entity.motX = vel.getX();
+        entity.motY = vel.getY();
+        entity.motZ = vel.getZ();
+        if (entity.motY > 0) {
+            entity.fallDistance = 0.0f;
+        }
+    }
+    // Kohi end
+
     // SportPaper end
 }

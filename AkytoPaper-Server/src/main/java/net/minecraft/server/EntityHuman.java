@@ -1038,77 +1038,44 @@ public abstract class EntityHuman extends EntityLiving {
                     // CraftBukkit end
                 }
 
+                // Kohi start
+                // Save the victim's velocity before they are potentially knocked back
+                double victimMotX = entity.motX;
+                double victimMotY = entity.motY;
+                double victimMotZ = entity.motZ;
+                // Kohi end
+
                 boolean flag2 = entity.damageEntity(DamageSource.playerAttack(this), f);
 
                 if (flag2) {
-                    if (entity instanceof EntityPlayer && entity.velocityChanged) {
-                        try {
-                            EntityPlayer victim = (EntityPlayer) entity;
-                            double velX = 0, velY = 0, velZ = 0;
-
-                            if (aSpigot.INSTANCE.getConfig().isEnableFrictionHorizontal()) {
-                                double entityVelX = victim.motX * aSpigot.INSTANCE.getConfig().getFrictionHorizontal();
-                                double entityVelZ = victim.motZ * aSpigot.INSTANCE.getConfig().getFrictionHorizontal();
-
-                                velX = entityVelX + Math.sin(Math.toRadians(yaw)) * -1.0F;
-                                velZ = entityVelZ + Math.cos(Math.toRadians(yaw));
-                            } else {
-                                velX = Math.sin(Math.toRadians(getHeadRotation())) * -1.0F;
-                                velZ = Math.cos(Math.toRadians(getHeadRotation()));
-                            }
-
-
-                            velX *= aSpigot.INSTANCE.getConfig().getHorizontal();
-                            velZ *= aSpigot.INSTANCE.getConfig().getHorizontal();
-                            velY = aSpigot.INSTANCE.getConfig().getVertical();
-
-
-                            if (victim.onGround) {
-                                velX *= aSpigot.INSTANCE.getConfig().getGroundHorizontal();
-                                velY *= aSpigot.INSTANCE.getConfig().getGroundVertical();
-                                velZ *= aSpigot.INSTANCE.getConfig().getGroundHorizontal();
-                            }
-
-                            int enchLvl = EnchantmentManager.getEnchantmentLevel(Enchantment.KNOCKBACK.id, this.inventory.getItemInHand()) + 1;
-                            if (enchLvl > 0) {
-                                velX *= enchLvl;
-                                velZ *= enchLvl;
-                            }
-
-                            if (shouldDealSprintKnockback) {
-                                velX *= aSpigot.INSTANCE.getConfig().getExtraHorizontal();
-                                velY *= aSpigot.INSTANCE.getConfig().getExtraVertical();
-                                velZ *= aSpigot.INSTANCE.getConfig().getExtraHorizontal();
-
-                                shouldDealSprintKnockback = false;
-                            }
-
-                            if (isSprinting()) {
-                                motX *= aSpigot.INSTANCE.getConfig().getSlowdown();
-                                motZ *= aSpigot.INSTANCE.getConfig().getSlowdown();
-                                shouldDealSprintKnockback = false;
-                            }
-
-                            double yOff = entity.locY - locY;
-
-                            if (aSpigot.INSTANCE.getConfig().isAllowLimitVertical()) {
-                                if (yOff > aSpigot.INSTANCE.getConfig().getVerticalLimit()) {
-                                    velY = aSpigot.INSTANCE.getConfig().getVerticalLimit();
-                                }
-                            }
-                            PlayerVelocityEvent event = new PlayerVelocityEvent(victim.getBukkitEntity(), new Vector(velX, velY, velZ));
-                            Bukkit.getPluginManager().callEvent(event);
-                            if (!event.isCancelled()) {
-                                victim.playerConnection.sendPacket(new PacketPlayOutEntityVelocity(victim.getId(), velX, velY, velZ));
-                            }
-                            victim.velocityChanged = false;
-                            victim.motX = velX;
-                            victim.motY = velY;
-                            victim.motZ = velZ;
-                        } catch (Exception e) {
-                            e.printStackTrace();
-                        }
+                    // Kohi start (KB)
+                    if (i > 0) {
+                        // Kohi start - configurable knockback
+                        entity.g(
+                                (double) (-MathHelper.sin(this.yaw * 3.1415927F / 180.0F) * (float) i * aSpigot.INSTANCE.getConfig().getExtraHorizontal()),
+                                aSpigot.INSTANCE.getConfig().getExtraVertical(),
+                                (double) (MathHelper.cos(this.yaw * 3.1415927F / 180.0F) * (float) i * aSpigot.INSTANCE.getConfig().getExtraHorizontal()));
+                        // Kohi end
+                        this.motX *= 0.6D;
+                        this.motZ *= 0.6D;
+                        this.setSprinting(false);
                     }
+                    if (entity instanceof EntityPlayer && entity.velocityChanged) {
+                        EntityPlayer attackedPlayer = (EntityPlayer) entity;
+                        PlayerVelocityEvent event = new PlayerVelocityEvent(attackedPlayer.getBukkitEntity(),
+                        attackedPlayer.getBukkitEntity().getVelocity());
+                        this.world.getServer().getPluginManager().callEvent(event);
+                        if (!event.isCancelled()) {
+                            attackedPlayer.getBukkitEntity().setVelocityDirect(event.getVelocity());
+                            attackedPlayer.playerConnection.sendPacket(new PacketPlayOutEntityVelocity(attackedPlayer));
+                        }
+
+                        attackedPlayer.velocityChanged = false;
+                        attackedPlayer.motX = victimMotX;
+                        attackedPlayer.motY = victimMotY;
+                        attackedPlayer.motZ = victimMotZ;
+                    }
+                    // Kohi end
                     // End
 
                     if (flag) {
