@@ -32,6 +32,7 @@ public class aSpigotConfig {
     private double extraHorizontal;
     private double extraVertical;
     private double verticalLimit;
+    private double latency;
     private boolean hitDetect;
     private boolean smoothPotting;
     private boolean hidePlayersFromTab;
@@ -65,6 +66,7 @@ public class aSpigotConfig {
         this.extraHorizontal = this.getDouble("extraHorizontal", 0.425d);
         this.extraVertical = this.getDouble("extraVertical", 0.085d);
         this.verticalLimit = this.getDouble("verticalLimit", 0.4d);
+        this.latency = this.getDouble("latency", 15.0d);
         this.smoothPotting = this.getBoolean("smooth-potting", false);
         this.hitDetect = this.getBoolean("hitDetect", true);
         this.hidePlayersFromTab = this.getBoolean("hidePlayersFromTab", false);
@@ -81,6 +83,7 @@ public class aSpigotConfig {
             config.set("extraHorizontal", extraHorizontal);
             config.set("extraVertical", extraVertical);
             config.set("verticalLimit", verticalLimit);
+            config.set("latency", latency);
             config.save(configFile);
         } catch (Exception ex) {
             Bukkit.getLogger().log(Level.SEVERE, "Could not save " + configFile, ex);

@@ -1,6 +1,7 @@
 package net.minecraft.server;
 
 import akyto.spigot.aSpigot;
+import akyto.spigot.runnable.DelayedKnockback;
 import com.google.common.base.Charsets;
 import com.google.common.collect.Lists;
 import com.mojang.authlib.GameProfile;
@@ -1038,44 +1039,61 @@ public abstract class EntityHuman extends EntityLiving {
                     // CraftBukkit end
                 }
 
-                // Kohi start
-                // Save the victim's velocity before they are potentially knocked back
-                double victimMotX = entity.motX;
-                double victimMotY = entity.motY;
-                double victimMotZ = entity.motZ;
-                // Kohi end
-
                 boolean flag2 = entity.damageEntity(DamageSource.playerAttack(this), f);
 
                 if (flag2) {
-                    // Kohi start (KB)
-                    if (i > 0) {
-                        // Kohi start - configurable knockback
-                        entity.g(
-                                (double) (-MathHelper.sin(this.yaw * 3.1415927F / 180.0F) * (float) i * aSpigot.INSTANCE.getConfig().getExtraHorizontal()),
-                                aSpigot.INSTANCE.getConfig().getExtraVertical(),
-                                (double) (MathHelper.cos(this.yaw * 3.1415927F / 180.0F) * (float) i * aSpigot.INSTANCE.getConfig().getExtraHorizontal()));
-                        // Kohi end
-                        this.motX *= 0.6D;
-                        this.motZ *= 0.6D;
-                        this.setSprinting(false);
-                    }
                     if (entity instanceof EntityPlayer && entity.velocityChanged) {
-                        EntityPlayer attackedPlayer = (EntityPlayer) entity;
-                        PlayerVelocityEvent event = new PlayerVelocityEvent(attackedPlayer.getBukkitEntity(),
-                        attackedPlayer.getBukkitEntity().getVelocity());
-                        this.world.getServer().getPluginManager().callEvent(event);
-                        if (!event.isCancelled()) {
-                            attackedPlayer.getBukkitEntity().setVelocityDirect(event.getVelocity());
-                            attackedPlayer.playerConnection.sendPacket(new PacketPlayOutEntityVelocity(attackedPlayer));
-                        }
+                        try {
+                            EntityPlayer victim = (EntityPlayer) entity;
+                            double velX = 0, velY = 0, velZ = 0;
+                            double entityVelX = victim.motX * 3.0D;
+                            double entityVelZ = victim.motZ * 3.0D;
 
-                        attackedPlayer.velocityChanged = false;
-                        attackedPlayer.motX = victimMotX;
-                        attackedPlayer.motY = victimMotY;
-                        attackedPlayer.motZ = victimMotZ;
+                            velX = entityVelX + Math.sin(Math.toRadians(yaw)) * -1.0F;
+                            velZ = entityVelZ + Math.cos(Math.toRadians(yaw));
+
+                            velX *= 0.37D;
+                            velZ *= 0.37D;
+                            velY = 0.35D;
+
+                            int enchLvl = EnchantmentManager.getEnchantmentLevel(Enchantment.KNOCKBACK.id, this.inventory.getItemInHand()) + 1;
+                            if (enchLvl > 0) {
+                                velX *= enchLvl;
+                                velZ *= enchLvl;
+                            }
+
+                            if (shouldDealSprintKnockback) {
+                                velX *= 0.4275D;
+                                velY *= 0.0D;
+                                velZ *= 0.4275D;
+
+                                shouldDealSprintKnockback = false;
+                            }
+
+                            if (isSprinting()) {
+                                motX *= 0.3D;
+                                motZ *= 0.3D;
+                                shouldDealSprintKnockback = false;
+                            }
+
+                            double yOff = entity.locY - locY;
+
+                            if (yOff > 0.385D) {
+                                velY = 0.385D;
+                            }
+                            PlayerVelocityEvent event = new PlayerVelocityEvent(victim.getBukkitEntity(), new Vector(velX, velY, velZ));
+                            Bukkit.getPluginManager().callEvent(event);
+                            if (!event.isCancelled()) {
+                                victim.playerConnection.sendPacket(new PacketPlayOutEntityVelocity(victim.getId(), velX, velY, velZ));
+                            }
+                            victim.velocityChanged = false;
+                            victim.motX = velX;
+                            victim.motY = velY;
+                            victim.motZ = velZ;
+                        } catch (Exception e) {
+                            e.printStackTrace();
+                        }
                     }
-                    // Kohi end
                     // End
 
                     if (flag) {

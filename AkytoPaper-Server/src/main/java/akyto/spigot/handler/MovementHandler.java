@@ -9,5 +9,4 @@ public interface MovementHandler {
 	void handleUpdateLocation(Player player, Location to, Location from, PacketPlayInFlying packet);
 
 	void handleUpdateRotation(Player player, Location to, Location from, PacketPlayInFlying packet);
-
 }
