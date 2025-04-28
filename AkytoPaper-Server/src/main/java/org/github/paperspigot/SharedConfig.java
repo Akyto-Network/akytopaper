@@ -4,6 +4,7 @@ import akyto.spigot.aSpigotConfig;
 import akyto.spigot.command.FlyCommand;
 import akyto.spigot.command.KbCommand;
 import akyto.spigot.command.PingCommand;
+import akyto.spigot.command.PotCommand;
 import com.google.common.base.Throwables;
 import net.minecraft.server.MinecraftServer;
 import org.bukkit.Bukkit;
@@ -57,6 +58,7 @@ public class SharedConfig {
         commands.put("ping", new PingCommand());
         commands.put("fly", new FlyCommand());
         commands.put("kb", new KbCommand());
+        commands.put("pot", new PotCommand());
     }
 
     public static void registerCommands() {

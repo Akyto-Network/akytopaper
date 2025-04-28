@@ -1046,15 +1046,15 @@ public abstract class EntityHuman extends EntityLiving {
                         try {
                             EntityPlayer victim = (EntityPlayer) entity;
                             double velX = 0, velY = 0, velZ = 0;
-                            double entityVelX = victim.motX * 3.0D;
-                            double entityVelZ = victim.motZ * 3.0D;
+                            double entityVelX = victim.motX * aSpigot.INSTANCE.getConfig().getFriction();
+                            double entityVelZ = victim.motZ * aSpigot.INSTANCE.getConfig().getFriction();
 
                             velX = entityVelX + Math.sin(Math.toRadians(yaw)) * -1.0F;
                             velZ = entityVelZ + Math.cos(Math.toRadians(yaw));
 
-                            velX *= 0.37D;
-                            velZ *= 0.37D;
-                            velY = 0.35D;
+                            velX *= aSpigot.INSTANCE.getConfig().getHorizontal();
+                            velZ *= aSpigot.INSTANCE.getConfig().getHorizontal();
+                            velY = aSpigot.INSTANCE.getConfig().getVertical();
 
                             int enchLvl = EnchantmentManager.getEnchantmentLevel(Enchantment.KNOCKBACK.id, this.inventory.getItemInHand()) + 1;
                             if (enchLvl > 0) {
@@ -1063,23 +1063,23 @@ public abstract class EntityHuman extends EntityLiving {
                             }
 
                             if (shouldDealSprintKnockback) {
-                                velX *= 0.4275D;
-                                velY *= 0.0D;
-                                velZ *= 0.4275D;
+                                velX *= aSpigot.INSTANCE.getConfig().getExtraHorizontal();
+                                velY *= aSpigot.INSTANCE.getConfig().getExtraVertical();
+                                velZ *= aSpigot.INSTANCE.getConfig().getExtraHorizontal();
 
                                 shouldDealSprintKnockback = false;
                             }
 
                             if (isSprinting()) {
-                                motX *= 0.3D;
-                                motZ *= 0.3D;
+                                motX *= 0.1D;
+                                motZ *= 0.1D;
                                 shouldDealSprintKnockback = false;
                             }
 
                             double yOff = entity.locY - locY;
 
-                            if (yOff > 0.385D) {
-                                velY = 0.385D;
+                            if (yOff > aSpigot.INSTANCE.getConfig().getVerticalLimit()) {
+                                velY = aSpigot.INSTANCE.getConfig().getVerticalLimit();
                             }
                             PlayerVelocityEvent event = new PlayerVelocityEvent(victim.getBukkitEntity(), new Vector(velX, velY, velZ));
                             Bukkit.getPluginManager().callEvent(event);

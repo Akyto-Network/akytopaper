@@ -37,6 +37,9 @@ public class aSpigotConfig {
     private boolean smoothPotting;
     private boolean hidePlayersFromTab;
     private boolean antiglitchPearl;
+    private float gravity;
+    private float velocity;
+    private float inaccuracy;
 
     public aSpigotConfig() {
         this.configFile = new File("settings.yml");
@@ -71,6 +74,9 @@ public class aSpigotConfig {
         this.hitDetect = this.getBoolean("hitDetect", true);
         this.hidePlayersFromTab = this.getBoolean("hidePlayersFromTab", false);
         this.antiglitchPearl = this.getBoolean("antiglitchPearl", true);
+        this.gravity = this.getFloat("gravity", 0.05f);
+        this.velocity = this.getFloat("velocity", 0.5f);
+        this.inaccuracy = this.getFloat("inaccuracy", -20.0f);
         SpigotBridge.disableOpPermissions = this.getBoolean("disable-op", false);
 
         save();

@@ -932,24 +932,21 @@ public abstract class EntityLiving extends Entity {
 
     protected void dropEquipment(boolean flag, int i) {}
 
-    public void a(Entity entity, float f, double d0, double d1) {
+    public void a(Entity entity, float f, double xo, double zo) {
         if (this.random.nextDouble() >= this.getAttributeInstance(GenericAttributes.c).getValue()) {
             this.ai = true;
-            // Kohi start - configurable knockback
-            double magnitude = MathHelper.sqrt(d0 * d0 + d1 * d1);
+            double magnitude = MathHelper.sqrt(xo * xo + zo * zo);
+            float f2 = 0.4F;
 
-            this.motX /= aSpigot.INSTANCE.getConfig().getFriction();
-            this.motY /= aSpigot.INSTANCE.getConfig().getFriction();
-            this.motZ /= aSpigot.INSTANCE.getConfig().getFriction();
-
-            this.motX -= d0 / magnitude * aSpigot.INSTANCE.getConfig().getHorizontal();
-            this.motY += aSpigot.INSTANCE.getConfig().getVertical();
-            this.motZ -= d1 / magnitude * aSpigot.INSTANCE.getConfig().getHorizontal();
-
-            if (this.motY > aSpigot.INSTANCE.getConfig().getVerticalLimit()) {
-                this.motY = aSpigot.INSTANCE.getConfig().getVerticalLimit();
+            this.motX /= 2.0D;
+            this.motY /= 2.0D;
+            this.motZ /= 2.0D;
+            this.motX -= (xo / magnitude * (double) f2);
+            this.motY += (double) f2;
+            this.motZ -= (zo / magnitude * (double) f2);
+            if (this.motY > 0.4000000059604645D) {
+                this.motY = 0.4000000059604645D;
             }
-            // Kohi end
         }
     }
 
