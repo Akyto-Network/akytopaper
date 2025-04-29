@@ -198,6 +198,18 @@ public class EntityPlayer extends EntityHuman implements ICrafting {
         this.playerConnection.sendPacket(new PacketPlayOutCombatEvent(this.bs(), PacketPlayOutCombatEvent.EnumCombatEventType.END_COMBAT));
     }
 
+    public void setSprinting(boolean flag) {
+        if (flag) {
+            if (!isSprinting() && flag) {
+                shouldDealSprintKnockback = true;
+            }
+        } else {
+            shouldDealSprintKnockback = false;
+        }
+
+        super.setSprinting(flag);
+    }
+
     public void t_() {
         // CraftBukkit start
         if (this.joining) {

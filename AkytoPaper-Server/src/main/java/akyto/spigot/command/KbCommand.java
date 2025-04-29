@@ -25,7 +25,7 @@ public class KbCommand extends Command {
         super(
                 "knockback",
                 "Change the knockback",
-                "/knockback <view | sethor | setver | setfric| setxhor | setxver | setverlimit> <value>",
+                "/knockback <view | sethor | setver | setfric| setxhor | setxver | setslowdown | setverlimit> <value>",
                 List.of("kb")
         );
         this.setPermission("aspigot.knockback");
@@ -37,6 +37,7 @@ public class KbCommand extends Command {
             subCommands.put("setxhor", aSpigotConfig.class.getMethod("setExtraHorizontal", double.class));
             subCommands.put("setxver", aSpigotConfig.class.getMethod("setExtraVertical", double.class));
             subCommands.put("setverlimit", aSpigotConfig.class.getMethod("setVerticalLimit", double.class));
+            subCommands.put("setslowdown", aSpigotConfig.class.getMethod("setSlowdown", double.class));
         } catch (NoSuchMethodException ex) {
             System.err.println("Failed to init kb command table");
             ex.printStackTrace();
@@ -90,6 +91,7 @@ public class KbCommand extends Command {
                 ChatColor.GRAY + String.format("Friction: %s%.4f\n", ChatColor.RESET, config.getFriction()) +
                 ChatColor.GRAY + String.format("Horizontal Extra: %s%.4f\n", ChatColor.RESET, config.getExtraHorizontal()) +
                 ChatColor.GRAY + String.format("Vertical Extra: %s%.4f\n", ChatColor.RESET, config.getExtraVertical()) +
+                ChatColor.GRAY + String.format("Slowdown: %s%.4f\n", ChatColor.RESET, config.getSlowdown()) +
                 ChatColor.GRAY + String.format("Vertical limit: %s%.4f\n", ChatColor.RESET, config.getVerticalLimit());
     }
 
@@ -100,7 +102,7 @@ public class KbCommand extends Command {
         Validate.notNull(alias, "Alias cannot be null");
 
         if (args.length < 2) {
-            return Stream.of("view", "sethor", "setver", "setfric", "setxhor", "setxver", "setverlimit")
+            return Stream.of("view", "sethor", "setver", "setfric", "setxhor", "setxver", "setverlimit", "setslowdown")
                     .filter(sub -> args.length == 0 || sub.startsWith(args[0].toLowerCase()))
                     .collect(Collectors.toUnmodifiableList());
         }

@@ -765,7 +765,7 @@ public abstract class EntityLiving extends Entity {
                 boolean flag = true;
 
                 //aSpigot - add HitDelay
-                int maxNoDamageTicks = this.maxNoDamageTicks;
+                int maxNoDamageTicks = this instanceof EntityHuman ? aSpigot.INSTANCE.getConfig().getHitDelay() : this.maxNoDamageTicks;
 
                 if ((float) this.noDamageTicks > maxNoDamageTicks / 2.0F) {
                     if (f <= this.lastDamage) {
@@ -935,19 +935,19 @@ public abstract class EntityLiving extends Entity {
     public void a(Entity entity, float f, double xo, double zo) {
         if (this.random.nextDouble() >= this.getAttributeInstance(GenericAttributes.c).getValue()) {
             this.ai = true;
-            double magnitude = MathHelper.sqrt(xo * xo + zo * zo);
+            double magnitude = (double)MathHelper.sqrt(xo * xo + zo * zo);
             float f2 = 0.4F;
-
-            this.motX /= 2.0D;
-            this.motY /= 2.0D;
-            this.motZ /= 2.0D;
-            this.motX -= (xo / magnitude * (double) f2);
-            this.motY += (double) f2;
-            this.motZ -= (zo / magnitude * (double) f2);
-            if (this.motY > 0.4000000059604645D) {
-                this.motY = 0.4000000059604645D;
+            this.motX /= (double)2.0F;
+            this.motY /= (double)2.0F;
+            this.motZ /= (double)2.0F;
+            this.motX -= xo / magnitude * (double)f2;
+            this.motY += (double)f2;
+            this.motZ -= zo / magnitude * (double)f2;
+            if (this.motY > (double)0.4F) {
+                this.motY = (double)0.4F;
             }
         }
+
     }
 
     protected String bo() {

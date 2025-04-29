@@ -1046,11 +1046,11 @@ public abstract class EntityHuman extends EntityLiving {
                         try {
                             EntityPlayer victim = (EntityPlayer) entity;
                             double velX = 0, velY = 0, velZ = 0;
+
                             double entityVelX = victim.motX * aSpigot.INSTANCE.getConfig().getFriction();
                             double entityVelZ = victim.motZ * aSpigot.INSTANCE.getConfig().getFriction();
-
-                            velX = entityVelX + Math.sin(Math.toRadians(yaw)) * -1.0F;
-                            velZ = entityVelZ + Math.cos(Math.toRadians(yaw));
+                            velX = entityVelX + Math.sin(Math.toRadians((double)this.yaw)) * (double)-1.0F;
+                            velZ = entityVelZ + Math.cos(Math.toRadians((double)this.yaw));
 
                             velX *= aSpigot.INSTANCE.getConfig().getHorizontal();
                             velZ *= aSpigot.INSTANCE.getConfig().getHorizontal();
@@ -1058,26 +1058,24 @@ public abstract class EntityHuman extends EntityLiving {
 
                             int enchLvl = EnchantmentManager.getEnchantmentLevel(Enchantment.KNOCKBACK.id, this.inventory.getItemInHand()) + 1;
                             if (enchLvl > 0) {
-                                velX *= enchLvl;
-                                velZ *= enchLvl;
+                                velX *= (double)enchLvl;
+                                velZ *= (double)enchLvl;
                             }
 
-                            if (shouldDealSprintKnockback) {
+                            if (this.shouldDealSprintKnockback) {
                                 velX *= aSpigot.INSTANCE.getConfig().getExtraHorizontal();
                                 velY *= aSpigot.INSTANCE.getConfig().getExtraVertical();
                                 velZ *= aSpigot.INSTANCE.getConfig().getExtraHorizontal();
-
-                                shouldDealSprintKnockback = false;
+                                this.shouldDealSprintKnockback = false;
                             }
 
-                            if (isSprinting()) {
-                                motX *= 0.1D;
-                                motZ *= 0.1D;
-                                shouldDealSprintKnockback = false;
+                            if (this.isSprinting()) {
+                                this.motX *= aSpigot.INSTANCE.getConfig().getSlowdown();
+                                this.motZ *= aSpigot.INSTANCE.getConfig().getSlowdown();
+                                this.shouldDealSprintKnockback = false;
                             }
 
-                            double yOff = entity.locY - locY;
-
+                            double yOff = entity.locY - this.locY;
                             if (yOff > aSpigot.INSTANCE.getConfig().getVerticalLimit()) {
                                 velY = aSpigot.INSTANCE.getConfig().getVerticalLimit();
                             }

@@ -28,11 +28,15 @@ public class aSpigotConfig {
 
     private double horizontal;
     private double vertical;
+    private boolean enableFrictionHorizontal;
     private double friction;
     private double extraHorizontal;
     private double extraVertical;
+    private double groundHorizontal;
+    private double groundVertical;
     private double verticalLimit;
-    private double latency;
+    private double slowdown;
+    private int hitDelay;
     private boolean hitDetect;
     private boolean smoothPotting;
     private boolean hidePlayersFromTab;
@@ -63,13 +67,16 @@ public class aSpigotConfig {
     }
 
     private void loadConfig() {
-        this.horizontal = this.getDouble("horizontal", 0.35d);
-        this.vertical = this.getDouble("vertical", 0.35d);
+        this.horizontal = this.getDouble("horizontal", 0.4d);
+        this.vertical = this.getDouble("vertical", 0.36d);
         this.friction = this.getDouble("friction", 2.0d);
-        this.extraHorizontal = this.getDouble("extraHorizontal", 0.425d);
-        this.extraVertical = this.getDouble("extraVertical", 0.085d);
-        this.verticalLimit = this.getDouble("verticalLimit", 0.4d);
-        this.latency = this.getDouble("latency", 15.0d);
+        this.extraHorizontal = this.getDouble("extraHorizontal", 1.75d);
+        this.extraVertical = this.getDouble("extraVertical", 1.2d);
+        this.verticalLimit = this.getDouble("verticalLimit", 0.36d);
+        this.groundHorizontal = this.getDouble("groundHorizontal", (double)1.0F);
+        this.groundVertical = this.getDouble("groundVertical", (double)1.0F);
+        this.slowdown = this.getDouble("slowdown", 0.3);
+        this.hitDelay = this.getInt("hitDelay", 20);
         this.smoothPotting = this.getBoolean("smooth-potting", false);
         this.hitDetect = this.getBoolean("hitDetect", true);
         this.hidePlayersFromTab = this.getBoolean("hidePlayersFromTab", false);
@@ -89,7 +96,10 @@ public class aSpigotConfig {
             config.set("extraHorizontal", extraHorizontal);
             config.set("extraVertical", extraVertical);
             config.set("verticalLimit", verticalLimit);
-            config.set("latency", latency);
+            config.set("friction", friction);
+            config.set("groundHorizontal", this.groundHorizontal);
+            config.set("groundVertical", this.groundVertical);
+            config.set("slowdown", this.slowdown);
             config.save(configFile);
         } catch (Exception ex) {
             Bukkit.getLogger().log(Level.SEVERE, "Could not save " + configFile, ex);
