@@ -36,7 +36,6 @@ public class aSpigotConfig {
     private double groundVertical;
     private double verticalLimit;
     private double slowdown;
-    private int hitDelay;
     private boolean hitDetect;
     private boolean smoothPotting;
     private boolean hidePlayersFromTab;
@@ -76,7 +75,6 @@ public class aSpigotConfig {
         this.groundHorizontal = this.getDouble("groundHorizontal", (double)1.0F);
         this.groundVertical = this.getDouble("groundVertical", (double)1.0F);
         this.slowdown = this.getDouble("slowdown", 0.3);
-        this.hitDelay = this.getInt("hitDelay", 20);
         this.smoothPotting = this.getBoolean("smooth-potting", false);
         this.hitDetect = this.getBoolean("hitDetect", true);
         this.hidePlayersFromTab = this.getBoolean("hidePlayersFromTab", false);
