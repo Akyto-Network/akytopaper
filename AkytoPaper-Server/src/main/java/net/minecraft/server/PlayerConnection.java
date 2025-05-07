@@ -268,6 +268,34 @@ public class PlayerConnection implements PacketListenerPlayIn, IUpdatePlayerList
                 // Prevent 40 event-calls for less than a single pixel of movement >.>
                 double delta = Math.pow(this.lastPosX - to.getX(), 2) + Math.pow(this.lastPosY - to.getY(), 2) + Math.pow(this.lastPosZ - to.getZ(), 2);
                 float deltaAngle = Math.abs(this.lastYaw - to.getYaw()) + Math.abs(this.lastPitch - to.getPitch());
+                if (aSpigot.INSTANCE.getConfig().isReleaseItemFix() && this.player.isBlocking() && packetplayinflying.g()) {
+                    double speed = Math.sqrt(d4 * d4 + d6 * d6);
+                    double maxBlockingSpeed = aSpigot.INSTANCE.getConfig().getMaxBlockingSpeed();
+                    CraftPlayer craftPlayer = (CraftPlayer) this.getPlayer();
+
+                    for (org.bukkit.potion.PotionEffect effect : craftPlayer.getActivePotionEffects()) {
+                        if (effect.getType().equals(org.bukkit.potion.PotionEffectType.SPEED)) {
+                            int amplifier = effect.getAmplifier();
+                            maxBlockingSpeed *= (1.0 + (amplifier + 1) * 0.2);
+                            break;
+                        }
+                    }
+
+                    float walkSpeed = craftPlayer.getWalkSpeed();
+                    float defaultWalkSpeed = 0.2f;
+                    if (walkSpeed > 0) {
+                        maxBlockingSpeed *= (walkSpeed / defaultWalkSpeed);
+                    }
+
+                    maxBlockingSpeed *= 1.1;
+
+                    maxBlockingSpeed = Math.min(maxBlockingSpeed, 0.3);
+
+                    if (speed > maxBlockingSpeed) {
+                        this.player.bU();
+                        //syncClientState();
+                    }
+                }
                 if ((packetplayinflying.hasPos || packetplayinflying.hasLook) && delta > 0.0D && this.checkMovement && !this.player.dead) {
                     for (MovementHandler handler : aSpigot.INSTANCE.getMovementHandlers()) {
                         try {

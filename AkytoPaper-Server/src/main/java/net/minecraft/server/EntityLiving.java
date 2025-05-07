@@ -18,6 +18,7 @@ import org.bukkit.craftbukkit.attribute.CraftAttributeMap;
 import org.bukkit.craftbukkit.entity.CraftLivingEntity;
 import org.bukkit.craftbukkit.event.CraftEventFactory;
 import org.bukkit.craftbukkit.potion.CraftPotionUtils;
+import org.bukkit.entity.EntityType;
 import org.bukkit.entity.LivingEntity;
 import org.bukkit.entity.Vehicle;
 import org.bukkit.event.entity.EntityDamageEvent;
@@ -932,22 +933,25 @@ public abstract class EntityLiving extends Entity {
 
     protected void dropEquipment(boolean flag, int i) {}
 
-    public void a(Entity entity, float f, double xo, double zo) {
+    public void a(Entity attacker, float damage, double xo, double zo) {
+        EntityType v = getBukkitEntity().getType();
+        EntityType d = attacker.getBukkitEntity().getType();
+
         if (this.random.nextDouble() >= this.getAttributeInstance(GenericAttributes.c).getValue()) {
             this.ai = true;
-            double magnitude = (double)MathHelper.sqrt(xo * xo + zo * zo);
+            float f1 = MathHelper.sqrt(xo * xo + zo * zo);
             float f2 = 0.4F;
-            this.motX /= (double)2.0F;
-            this.motY /= (double)2.0F;
-            this.motZ /= (double)2.0F;
-            this.motX -= xo / magnitude * (double)f2;
-            this.motY += (double)f2;
-            this.motZ -= zo / magnitude * (double)f2;
-            if (this.motY > (double)0.4F) {
-                this.motY = (double)0.4F;
+
+            this.motX /= 2.0D;
+            this.motY /= 2.0D;
+            this.motZ /= 2.0D;
+            this.motX -= (xo / (double) f1 * (double) f2);
+            this.motY += (double) f2;
+            this.motZ -= (zo / (double) f1 * (double) f2);
+            if (this.motY > 0.4000000059604645D) {
+                this.motY = 0.4000000059604645D;
             }
         }
-
     }
 
     protected String bo() {

@@ -1,6 +1,7 @@
 package net.minecraft.server;
 
 import akyto.spigot.aSpigot;
+import akyto.spigot.aSpigotConfig;
 import akyto.spigot.runnable.DelayedKnockback;
 import com.google.common.base.Charsets;
 import com.google.common.collect.Lists;
@@ -1045,40 +1046,100 @@ public abstract class EntityHuman extends EntityLiving {
                     if (entity instanceof EntityPlayer && entity.velocityChanged) {
                         try {
                             EntityPlayer victim = (EntityPlayer) entity;
+                            aSpigotConfig config = aSpigot.INSTANCE.getConfig();
+
                             double velX = 0, velY = 0, velZ = 0;
 
-                            double entityVelX = victim.motX * aSpigot.INSTANCE.getConfig().getFriction();
-                            double entityVelZ = victim.motZ * aSpigot.INSTANCE.getConfig().getFriction();
-                            velX = entityVelX + Math.sin(Math.toRadians((double)this.yaw)) * (double)-1.0F;
-                            velZ = entityVelZ + Math.cos(Math.toRadians((double)this.yaw));
+                            if (config.isOnePointOneKnockback()) {
+                                Vector v = new Vector(entity.locX - locX, 0, entity.locZ - locZ).normalize();
 
-                            velX *= aSpigot.INSTANCE.getConfig().getHorizontal();
-                            velZ *= aSpigot.INSTANCE.getConfig().getHorizontal();
-                            velY = aSpigot.INSTANCE.getConfig().getVertical();
+                                velX = v.getX();
+                                velY = config.getVertical();
+                                velZ = v.getZ();
 
-                            int enchLvl = EnchantmentManager.getEnchantmentLevel(Enchantment.KNOCKBACK.id, this.inventory.getItemInHand()) + 1;
-                            if (enchLvl > 0) {
-                                velX *= (double)enchLvl;
-                                velZ *= (double)enchLvl;
+                                velX *= config.getHorizontal();
+                                velZ *= config.getHorizontal();
+
+                                if (shouldDealSprintKnockback) {
+                                    velX *= config.getSprintHorizontal();
+                                    velY *= config.getSprintVertical();
+                                    velZ *= config.getSprintHorizontal();
+                                }
+
+                                if (isSprinting()) {
+                                    motX *= config.getSlowdown();
+                                    motZ *= config.getSlowdown();
+
+                                    shouldDealSprintKnockback = false;
+
+                                    if (config.isStopSprint()) {
+                                        setSprinting(false);
+                                    }
+                                }
+                            } else {
+                                if (config.isEnableFrictionHorizontal()) {
+                                    double entityVelX = victim.motX * config.getHorizontalFriction();
+                                    double entityVelZ = victim.motZ * config.getHorizontalFriction();
+
+                                    velX = entityVelX + Math.sin(Math.toRadians(yaw)) * -1.0F;
+                                    velZ = entityVelZ + Math.cos(Math.toRadians(yaw));
+                                } else {
+                                    velX = Math.sin(Math.toRadians(getHeadRotation())) * -1.0F;
+                                    velZ = Math.cos(Math.toRadians(getHeadRotation()));
+                                }
+
+
+                                velX *= config.getHorizontal();
+                                velZ *= config.getHorizontal();
+
+                                if (config.isEnableFrictionVertical()) {
+                                    double entityVelY = victim.motY * config.getVerticalFriction();
+
+                                    velY = entityVelY + config.getVertical();
+                                } else {
+                                    velY = config.getVertical();
+                                }
+
+
+                                if (victim.onGround) {
+                                    velX *= config.getGroundHorizontal();
+                                    velY *= config.getGroundVertical();
+                                    velZ *= config.getGroundHorizontal();
+                                }
+
+                                int enchLvl = EnchantmentManager.getEnchantmentLevel(Enchantment.KNOCKBACK.id, this.inventory.getItemInHand()) + 1;
+                                if (enchLvl > 0) {
+                                    velX *= enchLvl;
+                                    velZ *= enchLvl;
+                                }
+
+                                if (shouldDealSprintKnockback) {
+                                    velX *= config.getSprintHorizontal();
+                                    velY *= config.getSprintVertical();
+                                    velZ *= config.getSprintHorizontal();
+
+                                    shouldDealSprintKnockback = false;
+                                }
+
+                                if (isSprinting()) {
+                                    motX *= config.getSlowdown();
+                                    motZ *= config.getSlowdown();
+                                    shouldDealSprintKnockback = false;
+
+                                    if (config.isStopSprint()) {
+                                        setSprinting(false);
+                                    }
+                                }
+
+                                double yOff = entity.locY - locY;
+
+                                if (config.isEnableVerticalLimit()) {
+                                    if (yOff > config.getVerticalLimit()) {
+                                        velY = 0;
+                                    }
+                                }
                             }
 
-                            if (this.shouldDealSprintKnockback) {
-                                velX *= aSpigot.INSTANCE.getConfig().getExtraHorizontal();
-                                velY *= aSpigot.INSTANCE.getConfig().getExtraVertical();
-                                velZ *= aSpigot.INSTANCE.getConfig().getExtraHorizontal();
-                                this.shouldDealSprintKnockback = false;
-                            }
-
-                            if (this.isSprinting()) {
-                                this.motX *= aSpigot.INSTANCE.getConfig().getSlowdown();
-                                this.motZ *= aSpigot.INSTANCE.getConfig().getSlowdown();
-                                this.shouldDealSprintKnockback = false;
-                            }
-
-                            double yOff = entity.locY - this.locY;
-                            if (yOff > aSpigot.INSTANCE.getConfig().getVerticalLimit()) {
-                                velY = aSpigot.INSTANCE.getConfig().getVerticalLimit();
-                            }
                             PlayerVelocityEvent event = new PlayerVelocityEvent(victim.getBukkitEntity(), new Vector(velX, velY, velZ));
                             Bukkit.getPluginManager().callEvent(event);
                             if (!event.isCancelled()) {
@@ -1092,61 +1153,61 @@ public abstract class EntityHuman extends EntityLiving {
                             e.printStackTrace();
                         }
                     }
-                    // End
+                }
+                if (flag) {
+                    this.b(entity);
+                }
 
-                    if (flag) {
-                        this.b(entity);
+                if (f1 > 0.0F) {
+                    this.c(entity);
+                }
+
+                if (f >= 18.0F) {
+                    this.b(AchievementList.F);
+                }
+
+                this.p(entity);
+                if (entity instanceof EntityLiving) {
+                    EnchantmentManager.a((EntityLiving) entity, this);
+                }
+
+                EnchantmentManager.b(this, entity);
+                ItemStack itemstack = this.bZ();
+                Object object = entity;
+
+                if (entity instanceof EntityComplexPart) {
+                    IComplex icomplex = ((EntityComplexPart) entity).owner;
+
+                    if (icomplex instanceof EntityLiving) {
+                        object = icomplex;
                     }
+                }
 
-                    if (f1 > 0.0F) {
-                        this.c(entity);
+                if (itemstack != null && object instanceof EntityLiving) {
+                    itemstack.a((EntityLiving) object, this);
+                    // CraftBukkit - bypass infinite items; <= 0 -> == 0
+                    if (itemstack.count == 0) {
+                        this.ca();
                     }
+                }
 
-                    if (f >= 18.0F) {
-                        this.b(AchievementList.F);
-                    }
+                if (entity instanceof EntityLiving) {
+                    this.a(StatisticList.w, Math.round(f * 10.0F));
+                    if (j > 0) {
+                        // CraftBukkit start - Call a combust event when somebody hits with a fire enchanted item
+                        EntityCombustByEntityEvent combustEvent = new EntityCombustByEntityEvent(this.getBukkitEntity(), entity.getBukkitEntity(), j * 4);
+                        org.bukkit.Bukkit.getPluginManager().callEvent(combustEvent);
 
-                    this.p(entity);
-                    if (entity instanceof EntityLiving) {
-                        EnchantmentManager.a((EntityLiving) entity, this);
-                    }
-
-                    EnchantmentManager.b(this, entity);
-                    ItemStack itemstack = this.bZ();
-                    Object object = entity;
-
-                    if (entity instanceof EntityComplexPart) {
-                        IComplex icomplex = ((EntityComplexPart) entity).owner;
-
-                        if (icomplex instanceof EntityLiving) {
-                            object = icomplex;
+                        if (!combustEvent.isCancelled()) {
+                            entity.setOnFire(combustEvent.getDuration());
                         }
+                        // CraftBukkit end
                     }
+                }
 
-                    if (itemstack != null && object instanceof EntityLiving) {
-                        itemstack.a((EntityLiving) object, this);
-                        // CraftBukkit - bypass infinite items; <= 0 -> == 0
-                        if (itemstack.count == 0) {
-                            this.ca();
-                        }
-                    }
+                this.applyExhaustion(world.spigotConfig.combatExhaustion); // Spigot - Change to use configurable value
 
-                    if (entity instanceof EntityLiving) {
-                        this.a(StatisticList.w, Math.round(f * 10.0F));
-                        if (j > 0) {
-                            // CraftBukkit start - Call a combust event when somebody hits with a fire enchanted item
-                            EntityCombustByEntityEvent combustEvent = new EntityCombustByEntityEvent(this.getBukkitEntity(), entity.getBukkitEntity(), j * 4);
-                            org.bukkit.Bukkit.getPluginManager().callEvent(combustEvent);
-
-                            if (!combustEvent.isCancelled()) {
-                                entity.setOnFire(combustEvent.getDuration());
-                            }
-                            // CraftBukkit end
-                        }
-                    }
-
-                    this.applyExhaustion(world.spigotConfig.combatExhaustion); // Spigot - Change to use configurable value
-                }else if (flag1) {
+                if (flag1) {
                     entity.extinguish();
                 }
             }
