@@ -1003,7 +1003,7 @@ public abstract class EntityHuman extends EntityLiving {
         if (entity.aD() && !entity.l(this)) {
             float f = (float) this.getAttributeInstance(GenericAttributes.ATTACK_DAMAGE).getValue();
             byte b0 = 0;
-            float f1;
+            float f1 = 0.0F;
 
             if (entity instanceof EntityLiving) {
                 f1 = EnchantmentManager.a(this.bA(), ((EntityLiving) entity).getMonsterType());
@@ -1153,61 +1153,59 @@ public abstract class EntityHuman extends EntityLiving {
                             e.printStackTrace();
                         }
                     }
-                }
-                if (flag) {
-                    this.b(entity);
-                }
-
-                if (f1 > 0.0F) {
-                    this.c(entity);
-                }
-
-                if (f >= 18.0F) {
-                    this.b(AchievementList.F);
-                }
-
-                this.p(entity);
-                if (entity instanceof EntityLiving) {
-                    EnchantmentManager.a((EntityLiving) entity, this);
-                }
-
-                EnchantmentManager.b(this, entity);
-                ItemStack itemstack = this.bZ();
-                Object object = entity;
-
-                if (entity instanceof EntityComplexPart) {
-                    IComplex icomplex = ((EntityComplexPart) entity).owner;
-
-                    if (icomplex instanceof EntityLiving) {
-                        object = icomplex;
+                    if (flag) {
+                        this.b(entity);
                     }
-                }
 
-                if (itemstack != null && object instanceof EntityLiving) {
-                    itemstack.a((EntityLiving) object, this);
-                    // CraftBukkit - bypass infinite items; <= 0 -> == 0
-                    if (itemstack.count == 0) {
-                        this.ca();
+                    if (f1 > 0.0F) {
+                        this.c(entity);
                     }
-                }
 
-                if (entity instanceof EntityLiving) {
-                    this.a(StatisticList.w, Math.round(f * 10.0F));
-                    if (j > 0) {
-                        // CraftBukkit start - Call a combust event when somebody hits with a fire enchanted item
-                        EntityCombustByEntityEvent combustEvent = new EntityCombustByEntityEvent(this.getBukkitEntity(), entity.getBukkitEntity(), j * 4);
-                        org.bukkit.Bukkit.getPluginManager().callEvent(combustEvent);
+                    if (f >= 18.0F) {
+                        this.b(AchievementList.F);
+                    }
 
-                        if (!combustEvent.isCancelled()) {
-                            entity.setOnFire(combustEvent.getDuration());
+                    this.p(entity);
+                    if (entity instanceof EntityLiving) {
+                        EnchantmentManager.a((EntityLiving) entity, this);
+                    }
+
+                    EnchantmentManager.b(this, entity);
+                    ItemStack itemstack = this.bZ();
+                    Object object = entity;
+
+                    if (entity instanceof EntityComplexPart) {
+                        IComplex icomplex = ((EntityComplexPart) entity).owner;
+
+                        if (icomplex instanceof EntityLiving) {
+                            object = icomplex;
                         }
-                        // CraftBukkit end
                     }
-                }
 
-                this.applyExhaustion(world.spigotConfig.combatExhaustion); // Spigot - Change to use configurable value
+                    if (itemstack != null && object instanceof EntityLiving) {
+                        itemstack.a((EntityLiving) object, this);
+                        // CraftBukkit - bypass infinite items; <= 0 -> == 0
+                        if (itemstack.count == 0) {
+                            this.ca();
+                        }
+                    }
 
-                if (flag1) {
+                    if (entity instanceof EntityLiving) {
+                        this.a(StatisticList.w, Math.round(f * 10.0F));
+                        if (j > 0) {
+                            // CraftBukkit start - Call a combust event when somebody hits with a fire enchanted item
+                            EntityCombustByEntityEvent combustEvent = new EntityCombustByEntityEvent(this.getBukkitEntity(), entity.getBukkitEntity(), j * 4);
+                            org.bukkit.Bukkit.getPluginManager().callEvent(combustEvent);
+
+                            if (!combustEvent.isCancelled()) {
+                                entity.setOnFire(combustEvent.getDuration());
+                            }
+                            // CraftBukkit end
+                        }
+                    }
+
+                    this.applyExhaustion(world.spigotConfig.combatExhaustion); // Spigot - Change to use configurable value
+                } else if (flag1) {
                     entity.extinguish();
                 }
             }
