@@ -765,7 +765,6 @@ public abstract class EntityLiving extends Entity {
                 this.aB = 1.5F;
                 boolean flag = true;
 
-                //aSpigot - add HitDelay
                 int maxNoDamageTicks = this.maxNoDamageTicks;
 
                 if ((float) this.noDamageTicks > maxNoDamageTicks / 2.0F) {

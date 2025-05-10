@@ -148,43 +148,6 @@ public class EntityEnderPearl extends EntityProjectile {
         }
     }
 
-    protected void removeToLocation(final String d, final Location location, final double x) {
-        switch(d) {
-            case "SE": {
-                location.setX(location.getX() - x);
-                location.setZ(location.getZ() + x);
-            }
-            case "E": {
-                location.setX(location.getX() - x);
-                break;
-            }
-            case "NE": {
-                location.setX(location.getX() + x);
-                location.setZ(location.getZ() + x);
-            }
-            case "SW": {
-                location.setX(location.getX() + x);
-                location.setZ(location.getZ() + x);
-            }
-            case "W": {
-                location.setX(location.getX() + x);
-                break;
-            }
-            case "NW": {
-                location.setX(location.getX() - x);
-                location.setZ(location.getZ() + x);
-            }
-            case "N": {
-                location.setZ(location.getZ() + x);
-                break;
-            }
-            case "S": {
-                location.setZ(location.getZ() - x);
-                break;
-            }
-        }
-    }
-
     public void t_() {
         final EntityLiving entityliving = this.getShooter();
         if (entityliving != null && entityliving instanceof EntityHuman && !entityliving.isAlive()) {
