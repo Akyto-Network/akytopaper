@@ -1,14 +1,13 @@
 package net.minecraft.server;
 
-import java.util.Arrays;
-import java.util.List;
-
-// CraftBukkit start
 import org.bukkit.craftbukkit.event.CraftEventFactory;
-import org.bukkit.entity.Player;
 import org.bukkit.entity.Fish;
+import org.bukkit.entity.Player;
 import org.bukkit.event.player.PlayerFishEvent;
 import org.github.paperspigot.event.entity.ProjectileCollideEvent;
+
+import java.util.Arrays;
+import java.util.List;
 // CraftBukkit end
 
 public class EntityFishingHook extends Entity {

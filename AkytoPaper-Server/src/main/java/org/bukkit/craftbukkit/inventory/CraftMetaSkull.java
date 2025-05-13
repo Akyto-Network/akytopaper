@@ -1,17 +1,8 @@
 package org.bukkit.craftbukkit.inventory;
 
-import java.util.Map;
-import java.util.UUID;
-
-import net.minecraft.server.GameProfileSerializer;
-import net.minecraft.server.NBTBase;
-import net.minecraft.server.NBTTagCompound;
-
-// PaperSpigot start
-import net.minecraft.server.EntityPlayer;
-import net.minecraft.server.MinecraftServer;
-// PaperSpigot end
-
+import com.google.common.collect.ImmutableMap.Builder;
+import com.mojang.authlib.GameProfile;
+import net.minecraft.server.*;
 import org.bukkit.Material;
 import org.bukkit.Skin;
 import org.bukkit.configuration.serialization.DelegateDeserialization;
@@ -19,8 +10,8 @@ import org.bukkit.craftbukkit.inventory.CraftMetaItem.SerializableMeta;
 import org.bukkit.craftbukkit.util.Skins;
 import org.bukkit.inventory.meta.SkullMeta;
 
-import com.google.common.collect.ImmutableMap.Builder;
-import com.mojang.authlib.GameProfile;
+import java.util.Map;
+import java.util.UUID;
 
 @DelegateDeserialization(SerializableMeta.class)
 class CraftMetaSkull extends CraftMetaItem implements SkullMeta {

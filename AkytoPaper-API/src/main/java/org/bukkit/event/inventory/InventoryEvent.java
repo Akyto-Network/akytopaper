@@ -1,17 +1,17 @@
 
 package org.bukkit.event.inventory;
 
-import java.util.List;
-
 import org.bukkit.Physical;
 import org.bukkit.World;
-import org.bukkit.entity.Player;
-import org.bukkit.event.HandlerList;
 import org.bukkit.entity.HumanEntity;
+import org.bukkit.entity.Player;
 import org.bukkit.event.Event;
+import org.bukkit.event.HandlerList;
 import org.bukkit.event.PlayerAction;
 import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.InventoryView;
+
+import java.util.List;
 
 /**
  * Represents a player related inventory event

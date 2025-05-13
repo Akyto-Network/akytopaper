@@ -1,15 +1,14 @@
 package net.minecraft.server;
 
 import com.google.common.collect.Lists;
-import java.util.Iterator;
-import java.util.List;
-
-// CraftBukkit start
 import org.bukkit.craftbukkit.event.CraftEventFactory;
 import org.bukkit.entity.EntityType;
 import org.bukkit.event.entity.CreatureSpawnEvent;
 import org.bukkit.event.entity.SpawnerSpawnEvent;
 import org.github.paperspigot.event.entity.PreCreatureSpawnEvent;
+
+import java.util.Iterator;
+import java.util.List;
 // CraftBukkit end
 
 public abstract class MobSpawnerAbstract {

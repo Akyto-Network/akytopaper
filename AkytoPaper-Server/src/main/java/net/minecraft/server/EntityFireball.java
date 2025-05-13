@@ -1,9 +1,9 @@
 package net.minecraft.server;
 
-import java.util.List;
-
-import org.bukkit.craftbukkit.event.CraftEventFactory; // CraftBukkit
+import org.bukkit.craftbukkit.event.CraftEventFactory;
 import org.github.paperspigot.event.entity.ProjectileCollideEvent;
+
+import java.util.List;
 
 public abstract class EntityFireball extends Entity {
 

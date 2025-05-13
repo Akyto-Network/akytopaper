@@ -1,10 +1,11 @@
 package org.spigotmc;
 
-import java.util.Arrays;
-import java.util.List;
 import org.bukkit.Bukkit;
 import org.bukkit.configuration.file.YamlConfiguration;
 import org.github.paperspigot.SharedConfig;
+
+import java.util.Arrays;
+import java.util.List;
 
 public class SpigotWorldConfig
 {

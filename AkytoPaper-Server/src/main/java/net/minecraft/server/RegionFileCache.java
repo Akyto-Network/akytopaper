@@ -1,6 +1,5 @@
 package net.minecraft.server;
 
-import com.google.common.collect.Maps;
 import org.github.paperspigot.PaperSpigotConfig;
 import org.github.paperspigot.exception.ServerInternalException;
 

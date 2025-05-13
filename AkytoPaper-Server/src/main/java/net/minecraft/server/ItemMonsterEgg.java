@@ -1,7 +1,7 @@
 package net.minecraft.server;
 
 // CraftBukkit start
-import org.bukkit.craftbukkit.entity.CraftEntity;
+
 import org.bukkit.craftbukkit.inventory.CraftItemStack;
 import org.bukkit.event.player.PlayerSpawnEntityEvent;
 // CraftBukkit end

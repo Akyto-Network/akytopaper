@@ -1,7 +1,5 @@
 package net.minecraft.server;
 
-import org.bukkit.event.entity.ExplosionPrimeEvent; // CraftBukkit
-
 public class EntityTNTPrimed extends Entity {
 
     public int fuseTicks;

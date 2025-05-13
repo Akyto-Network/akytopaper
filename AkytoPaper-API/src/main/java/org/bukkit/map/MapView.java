@@ -1,9 +1,9 @@
 package org.bukkit.map;
 
-import java.util.List;
-
 import org.bukkit.Physical;
 import org.bukkit.World;
+
+import java.util.List;
 
 /**
  * Represents a map item.

@@ -1,9 +1,10 @@
 package net.minecraft.server;
 
-import java.util.Collection;
-import java.util.Iterator;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
+
+import java.util.Collection;
+import java.util.Iterator;
 
 public class PersistentScoreboard extends PersistentBase {
 

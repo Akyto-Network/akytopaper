@@ -2,7 +2,6 @@ package org.bukkit.craftbukkit.block;
 
 import net.minecraft.server.TileEntityMobSpawner;
 import org.bukkit.Material;
-
 import org.bukkit.block.Block;
 import org.bukkit.block.CreatureSpawner;
 import org.bukkit.craftbukkit.CraftWorld;

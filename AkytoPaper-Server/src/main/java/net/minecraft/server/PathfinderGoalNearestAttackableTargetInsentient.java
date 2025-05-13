@@ -1,10 +1,11 @@
 package net.minecraft.server;
 
 import com.google.common.base.Predicate;
-import java.util.Collections;
-import java.util.List;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
+
+import java.util.Collections;
+import java.util.List;
 
 public class PathfinderGoalNearestAttackableTargetInsentient extends PathfinderGoal {
 

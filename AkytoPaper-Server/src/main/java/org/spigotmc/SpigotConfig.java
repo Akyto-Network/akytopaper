@@ -1,14 +1,9 @@
 package org.spigotmc;
 
-import java.util.Arrays;
-import java.util.HashSet;
-import java.util.List;
-import java.util.Map;
-import java.util.Set;
-import java.util.concurrent.TimeUnit;
-import java.util.logging.Level;
-import gnu.trove.map.hash.TObjectIntHashMap;
+import co.aikar.timings.Timings;
+import co.aikar.timings.TimingsManager;
 import com.google.common.collect.Lists;
+import gnu.trove.map.hash.TObjectIntHashMap;
 import net.minecraft.server.AttributeRanged;
 import net.minecraft.server.GenericAttributes;
 import org.apache.logging.log4j.LogManager;
@@ -19,9 +14,11 @@ import org.bukkit.ChatColor;
 import org.bukkit.command.Command;
 import org.bukkit.configuration.ConfigurationSection;
 import org.bukkit.configuration.file.YamlConfiguration;
-import co.aikar.timings.Timings;
-import co.aikar.timings.TimingsManager;
 import org.github.paperspigot.SharedConfig;
+
+import java.util.*;
+import java.util.concurrent.TimeUnit;
+import java.util.logging.Level;
 
 public class SpigotConfig
 {

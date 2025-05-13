@@ -1,7 +1,7 @@
 package app.ashcon.sportpaper.server;
 
-import net.minecraft.server.NBTTagCompound;
 import app.ashcon.sportpaper.api.world.CustomizedGenerationSettings;
+import net.minecraft.server.NBTTagCompound;
 
 /**
  * Acts as a bridge between {@link

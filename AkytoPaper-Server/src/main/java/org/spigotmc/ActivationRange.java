@@ -1,37 +1,9 @@
 package org.spigotmc;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Set;
-import net.minecraft.server.AxisAlignedBB;
-import net.minecraft.server.Chunk;
-import net.minecraft.server.Entity;
-import net.minecraft.server.EntityAmbient;
-import net.minecraft.server.EntityAnimal;
-import net.minecraft.server.EntityArrow;
-import net.minecraft.server.EntityComplexPart;
-import net.minecraft.server.EntityCreature;
-import net.minecraft.server.EntityCreeper;
-import net.minecraft.server.EntityEnderCrystal;
-import net.minecraft.server.EntityEnderDragon;
-import net.minecraft.server.EntityFallingBlock;
-import net.minecraft.server.EntityFireball;
-import net.minecraft.server.EntityFireworks;
-import net.minecraft.server.EntityHuman;
-import net.minecraft.server.EntityLiving;
-import net.minecraft.server.EntityMonster;
-import net.minecraft.server.EntityProjectile;
-import net.minecraft.server.EntitySheep;
-import net.minecraft.server.EntitySlice;
-import net.minecraft.server.EntitySlime;
-import net.minecraft.server.EntityTNTPrimed;
-import net.minecraft.server.EntityVillager;
-import net.minecraft.server.EntityWeather;
-import net.minecraft.server.EntityWither;
-import net.minecraft.server.MathHelper;
-import net.minecraft.server.MinecraftServer;
-import net.minecraft.server.World;
 import co.aikar.timings.SpigotTimings;
+import net.minecraft.server.*;
+
+import java.util.List;
 
 
 public class ActivationRange

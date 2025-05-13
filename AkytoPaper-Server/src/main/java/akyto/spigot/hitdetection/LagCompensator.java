@@ -3,13 +3,13 @@ package akyto.spigot.hitdetection;
 import akyto.spigot.aSpigot;
 import com.google.common.collect.ArrayListMultimap;
 import com.google.common.collect.ListMultimap;
-
 import org.apache.commons.lang3.tuple.Pair;
 import org.bukkit.Location;
 import org.bukkit.entity.Player;
 import org.bukkit.util.Vector;
 
-import java.util.*;
+import java.util.List;
+import java.util.UUID;
 
 public class LagCompensator {
 

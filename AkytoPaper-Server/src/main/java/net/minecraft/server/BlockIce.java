@@ -1,9 +1,9 @@
 package net.minecraft.server;
 
-import java.util.Random;
-
 import org.bukkit.block.BlockState;
 import org.bukkit.event.block.BlockFormEvent;
+
+import java.util.Random;
 
 public class BlockIce extends BlockHalfTransparent {
 

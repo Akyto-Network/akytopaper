@@ -1,8 +1,6 @@
 package net.minecraft.server;
 
 import com.google.common.base.Predicate;
-
-// CraftBukkit start
 import org.bukkit.craftbukkit.event.CraftEventFactory;
 import org.bukkit.event.entity.EntityTargetEvent.TargetReason;
 // CraftBukkit end

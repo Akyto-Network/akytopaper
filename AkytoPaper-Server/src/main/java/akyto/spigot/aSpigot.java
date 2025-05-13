@@ -6,7 +6,8 @@ import akyto.spigot.hitdetection.LagCompensator;
 import lombok.Getter;
 import lombok.Setter;
 
-import java.util.*;
+import java.util.HashSet;
+import java.util.Set;
 
 @Getter
 public enum aSpigot {

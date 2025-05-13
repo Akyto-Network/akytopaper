@@ -1,10 +1,10 @@
 package org.github.paperspigot;
 
-import java.util.List;
-
 import net.minecraft.server.MinecraftServer;
 import org.bukkit.Bukkit;
 import org.bukkit.configuration.file.YamlConfiguration;
+
+import java.util.List;
 
 public class PaperSpigotWorldConfig
 {

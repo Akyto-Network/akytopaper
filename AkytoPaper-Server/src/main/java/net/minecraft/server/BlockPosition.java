@@ -1,6 +1,7 @@
 package net.minecraft.server;
 
 import com.google.common.collect.AbstractIterator;
+
 import java.util.Iterator;
 
 public class BlockPosition extends BaseBlockPosition {

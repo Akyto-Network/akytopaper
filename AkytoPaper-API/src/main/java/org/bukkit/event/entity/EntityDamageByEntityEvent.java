@@ -1,10 +1,10 @@
 package org.bukkit.event.entity;
 
-import java.util.Map;
-
 import com.google.common.base.Function;
 import org.bukkit.entity.Entity;
 import org.bukkit.event.EntityAction;
+
+import java.util.Map;
 
 /**
  * Called when an entity is damaged by an entity

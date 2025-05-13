@@ -1,7 +1,6 @@
 package org.github.paperspigot.event;
 
 import com.google.common.base.Preconditions;
-import org.apache.commons.lang.Validate;
 import org.bukkit.event.Event;
 import org.bukkit.event.HandlerList;
 import org.github.paperspigot.exception.ServerException;

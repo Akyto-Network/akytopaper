@@ -1,15 +1,15 @@
 package org.bukkit.craftbukkit.map;
 
-import java.util.UUID;
-import net.minecraft.server.WorldMap;
 import net.minecraft.server.MapIcon;
-
+import net.minecraft.server.WorldMap;
 import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
 import org.bukkit.map.MapCanvas;
 import org.bukkit.map.MapCursorCollection;
 import org.bukkit.map.MapRenderer;
 import org.bukkit.map.MapView;
+
+import java.util.UUID;
 
 public class CraftMapRenderer extends MapRenderer {
 

@@ -1,9 +1,9 @@
 package net.minecraft.server;
 
-import java.util.Calendar;
-
-import org.bukkit.event.entity.EntityCombustEvent; // CraftBukkit
+import org.bukkit.event.entity.EntityCombustEvent;
 import org.bukkit.event.entity.PotionEffectAddEvent.EffectAddReason;
+
+import java.util.Calendar;
 
 public class EntitySkeleton extends EntityMonster implements IRangedEntity {
 

@@ -1,12 +1,5 @@
 package net.minecraft.server;
 
-import com.google.common.collect.Sets;
-import java.util.Iterator;
-import java.util.List;
-import java.util.Random;
-import java.util.Set;
-
-// CraftBukkit start
 import org.bukkit.craftbukkit.util.LongHash;
 import org.bukkit.craftbukkit.util.LongHashSet;
 import org.bukkit.entity.EntityType;
@@ -14,6 +7,10 @@ import org.bukkit.event.entity.CreatureSpawnEvent.SpawnReason;
 import org.github.paperspigot.event.entity.PreCreatureSpawnEvent;
 import org.github.paperspigot.event.player.PlayerNaturallySpawnCreaturesEvent;
 import org.github.paperspigot.exception.ServerInternalException;
+
+import java.util.Iterator;
+import java.util.List;
+import java.util.Random;
 // CraftBukkit end
 
 public final class SpawnerCreature {

@@ -1,12 +1,10 @@
 package org.bukkit.command.defaults;
 
-import java.util.List;
-
+import com.google.common.collect.ImmutableList;
 import org.bukkit.ChatColor;
 import org.bukkit.command.CommandSender;
 
-
-import com.google.common.collect.ImmutableList;
+import java.util.List;
 
 
 public class TimingsCommand extends BukkitCommand {

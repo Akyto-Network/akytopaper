@@ -2,11 +2,12 @@ package net.minecraft.server;
 
 import com.google.common.collect.Lists;
 import com.google.common.collect.Maps;
+import org.bukkit.event.entity.PotionEffectAddEvent.EffectAddReason;
+
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
-import org.bukkit.event.entity.PotionEffectAddEvent.EffectAddReason;
 
 public class ItemPotion extends Item {
 

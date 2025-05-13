@@ -1,31 +1,20 @@
 package net.minecraft.server;
 
 import com.google.common.base.Charsets;
-import io.netty.buffer.ByteBuf;
-import io.netty.buffer.ByteBufAllocator;
-import io.netty.buffer.ByteBufInputStream;
-import io.netty.buffer.ByteBufOutputStream;
-import io.netty.buffer.ByteBufProcessor;
+import io.netty.buffer.*;
 import io.netty.handler.codec.DecoderException;
 import io.netty.handler.codec.EncoderException;
-import io.netty.util.ReferenceCounted;
-import java.io.DataInput;
-import java.io.DataOutput;
-import java.io.IOException;
-import java.io.InputStream;
-import java.io.OutputStream;
+import io.netty.util.ByteProcessor;
+import org.bukkit.craftbukkit.inventory.CraftItemStack;
+
+import java.io.*;
 import java.nio.ByteBuffer;
 import java.nio.ByteOrder;
+import java.nio.channels.FileChannel;
 import java.nio.channels.GatheringByteChannel;
 import java.nio.channels.ScatteringByteChannel;
 import java.nio.charset.Charset;
 import java.util.UUID;
-// SportPaper start
-import io.netty.util.ByteProcessor;
-import java.nio.channels.FileChannel;
-// SportPaper end
-
-import org.bukkit.craftbukkit.inventory.CraftItemStack; // CraftBukkit
 
 public class PacketDataSerializer extends ByteBuf {
 

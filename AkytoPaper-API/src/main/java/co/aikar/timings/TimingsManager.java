@@ -23,6 +23,7 @@
  */
 package co.aikar.timings;
 
+import co.aikar.util.LoadingMap;
 import com.google.common.base.Function;
 import com.google.common.collect.EvictingQueue;
 import org.bukkit.Bukkit;
@@ -30,14 +31,8 @@ import org.bukkit.Server;
 import org.bukkit.command.Command;
 import org.bukkit.plugin.Plugin;
 import org.bukkit.plugin.java.PluginClassLoader;
-import co.aikar.util.LoadingMap;
 
-import java.util.ArrayDeque;
-import java.util.ArrayList;
-import java.util.Collection;
-import java.util.Collections;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 import java.util.logging.Level;
 
 public final class TimingsManager {

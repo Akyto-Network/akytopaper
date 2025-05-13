@@ -1,25 +1,21 @@
 package org.bukkit.craftbukkit;
 
-import java.lang.ref.WeakReference;
-import java.util.Arrays;
-import java.util.HashSet;
-import java.util.Set;
-
 import akyto.spigot.chunk.CraftFakeMultiBlockChange;
 import akyto.spigot.chunk.FakeMultiBlockChange;
 import net.minecraft.server.*;
-
-import net.minecraft.server.Chunk;
-import net.minecraft.server.Material;
-import org.bukkit.*;
 import org.bukkit.ChunkSnapshot;
+import org.bukkit.Location;
 import org.bukkit.World;
 import org.bukkit.block.Block;
 import org.bukkit.block.BlockState;
 import org.bukkit.craftbukkit.block.CraftBlock;
 import org.bukkit.craftbukkit.util.CraftMagicNumbers;
 import org.bukkit.entity.Entity;
-import org.bukkit.material.MaterialData;
+
+import java.lang.ref.WeakReference;
+import java.util.Arrays;
+import java.util.HashSet;
+import java.util.Set;
 
 public class CraftChunk implements org.bukkit.Chunk {
     private WeakReference<net.minecraft.server.Chunk> weakChunk;

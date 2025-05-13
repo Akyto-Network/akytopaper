@@ -1,22 +1,9 @@
 package org.bukkit.craftbukkit.world;
 
-import java.io.File;
-import java.io.FileInputStream;
-import java.io.FileOutputStream;
-import java.io.InputStream;
-import java.io.OutputStream;
-
-import net.minecraft.server.ChunkRegionLoader;
-import net.minecraft.server.IChunkLoader;
-import net.minecraft.server.NBTTagCompound;
-import net.minecraft.server.NBTCompressedStreamTools;
-import net.minecraft.server.WorldData;
-import net.minecraft.server.WorldNBTStorage;
-import net.minecraft.server.WorldProvider;
-import net.minecraft.server.WorldProviderHell;
-import net.minecraft.server.WorldProviderTheEnd;
-
+import net.minecraft.server.*;
 import org.github.paperspigot.exception.ServerInternalException;
+
+import java.io.*;
 
 public class AnvilFormatLoader implements IWorldFormat {
 

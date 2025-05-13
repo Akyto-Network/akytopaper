@@ -1,19 +1,10 @@
 package net.minecraft.server;
 
-import akyto.spigot.aSpigot;
+import com.google.common.base.Function;
 import com.google.common.base.Predicate;
 import com.google.common.base.Predicates;
 import com.google.common.collect.Maps;
-import java.util.Collection;
-import java.util.Iterator;
-import java.util.List;
-import java.util.Map;
-import java.util.Random;
-import java.util.UUID;
-
-// CraftBukkit start
-import java.util.ArrayList;
-import com.google.common.base.Function;
+import org.bukkit.Bukkit;
 import org.bukkit.craftbukkit.attribute.CraftAttributeMap;
 import org.bukkit.craftbukkit.entity.CraftLivingEntity;
 import org.bukkit.craftbukkit.event.CraftEventFactory;
@@ -21,22 +12,13 @@ import org.bukkit.craftbukkit.potion.CraftPotionUtils;
 import org.bukkit.entity.EntityType;
 import org.bukkit.entity.LivingEntity;
 import org.bukkit.entity.Vehicle;
-import org.bukkit.event.entity.EntityDamageEvent;
+import org.bukkit.event.entity.*;
 import org.bukkit.event.entity.EntityDamageEvent.DamageModifier;
-import org.bukkit.event.entity.EntityRegainHealthEvent;
-import org.bukkit.event.entity.PotionEffectAddEvent;
 import org.bukkit.event.entity.PotionEffectAddEvent.EffectAddReason;
-import org.bukkit.event.entity.PotionEffectExpireEvent;
-import org.bukkit.event.entity.PotionEffectExtendEvent;
-import org.bukkit.event.entity.PotionEffectRemoveEvent;
 import org.bukkit.event.vehicle.VehicleExitEvent;
-import org.bukkit.util.Vector;
-// CraftBukkit end
-
-// PaperSpigot start
-import org.bukkit.Bukkit;
-import org.github.paperspigot.PaperSpigotConfig;
 import org.spigotmc.event.entity.EntityDismountEvent;
+
+import java.util.*;
 // PaperSpigot end
 
 public abstract class EntityLiving extends Entity {

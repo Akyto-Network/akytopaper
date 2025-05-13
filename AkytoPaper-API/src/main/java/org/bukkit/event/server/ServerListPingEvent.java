@@ -1,18 +1,14 @@
 package org.bukkit.event.server;
 
-import java.net.InetAddress;
-import java.util.Collections;
-import java.util.HashMap;
-import java.util.Iterator;
-import java.util.Map;
-import java.util.Optional;
-
 import com.google.gson.JsonObject;
 import org.apache.commons.lang.Validate;
 import org.bukkit.entity.Player;
 import org.bukkit.event.HandlerList;
 import org.bukkit.plugin.Plugin;
 import org.bukkit.util.CachedServerIcon;
+
+import java.net.InetAddress;
+import java.util.*;
 
 /**
  * Called when a server list ping is coming in. Displayed players can be

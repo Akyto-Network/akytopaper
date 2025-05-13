@@ -1,6 +1,5 @@
 package akyto.spigot.chunk;
 
-import akyto.spigot.chunk.FakeMultiBlockChange;
 import net.minecraft.server.PacketPlayOutMultiBlockChange;
 import org.bukkit.craftbukkit.entity.CraftPlayer;
 import org.bukkit.entity.Player;

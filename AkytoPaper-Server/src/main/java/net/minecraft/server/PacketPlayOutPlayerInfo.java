@@ -4,11 +4,12 @@ import com.google.common.base.Objects;
 import com.google.common.collect.Lists;
 import com.mojang.authlib.GameProfile;
 import com.mojang.authlib.properties.Property;
+import net.minecraft.server.WorldSettings.EnumGamemode;
+import org.bukkit.ChatColor;
+
 import java.io.IOException;
 import java.util.Iterator;
 import java.util.List;
-import net.minecraft.server.WorldSettings.EnumGamemode;
-import org.bukkit.ChatColor;
 
 public class PacketPlayOutPlayerInfo implements Packet<PacketListenerPlayOut> {
 

@@ -1,9 +1,9 @@
 package net.minecraft.server;
 
 // CraftBukkit start
+
 import org.bukkit.craftbukkit.inventory.CraftItemStack;
 import org.bukkit.event.block.BlockDispenseEntityEvent;
-import org.bukkit.event.block.BlockDispenseEvent;
 // CraftBukkit end
 
 public class ItemMinecart extends Item {

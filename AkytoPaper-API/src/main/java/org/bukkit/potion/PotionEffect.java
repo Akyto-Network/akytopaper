@@ -1,17 +1,16 @@
 package org.bukkit.potion;
 
-import java.util.Map;
-import java.util.NoSuchElementException;
-
+import com.google.common.collect.ImmutableMap;
 import org.apache.commons.lang.Validate;
 import org.apache.commons.lang.WordUtils;
 import org.bukkit.configuration.serialization.ConfigurationSerializable;
 import org.bukkit.configuration.serialization.SerializableAs;
 import org.bukkit.entity.LivingEntity;
-
-import com.google.common.collect.ImmutableMap;
 import org.bukkit.event.entity.PotionEffectAddEvent.EffectAddReason;
 import org.bukkit.util.RomanNumber;
+
+import java.util.Map;
+import java.util.NoSuchElementException;
 
 /**
  * Represents a potion effect, that can be added to a {@link LivingEntity}. A

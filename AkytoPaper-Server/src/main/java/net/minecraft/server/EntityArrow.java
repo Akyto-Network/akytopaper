@@ -1,13 +1,12 @@
 package net.minecraft.server;
 
-import java.util.List;
-
-// CraftBukkit start
 import org.bukkit.entity.LivingEntity;
 import org.bukkit.event.entity.EntityCombustByEntityEvent;
 import org.bukkit.event.player.PlayerPickupItemEvent;
 import org.github.paperspigot.PaperSpigotConfig;
 import org.github.paperspigot.event.entity.ProjectileCollideEvent;
+
+import java.util.List;
 // CraftBukkit end
 
 public class EntityArrow extends Entity implements IProjectile {

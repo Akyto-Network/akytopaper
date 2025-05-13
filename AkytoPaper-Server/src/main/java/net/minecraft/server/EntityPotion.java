@@ -1,15 +1,13 @@
 package net.minecraft.server;
 
-import java.util.Iterator;
-import java.util.List;
-
-// CraftBukkit start
-import java.util.HashMap;
-
 import akyto.spigot.aSpigot;
 import org.bukkit.craftbukkit.entity.CraftLivingEntity;
 import org.bukkit.entity.LivingEntity;
 import org.bukkit.event.entity.PotionEffectAddEvent.EffectAddReason;
+
+import java.util.HashMap;
+import java.util.Iterator;
+import java.util.List;
 // CraftBukkit end
 
 public class EntityPotion extends EntityProjectile {

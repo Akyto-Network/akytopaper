@@ -1,14 +1,14 @@
 package org.bukkit.plugin;
 
-import java.io.File;
-import java.util.Set;
-
 import org.bukkit.event.Event;
 import org.bukkit.event.EventCallback;
 import org.bukkit.event.EventPriority;
 import org.bukkit.event.Listener;
 import org.bukkit.permissions.Permissible;
 import org.bukkit.permissions.Permission;
+
+import java.io.File;
+import java.util.Set;
 
 /**
  * Handles all plugin management from the Server

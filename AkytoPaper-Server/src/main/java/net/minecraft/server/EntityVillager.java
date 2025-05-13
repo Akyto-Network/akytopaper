@@ -1,9 +1,10 @@
 package net.minecraft.server;
 
+import org.bukkit.craftbukkit.entity.CraftVillager;
+import org.bukkit.event.entity.PotionEffectAddEvent.EffectAddReason;
+
 import java.util.Iterator;
 import java.util.Random;
-import org.bukkit.craftbukkit.entity.CraftVillager; // CraftBukkit
-import org.bukkit.event.entity.PotionEffectAddEvent.EffectAddReason;
 
 public class EntityVillager extends EntityAgeable implements IMerchant, NPC {
 

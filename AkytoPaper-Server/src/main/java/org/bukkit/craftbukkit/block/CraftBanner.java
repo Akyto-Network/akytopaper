@@ -1,7 +1,5 @@
 package org.bukkit.craftbukkit.block;
 
-import java.util.ArrayList;
-import java.util.List;
 import net.minecraft.server.NBTTagCompound;
 import net.minecraft.server.NBTTagList;
 import net.minecraft.server.TileEntityBanner;
@@ -12,6 +10,9 @@ import org.bukkit.block.Block;
 import org.bukkit.block.banner.Pattern;
 import org.bukkit.block.banner.PatternType;
 import org.bukkit.craftbukkit.CraftWorld;
+
+import java.util.ArrayList;
+import java.util.List;
 
 public class CraftBanner extends CraftBlockState implements Banner {
 

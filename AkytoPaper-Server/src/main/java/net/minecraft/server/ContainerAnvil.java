@@ -1,12 +1,12 @@
 package net.minecraft.server;
 
-import java.util.Iterator;
-import java.util.Map;
 import org.apache.commons.lang3.StringUtils;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
+import org.bukkit.craftbukkit.inventory.CraftInventoryView;
 
-import org.bukkit.craftbukkit.inventory.CraftInventoryView; // CraftBukkit
+import java.util.Iterator;
+import java.util.Map;
 
 public class ContainerAnvil extends Container {
 

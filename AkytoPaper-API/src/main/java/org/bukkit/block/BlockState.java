@@ -1,10 +1,6 @@
 package org.bukkit.block;
 
-import org.bukkit.Chunk;
-import org.bukkit.Location;
-import org.bukkit.Material;
-import org.bukkit.Physical;
-import org.bukkit.World;
+import org.bukkit.*;
 import org.bukkit.material.MaterialData;
 import org.bukkit.metadata.Metadatable;
 

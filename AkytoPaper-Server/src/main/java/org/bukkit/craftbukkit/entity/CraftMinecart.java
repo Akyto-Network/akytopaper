@@ -2,9 +2,7 @@ package org.bukkit.craftbukkit.entity;
 
 import net.minecraft.server.Blocks;
 import net.minecraft.server.EntityMinecartAbstract;
-
 import net.minecraft.server.IBlockData;
-import org.bukkit.Material;
 import org.bukkit.craftbukkit.CraftServer;
 import org.bukkit.craftbukkit.util.CraftMagicNumbers;
 import org.bukkit.entity.Minecart;

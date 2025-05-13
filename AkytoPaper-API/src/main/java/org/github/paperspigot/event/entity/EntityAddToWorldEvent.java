@@ -1,7 +1,6 @@
 package org.github.paperspigot.event.entity;
 
 import org.bukkit.entity.Entity;
-import org.bukkit.event.Event;
 import org.bukkit.event.HandlerList;
 import org.bukkit.event.entity.EntityEvent;
 

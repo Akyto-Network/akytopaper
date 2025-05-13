@@ -1,14 +1,14 @@
 package org.bukkit.inventory;
 
-import java.util.HashMap;
-import java.util.List;
-import java.util.ListIterator;
-
 import net.md_5.bungee.api.chat.BaseComponent;
 import org.bukkit.Material;
 import org.bukkit.Physical;
 import org.bukkit.entity.HumanEntity;
 import org.bukkit.event.inventory.InventoryType;
+
+import java.util.HashMap;
+import java.util.List;
+import java.util.ListIterator;
 
 /**
  * Interface to the various inventories. Behavior relating to {@link

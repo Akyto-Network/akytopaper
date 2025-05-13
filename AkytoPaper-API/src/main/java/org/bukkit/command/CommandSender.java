@@ -1,9 +1,10 @@
 package org.bukkit.command;
 
-import java.util.Locale;
 import app.ashcon.sportpaper.api.text.PersonalizedComponent;
 import org.bukkit.Server;
 import org.bukkit.permissions.Permissible;
+
+import java.util.Locale;
 
 public interface CommandSender extends Permissible {
 

@@ -1,14 +1,13 @@
 package net.minecraft.server;
 
+import org.bukkit.block.BlockFace;
+import org.bukkit.event.block.BlockFormEvent;
+import org.bukkit.event.block.BlockFromToEvent;
+
 import java.util.EnumSet;
 import java.util.Iterator;
 import java.util.Random;
 import java.util.Set;
-
-// CraftBukkit start
-import org.bukkit.block.BlockFace;
-import org.bukkit.event.block.BlockFormEvent;
-import org.bukkit.event.block.BlockFromToEvent;
 // CraftBukkit end
 
 public class BlockFlowing extends BlockFluids {

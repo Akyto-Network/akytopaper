@@ -1,5 +1,6 @@
 package org.spigotmc;
 
+import co.aikar.timings.SpigotTimings;
 import gnu.trove.set.TByteSet;
 import gnu.trove.set.hash.TByteHashSet;
 import net.minecraft.server.Block;
@@ -7,9 +8,7 @@ import net.minecraft.server.BlockPosition;
 import net.minecraft.server.Blocks;
 import net.minecraft.server.World;
 import org.bukkit.craftbukkit.util.CraftMagicNumbers;
-import co.aikar.timings.SpigotTimings;
 
-// PaperSpigot start
 import java.util.HashSet;
 import java.util.Set;
 // PaperSpigot end

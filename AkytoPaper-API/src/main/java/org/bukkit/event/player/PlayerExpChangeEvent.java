@@ -1,9 +1,10 @@
 package org.bukkit.event.player;
 
-import javax.annotation.Nullable;
 import org.bukkit.entity.Entity;
 import org.bukkit.entity.Player;
 import org.bukkit.event.HandlerList;
+
+import javax.annotation.Nullable;
 
 /**
  * Called when a players experience changes naturally

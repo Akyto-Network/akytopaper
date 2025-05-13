@@ -1,16 +1,12 @@
 package org.bukkit.block;
 
-import java.util.Collection;
-
-import org.bukkit.Chunk;
-import org.bukkit.Material;
-import org.bukkit.Physical;
-import org.bukkit.World;
-import org.bukkit.Location;
+import org.bukkit.*;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.metadata.Metadatable;
 import org.bukkit.util.RayBlockIntersection;
 import org.bukkit.util.Vector;
+
+import java.util.Collection;
 
 /**
  * Represents a block. This is a live object, and only one Block may exist for

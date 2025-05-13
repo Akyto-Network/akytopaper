@@ -1,10 +1,5 @@
 package org.bukkit;
 
-import java.util.Collection;
-import java.util.HashMap;
-import java.util.Map;
-import java.util.function.Predicate;
-
 import com.google.common.base.Preconditions;
 import org.bukkit.block.Block;
 import org.bukkit.configuration.serialization.ConfigurationSerializable;
@@ -12,8 +7,12 @@ import org.bukkit.entity.Entity;
 import org.bukkit.entity.LivingEntity;
 import org.bukkit.entity.Player;
 import org.bukkit.util.NumberConversions;
-import static org.bukkit.util.NumberConversions.checkFinite;
 import org.bukkit.util.Vector;
+
+import java.util.Collection;
+import java.util.HashMap;
+import java.util.Map;
+import java.util.function.Predicate;
 
 /**
  * Represents a 3-dimensional position in a world

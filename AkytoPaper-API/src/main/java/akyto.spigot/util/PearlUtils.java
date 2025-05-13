@@ -2,8 +2,6 @@ package akyto.spigot.util;
 
 import org.bukkit.Location;
 import org.bukkit.block.Block;
-import org.bukkit.block.BlockFace;
-import org.bukkit.material.Openable;
 
 public class PearlUtils {
 

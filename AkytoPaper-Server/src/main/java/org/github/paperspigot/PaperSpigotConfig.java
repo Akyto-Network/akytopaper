@@ -1,14 +1,14 @@
 package org.github.paperspigot;
 
-import java.util.*;
-import java.util.logging.Level;
-
 import net.minecraft.server.Items;
 import org.apache.commons.lang.StringUtils;
 import org.bukkit.Bukkit;
 import org.bukkit.Material;
 import org.bukkit.command.Command;
 import org.bukkit.configuration.file.YamlConfiguration;
+
+import java.util.*;
+import java.util.logging.Level;
 
 public class PaperSpigotConfig
 {

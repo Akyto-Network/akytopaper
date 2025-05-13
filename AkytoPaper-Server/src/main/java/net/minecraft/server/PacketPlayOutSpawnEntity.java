@@ -1,7 +1,6 @@
 package net.minecraft.server;
 
 import java.io.IOException;
-import java.util.UUID;
 
 public class PacketPlayOutSpawnEntity implements Packet<PacketListenerPlayOut> {
 

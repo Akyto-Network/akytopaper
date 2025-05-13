@@ -1,13 +1,9 @@
 package org.bukkit.util;
 
-import java.util.Arrays;
-import java.util.Collection;
-import java.util.Collections;
-import java.util.EnumSet;
-import java.util.Set;
-
 import com.google.common.collect.ForwardingSet;
 import org.bukkit.Material;
+
+import java.util.*;
 
 /**
  * Highly efficient immutable container for {@link Material}s. Useful for sharing

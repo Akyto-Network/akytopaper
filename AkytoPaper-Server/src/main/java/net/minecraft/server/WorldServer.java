@@ -4,31 +4,19 @@ import akyto.spigot.math.FastRandom;
 import com.google.common.base.Predicate;
 import com.google.common.collect.Lists;
 import com.google.common.collect.Maps;
-import com.google.common.collect.Sets;
 import com.google.common.util.concurrent.ListenableFuture;
-import java.util.ArrayList;
-import java.util.Iterator;
-import java.util.List;
-import java.util.Map;
-import java.util.Random;
-import java.util.Set;
-import java.util.TreeSet;
-import java.util.UUID;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
-
-// CraftBukkit start
-import java.util.*;
-import java.util.logging.Level;
-
 import org.bukkit.WeatherType;
 import org.bukkit.block.BlockState;
-import org.bukkit.craftbukkit.util.LongHash;
 import org.bukkit.craftbukkit.util.HashTreeSet;
-
+import org.bukkit.craftbukkit.util.LongHash;
 import org.bukkit.event.block.BlockFormEvent;
 import org.bukkit.event.weather.LightningStrikeEvent;
 import org.github.paperspigot.PaperSpigotConfig;
+
+import java.util.*;
+import java.util.logging.Level;
 // CraftBukkit end
 
 public class WorldServer extends World implements IAsyncTaskHandler {

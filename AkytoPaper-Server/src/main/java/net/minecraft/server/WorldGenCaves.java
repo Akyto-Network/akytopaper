@@ -1,6 +1,7 @@
 package net.minecraft.server;
 
 import com.google.common.base.Objects;
+
 import java.util.Random;
 
 public class WorldGenCaves extends WorldGenBase {

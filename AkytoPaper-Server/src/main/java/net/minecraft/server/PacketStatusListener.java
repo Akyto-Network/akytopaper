@@ -1,14 +1,14 @@
 package net.minecraft.server;
 
 // CraftBukkit start
-import com.mojang.authlib.GameProfile;
-import io.netty.channel.ChannelFutureListener;
-import java.net.InetSocketAddress;
-import java.util.Iterator;
-import java.util.Locale; // SportPaper - server list ping extra
 
+import com.mojang.authlib.GameProfile;
 import org.bukkit.craftbukkit.util.CraftIconCache;
 import org.bukkit.entity.Player;
+
+import java.net.InetSocketAddress;
+import java.util.Iterator;
+import java.util.Locale;
 
 // CraftBukkit end
 

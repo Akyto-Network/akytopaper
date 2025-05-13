@@ -1,10 +1,8 @@
 package org.bukkit.craftbukkit.scoreboard;
 
-import net.minecraft.server.Scoreboard;
-
-import org.bukkit.scoreboard.DisplaySlot;
-
 import com.google.common.collect.ImmutableBiMap;
+import net.minecraft.server.Scoreboard;
+import org.bukkit.scoreboard.DisplaySlot;
 
 public class CraftScoreboardTranslations {
     static final int MAX_DISPLAY_SLOT = 3;

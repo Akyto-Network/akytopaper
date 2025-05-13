@@ -1,10 +1,6 @@
 package org.bukkit.command.defaults;
 
-import com.google.common.base.Charsets;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
-
+import com.google.common.collect.ImmutableList;
 import org.apache.commons.lang.Validate;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
@@ -13,20 +9,9 @@ import org.bukkit.plugin.Plugin;
 import org.bukkit.plugin.PluginDescriptionFile;
 import org.bukkit.util.StringUtil;
 
-import com.google.common.collect.ImmutableList;
-import com.google.common.io.Resources;
-import java.io.BufferedReader;
-import java.io.IOException;
-import java.net.URL;
-import java.net.URLEncoder;
-import java.util.HashSet;
-import java.util.Set;
-import java.util.concurrent.locks.ReentrantLock;
-import java.util.logging.Level;
-import java.util.logging.Logger;
-import org.json.simple.JSONObject;
-import org.json.simple.parser.JSONParser;
-import org.json.simple.parser.ParseException;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
 
 public class VersionCommand extends BukkitCommand {
     public VersionCommand(String name) {
@@ -58,7 +43,7 @@ public class VersionCommand extends BukkitCommand {
             StringBuilder name = new StringBuilder();
 
             for (String arg : args) {
-                if (name.length() > 0) {
+                if (!name.isEmpty()) {
                     name.append(' ');
                 }
 
@@ -115,7 +100,7 @@ public class VersionCommand extends BukkitCommand {
         List<String> authors = desc.getAuthors();
 
         for (int i = 0; i < authors.size(); i++) {
-            if (result.length() > 0) {
+            if (!result.isEmpty()) {
                 result.append(ChatColor.WHITE);
 
                 if (i < authors.size() - 1) {

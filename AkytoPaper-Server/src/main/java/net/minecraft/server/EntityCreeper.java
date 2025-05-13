@@ -1,9 +1,10 @@
 package net.minecraft.server;
 
 // CraftBukkit start
+
 import org.bukkit.craftbukkit.event.CraftEventFactory;
-import org.bukkit.event.entity.ExplosionPrimeEvent;
 import org.bukkit.event.entity.ExplosionPrimeByEntityEvent;
+import org.bukkit.event.entity.ExplosionPrimeEvent;
 
 // CraftBukkit end
 

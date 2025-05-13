@@ -1,11 +1,10 @@
 package org.bukkit.craftbukkit;
 
+import net.minecraft.server.BiomeBase;
 import org.bukkit.ChunkSnapshot;
 import org.bukkit.block.Biome;
 import org.bukkit.block.BlockState;
 import org.bukkit.craftbukkit.block.CraftBlock;
-
-import net.minecraft.server.BiomeBase;
 import org.bukkit.material.MaterialData;
 import org.bukkit.util.Vector;
 

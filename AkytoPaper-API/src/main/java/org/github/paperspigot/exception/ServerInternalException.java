@@ -1,7 +1,6 @@
 package org.github.paperspigot.exception;
 
 import org.bukkit.Bukkit;
-import org.bukkit.entity.ThrownExpBottle;
 import org.github.paperspigot.event.ServerExceptionEvent;
 
 /**

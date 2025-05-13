@@ -1,23 +1,21 @@
 package net.minecraft.server;
 
-import com.google.common.collect.Iterables;
-import com.mojang.authlib.GameProfile;
-import com.mojang.authlib.properties.Property;
-import java.util.UUID;
-
-// Spigot start
 import com.google.common.base.Predicate;
-import com.google.common.cache.LoadingCache;
 import com.google.common.cache.CacheBuilder;
 import com.google.common.cache.CacheLoader;
+import com.google.common.cache.LoadingCache;
+import com.google.common.collect.Iterables;
+import com.google.common.util.concurrent.ThreadFactoryBuilder;
+import com.mojang.authlib.Agent;
+import com.mojang.authlib.GameProfile;
+import com.mojang.authlib.ProfileLookupCallback;
+import com.mojang.authlib.properties.Property;
+import org.spigotmc.SpigotConfig;
+
+import java.util.UUID;
 import java.util.concurrent.Executor;
 import java.util.concurrent.Executors;
 import java.util.concurrent.TimeUnit;
-
-import com.google.common.util.concurrent.ThreadFactoryBuilder;
-import com.mojang.authlib.Agent;
-import com.mojang.authlib.ProfileLookupCallback;
-import org.spigotmc.SpigotConfig;
 // Spigot end
 
 public class TileEntitySkull extends TileEntity {

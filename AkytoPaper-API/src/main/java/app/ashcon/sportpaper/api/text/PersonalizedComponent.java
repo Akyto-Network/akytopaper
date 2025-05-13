@@ -1,8 +1,9 @@
 package app.ashcon.sportpaper.api.text;
 
-import java.util.Locale;
 import net.md_5.bungee.api.chat.BaseComponent;
 import org.bukkit.command.CommandSender;
+
+import java.util.Locale;
 
 /**
  * A component which can be rendered for a specific {@link CommandSender}.

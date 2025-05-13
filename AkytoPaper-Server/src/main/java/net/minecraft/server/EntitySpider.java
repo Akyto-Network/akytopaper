@@ -1,7 +1,8 @@
 package net.minecraft.server;
 
-import java.util.Random;
 import org.bukkit.event.entity.PotionEffectAddEvent.EffectAddReason;
+
+import java.util.Random;
 
 public class EntitySpider extends EntityMonster {
 

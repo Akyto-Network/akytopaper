@@ -1,13 +1,12 @@
 package org.bukkit;
 
+import com.google.common.collect.Maps;
+import org.apache.commons.lang.Validate;
+
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 import java.util.regex.Pattern;
-
-import org.apache.commons.lang.Validate;
-
-import com.google.common.collect.Maps;
 
 /**
  * All supported color values for chat
