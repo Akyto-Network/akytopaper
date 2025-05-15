@@ -1,12 +1,25 @@
 package net.minecraft.server;
 
+import akyto.spigot.aSpigot;
+import org.bukkit.Bukkit;
+
 import java.io.IOException;
+import java.util.HashMap;
+import java.util.Map;
+import java.util.UUID;
+import java.util.concurrent.ConcurrentHashMap;
+
+import static akyto.spigot.aSpigot.lastClickTimes;
 
 public class PacketPlayInUseEntity implements Packet<PacketListenerPlayIn> {
 
-    private int a;public int getEntityId() { return this.a; } // Paper - add accessor
+    private int a;
+    public int getEntityId() { return this.a; } // Paper - add accessor
     private PacketPlayInUseEntity.EnumEntityUseAction action;
     private Vec3D c;
+
+    private static final int MAX_CLICKS_PER_SECOND = aSpigot.INSTANCE.getConfig().getCpsMax();
+    private static final long MIN_CLICK_INTERVAL = 1000 / MAX_CLICKS_PER_SECOND;
 
     public PacketPlayInUseEntity() {}
 
@@ -31,7 +44,42 @@ public class PacketPlayInUseEntity implements Packet<PacketListenerPlayIn> {
     }
 
     public void a(PacketListenerPlayIn packetlistenerplayin) {
-        packetlistenerplayin.a(this);
+        if (this.action == PacketPlayInUseEntity.EnumEntityUseAction.ATTACK && aSpigot.INSTANCE.getConfig().isCpsCapPacketEnabled()) {
+            PlayerConnection playerConnection = (PlayerConnection) packetlistenerplayin;
+            EntityPlayer player = playerConnection.player;
+            UUID playerId = player.getUniqueID();
+            long currentTime = System.currentTimeMillis();
+            handleAttack(playerId, currentTime, packetlistenerplayin);
+        }
+        else {
+            packetlistenerplayin.a(this);
+        }
+    }
+
+    private void handleAttack(UUID playerId, long currentTime, PacketListenerPlayIn packetlistenerplayin) {
+        if (!(packetlistenerplayin instanceof PlayerConnection)) {
+            return;
+        }
+        PlayerConnection playerConnection = (PlayerConnection) packetlistenerplayin;
+        if (playerConnection.player == null || playerConnection.player.dead) {
+            return;
+        }
+        PlayerConnectionUtils.ensureMainThread(this, playerConnection, playerConnection.player.u());
+        long lastProcessedTime = aSpigot.lastProcessedClickTimes.getOrDefault(playerId, 0L);
+        long lastClickTime = aSpigot.lastClickTimes.getOrDefault(playerId, 0L);
+        System.out.println((currentTime - lastProcessedTime >= MIN_CLICK_INTERVAL ? "packet sended" : "packet not sended") + " for " + Bukkit.getPlayer(playerId).getName());
+        if (currentTime - lastProcessedTime >= MIN_CLICK_INTERVAL) {
+            aSpigot.lastProcessedClickTimes.put(playerId, currentTime);
+            packetlistenerplayin.a(this);
+        }
+        lastClickTimes.put(playerId, currentTime);
+        int clickCount = aSpigot.clickCounts.getOrDefault(playerId, 0);
+        if (currentTime - lastClickTime < 1000) {
+            clickCount++;
+        } else {
+            clickCount = 0;
+        }
+        aSpigot.clickCounts.put(playerId, clickCount);
     }
 
     public Entity a(World world) {

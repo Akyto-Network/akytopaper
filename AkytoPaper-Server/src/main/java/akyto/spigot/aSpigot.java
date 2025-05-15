@@ -7,7 +7,10 @@ import lombok.Getter;
 import lombok.Setter;
 
 import java.util.HashSet;
+import java.util.Map;
 import java.util.Set;
+import java.util.UUID;
+import java.util.concurrent.ConcurrentHashMap;
 
 @Getter
 public enum aSpigot {
@@ -19,6 +22,10 @@ public enum aSpigot {
     private final Set<PacketHandler> packetHandlers = new HashSet<>();
     private final Set<MovementHandler> movementHandlers = new HashSet<>();
 	private final LagCompensator lagCompensator = new LagCompensator();
+
+	public static final Map<UUID, Long> lastClickTimes = new ConcurrentHashMap<>();
+	public static final Map<UUID, Integer> clickCounts = new ConcurrentHashMap<>();
+	public static final Map<UUID, Long> lastProcessedClickTimes = new ConcurrentHashMap<>();
 
 	public void addPacketHandler(PacketHandler handler) {
 		this.packetHandlers.add(handler);

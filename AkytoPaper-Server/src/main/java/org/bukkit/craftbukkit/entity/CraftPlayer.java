@@ -92,6 +92,9 @@ public class CraftPlayer extends CraftHumanEntity implements Player {
     }
 
     @Override
+    public int getCps() { return aSpigot.clickCounts.getOrDefault(getHandle().playerConnection.player.getUniqueID(), 0);}
+
+    @Override
     public <T> void sendPacket(T packet) throws RuntimeException {
         if (packet instanceof Packet)
             getHandle().playerConnection.sendPacket((Packet) packet);

@@ -63,6 +63,9 @@ public class aSpigotConfig {
     private boolean releaseItemFix;
     private double maxBlockingSpeed;
 
+    private boolean cpsCapPacketEnabled;
+    private int cpsMax;
+
     public aSpigotConfig() {
         this.configFile = new File("settings.yml");
         this.config = new YamlConfiguration();
@@ -118,6 +121,9 @@ public class aSpigotConfig {
         this.inaccuracy = this.getFloat("inaccuracy", -10.0f);
         this.releaseItemFix = this.getBoolean("releaseItemFix", true);
         this.maxBlockingSpeed = this.getDouble("maxBlockingSpeed", 0.2d);
+
+        this.cpsCapPacketEnabled = this.getBoolean("cpsCapPacketEnabled", false);
+        this.cpsMax = this.getInt("cpsMax", 15);
         SpigotBridge.disableOpPermissions = this.getBoolean("disable-op", false);
 
         save();

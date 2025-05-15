@@ -4,8 +4,7 @@ import java.io.IOException;
 
 public class PacketPlayInArmAnimation implements Packet<PacketListenerPlayIn> {
 
-    public long timestamp; // Spigot
-
+    public long timestamp;
     public PacketPlayInArmAnimation() {}
 
     public void a(PacketDataSerializer packetdataserializer) throws IOException {

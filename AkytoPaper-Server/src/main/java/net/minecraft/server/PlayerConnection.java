@@ -1365,6 +1365,7 @@ public class PlayerConnection implements PacketListenerPlayIn, IUpdatePlayerList
     public void a(PacketPlayInArmAnimation packetplayinarmanimation) {
         if (this.player.dead) return; // CraftBukkit
         PlayerConnectionUtils.ensureMainThread(packetplayinarmanimation, this, this.player.u());
+
         this.player.resetIdleTimer();
         // CraftBukkit start - Raytrace to look for 'rogue armswings'
         float f1 = this.player.pitch;
@@ -1487,7 +1488,6 @@ public class PlayerConnection implements PacketListenerPlayIn, IUpdatePlayerList
 
             if (this.player.distanceSqrdAccurate(entity) <= d0) {
                 ItemStack itemInHand = this.player.inventory.getItemInHand(); // CraftBukkit
-
                 if (packetplayinuseentity.a() == PacketPlayInUseEntity.EnumEntityUseAction.INTERACT
                         || packetplayinuseentity.a() == PacketPlayInUseEntity.EnumEntityUseAction.INTERACT_AT) {
                     // CraftBukkit start

@@ -1057,8 +1057,10 @@ public abstract class EntityHuman extends EntityLiving {
                                 }
 
                                 if (isSprinting()) {
-                                    motX *= config.getSlowdown();
-                                    motZ *= config.getSlowdown();
+                                    if (!aSpigot.INSTANCE.getConfig().isCpsCapPacketEnabled()) {
+                                        motX *= config.getSlowdown();
+                                        motZ *= config.getSlowdown();
+                                    }
 
                                     shouldDealSprintKnockback = false;
 
@@ -1112,8 +1114,10 @@ public abstract class EntityHuman extends EntityLiving {
                                 }
 
                                 if (isSprinting()) {
-                                    motX *= config.getSlowdown();
-                                    motZ *= config.getSlowdown();
+                                    if (!aSpigot.INSTANCE.getConfig().isCpsCapPacketEnabled()) {
+                                        motX *= config.getSlowdown();
+                                        motZ *= config.getSlowdown();
+                                    }
                                     shouldDealSprintKnockback = false;
 
                                     if (config.isStopSprint()) {
