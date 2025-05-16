@@ -5,6 +5,7 @@ import akyto.spigot.handler.PacketHandler;
 import akyto.spigot.hitdetection.LagCompensator;
 import lombok.Getter;
 import lombok.Setter;
+import net.minecraft.server.Entity;
 
 import java.util.HashSet;
 import java.util.Map;
@@ -26,6 +27,11 @@ public enum aSpigot {
 	public static final Map<UUID, Long> lastClickTimes = new ConcurrentHashMap<>();
 	public static final Map<UUID, Integer> clickCounts = new ConcurrentHashMap<>();
 	public static final Map<UUID, Long> lastProcessedClickTimes = new ConcurrentHashMap<>();
+	public static final Map<Entity, Long> nextHitTick = new ConcurrentHashMap<>();
+
+	public static void updateNextHitTick(final Entity entity) {
+		nextHitTick.replace(entity, System.currentTimeMillis() + 500L);
+	}
 
 	public void addPacketHandler(PacketHandler handler) {
 		this.packetHandlers.add(handler);

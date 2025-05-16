@@ -1,5 +1,6 @@
 package net.minecraft.server;
 
+import akyto.spigot.aSpigot;
 import com.google.common.base.Function;
 import com.google.common.base.Predicate;
 import com.google.common.base.Predicates;
@@ -739,11 +740,6 @@ public abstract class EntityLiving extends Entity {
                 return false;
             } else {
                 // CraftBukkit - Moved into d(DamageSource, float)
-                if (false && (damagesource == DamageSource.ANVIL || damagesource == DamageSource.FALLING_BLOCK) && this.getEquipment(4) != null) {
-                    this.getEquipment(4).damage((int) (f * 4.0F + this.random.nextFloat() * f * 2.0F), this);
-                    f *= 0.75F;
-                }
-
                 this.aB = 1.5F;
                 boolean flag = true;
 
@@ -755,11 +751,18 @@ public abstract class EntityLiving extends Entity {
                         return false;
                     }
 
-                    // CraftBukkit start
+                    //Akyto - fix double hit
+                    final Long nextHitTick = aSpigot.nextHitTick.getOrDefault(this, 0L);
+                    if (nextHitTick != 0L && nextHitTick  > System.currentTimeMillis()) {
+                        return false;
+                    }
+                    aSpigot.updateNextHitTick(this);
+
+                    //CraftBukkit start
                     if (!this.d(damagesource, f - this.lastDamage)) {
                         return false;
                     }
-                    // CraftBukkit end
+                    //CraftBukkit end
                     this.lastDamage = f;
                     flag = false;
                 } else {
@@ -1081,7 +1084,7 @@ public abstract class EntityLiving extends Entity {
                 public Double apply(Double f) {
                     if (human) {
                         if (!damagesource.ignoresArmor() && ((EntityHuman) EntityLiving.this).isBlocking() && f > 0.0F) {
-                            return -(f - ((1.0F + f) * 0.5F));
+                            return -(f - ((1.0F + f) * world.paperSpigotConfig.playerBlockingDamageMultiplier));
                         }
                     }
                     return -0.0;

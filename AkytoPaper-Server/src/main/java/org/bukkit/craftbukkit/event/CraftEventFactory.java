@@ -437,7 +437,9 @@ public class CraftEventFactory {
                 event.getEntity().setLastDamageCause(event);
             }
             return event;
-        } else if (source instanceof EntityDamageSource) {
+        }
+
+        else if (source instanceof EntityDamageSource) {
             Entity damager = source.getEntity();
             DamageCause cause = DamageCause.ENTITY_ATTACK;
 
@@ -453,7 +455,9 @@ public class CraftEventFactory {
             }
 
             return callEntityDamageEvent(damager, entity, cause, modifiers, modifierFunctions);
-        } else if (source == DamageSource.OUT_OF_WORLD) {
+        }
+
+        else if (source == DamageSource.OUT_OF_WORLD) {
             EntityDamageEvent event = callEvent(new EntityDamageByBlockEvent(null, entity.getBukkitEntity(), DamageCause.VOID, modifiers, modifierFunctions));
             if (!event.isCancelled()) {
                 event.getEntity().setLastDamageCause(event);
