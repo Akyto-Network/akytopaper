@@ -25,6 +25,8 @@ package co.aikar.timings;
 
 import com.google.common.base.Function;
 import com.google.common.collect.Sets;
+import net.minidev.json.JSONObject;
+import net.minidev.json.JSONValue;
 import org.apache.commons.lang.StringUtils;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
@@ -36,8 +38,6 @@ import org.bukkit.configuration.ConfigurationSection;
 import org.bukkit.configuration.MemorySection;
 import org.bukkit.entity.EntityType;
 import org.bukkit.plugin.Plugin;
-import org.json.simple.JSONObject;
-import org.json.simple.JSONValue;
 
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
@@ -49,6 +49,7 @@ import java.lang.management.RuntimeMXBean;
 import java.net.HttpURLConnection;
 import java.net.InetAddress;
 import java.net.URL;
+import java.nio.charset.StandardCharsets;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
@@ -313,7 +314,7 @@ class TimingsExport extends Thread {
                 this.def.setLevel(7);
             }};
 
-            request.write(JSONValue.toJSONString(out).getBytes("UTF-8"));
+            request.write(JSONValue.toJSONString(out).getBytes(StandardCharsets.UTF_8));
             request.close();
 
             response = getResponse(con);

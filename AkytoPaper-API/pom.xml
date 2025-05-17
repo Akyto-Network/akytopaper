@@ -55,10 +55,9 @@
             <scope>compile</scope>
         </dependency>
         <dependency>
-            <groupId>com.googlecode.json-simple</groupId>
-            <artifactId>json-simple</artifactId>
-            <version>1.1.1</version>
-            <type>jar</type>
+            <groupId>net.minidev</groupId>
+            <artifactId>json-smart</artifactId>
+            <version>2.5.2</version>
             <scope>compile</scope>
         </dependency>
         <!-- bundled with Minecraft, should be kept in sync -->
