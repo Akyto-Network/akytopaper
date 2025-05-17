@@ -7,9 +7,10 @@ import com.avaje.ebean.config.dbplatform.SQLitePlatform;
 import com.avaje.ebeaninternal.server.lib.sql.TransactionIsolation;
 import com.google.common.base.Charsets;
 import com.google.common.base.Function;
+import com.google.common.cache.Cache;
+import com.google.common.cache.CacheBuilder;
 import com.google.common.collect.ImmutableList;
 import com.google.common.collect.Lists;
-import com.google.common.collect.MapMaker;
 import com.mojang.authlib.GameProfile;
 import io.netty.buffer.ByteBuf;
 import io.netty.buffer.ByteBufOutputStream;
@@ -110,7 +111,7 @@ public final class CraftServer implements Server {
     protected final DedicatedPlayerList playerList;
     private final Map<String, World> worlds = new LinkedHashMap<String, World>();
     private final Yaml yaml = new Yaml(new SafeConstructor(new LoaderOptions()));
-    private final Map<UUID, OfflinePlayer> offlinePlayers = new MapMaker().softValues().makeMap();
+    private final Cache<UUID, OfflinePlayer> offlinePlayers = CacheBuilder.newBuilder().softValues().build();
     private final EntityMetadataStore entityMetadata = new EntityMetadataStore();
     private final PlayerMetadataStore playerMetadata = new PlayerMetadataStore();
     private final WorldMetadataStore worldMetadata = new WorldMetadataStore();
@@ -1218,7 +1219,7 @@ public final class CraftServer implements Server {
                 result = getOfflinePlayer(profile);
             }
         } else {
-            offlinePlayers.remove(result.getUniqueId());
+            offlinePlayers.invalidate(result.getUniqueId());
         }
 
         return result;
@@ -1230,13 +1231,13 @@ public final class CraftServer implements Server {
 
         OfflinePlayer result = getPlayer(id);
         if (result == null) {
-            result = offlinePlayers.get(id);
+            result = offlinePlayers.getIfPresent(id);
             if (result == null) {
                 result = new CraftOfflinePlayer(this, new GameProfile(id, null));
                 offlinePlayers.put(id, result);
             }
         } else {
-            offlinePlayers.remove(id);
+            offlinePlayers.invalidate(id);
         }
 
         return result;

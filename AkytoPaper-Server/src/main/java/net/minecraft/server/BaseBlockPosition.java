@@ -1,5 +1,6 @@
 package net.minecraft.server;
 
+import com.google.common.base.MoreObjects;
 import com.google.common.base.Objects;
 
 public class BaseBlockPosition implements Comparable<BaseBlockPosition> {
@@ -80,7 +81,7 @@ public class BaseBlockPosition implements Comparable<BaseBlockPosition> {
     }
 
     public String toString() {
-        return Objects.toStringHelper(this).add("x", this.getX()).add("y", this.getY()).add("z", this.getZ()).toString();
+        return MoreObjects.toStringHelper(this).add("x", this.getX()).add("y", this.getY()).add("z", this.getZ()).toString();
     }
 
     // Paperspigot - Signature change, Object -> BaseBlockPosition

@@ -112,8 +112,8 @@ public class BlockTripwireHook extends Block {
                 aiblockdata[k] = null;
                 flag5 = false;
             } else {
-                if (k == i) {
-                    iblockdata2 = (IBlockData) Objects.firstNonNull(iblockdata1, iblockdata2);
+                if (k == i && iblockdata1 != null) {
+                    iblockdata2 = iblockdata1;
                 }
 
                 boolean flag7 = !((Boolean) iblockdata2.get(BlockTripwire.DISARMED)).booleanValue();

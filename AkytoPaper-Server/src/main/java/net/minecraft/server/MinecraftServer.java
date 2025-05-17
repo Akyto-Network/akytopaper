@@ -1567,7 +1567,7 @@ public abstract class MinecraftServer implements Runnable, ICommandListener, IAs
             try {
                 return Futures.immediateFuture(callable.call());
             } catch (Exception exception) {
-                return Futures.immediateFailedCheckedFuture(exception);
+                return Futures.immediateFailedFuture(exception);
             }
         }
     }

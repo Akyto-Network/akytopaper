@@ -145,7 +145,9 @@ public class WorldGenCaves extends WorldGenBase {
 
                                         if (d14 > -0.7D && d12 * d12 + d14 * d14 + d13 * d13 < 1.0D) {
                                             IBlockData iblockdata1 = chunksnapshot.a(j3, j4, i4);
-                                            IBlockData iblockdata2 = (IBlockData) Objects.firstNonNull(chunksnapshot.a(j3, j4 + 1, i4), Blocks.AIR.getBlockData());
+                                            IBlockData iblockdata2 = chunksnapshot.a(j3, j4 + 1, i4);
+                                            if (iblockdata2 == null)
+                                                iblockdata2 = Blocks.AIR.getBlockData();
 
                                             if (iblockdata1.getBlock() == Blocks.GRASS || iblockdata1.getBlock() == Blocks.MYCELIUM) {
                                                 flag3 = true;

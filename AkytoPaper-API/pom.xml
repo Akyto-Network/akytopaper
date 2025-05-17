@@ -64,10 +64,10 @@
         <dependency>
             <groupId>com.google.guava</groupId>
             <artifactId>guava</artifactId>
-            <version>17.0</version>
+            <version>33.4.8-jre</version>
             <scope>compile</scope>
         </dependency>
-        <!-- bundled with Minecraft, updated in SportPaper -->
+        <!-- bundled with Minecraft, updated in AkytoPaper -->
         <dependency>
             <groupId>com.google.code.gson</groupId>
             <artifactId>gson</artifactId>
