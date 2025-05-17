@@ -121,9 +121,9 @@ public class DedicatedServer extends MinecraftServer implements IMinecraftServer
         boolean eulaAgreed = true;//SportPaper - Disable check
         if ( eulaAgreed )
         {
-            System.err.println( "You have used the Spigot command line EULA agreement flag." );
-            System.err.println( "By using this setting you are indicating your agreement to Mojang's EULA (https://account.mojang.com/documents/minecraft_eula)." );
-            System.err.println( "If you do not agree to the above EULA please stop your server and remove this flag immediately." );
+            DedicatedServer.LOGGER.error( "You have used the Spigot command line EULA agreement flag." );
+            DedicatedServer.LOGGER.error( "By using this setting you are indicating your agreement to Mojang's EULA (https://account.mojang.com/documents/minecraft_eula)." );
+            DedicatedServer.LOGGER.error( "If you do not agree to the above EULA please stop your server and remove this flag immediately." );
         }
         // Spigot End
         if (!eulaAgreed) { // Spigot // SportPaper
