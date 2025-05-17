@@ -9,6 +9,7 @@ import org.bukkit.permissions.Permissible;
 import org.bukkit.permissions.Permission;
 import org.bukkit.permissions.PermissionDefault;
 import org.bukkit.plugin.java.JavaPlugin;
+import org.yaml.snakeyaml.LoaderOptions;
 import org.yaml.snakeyaml.Yaml;
 import org.yaml.snakeyaml.constructor.AbstractConstruct;
 import org.yaml.snakeyaml.constructor.SafeConstructor;
@@ -173,7 +174,7 @@ public final class PluginDescriptionFile {
     private static final ThreadLocal<Yaml> YAML = new ThreadLocal<Yaml>() {
         @Override
         protected Yaml initialValue() {
-            return new Yaml(new SafeConstructor() {
+            return new Yaml(new SafeConstructor(new LoaderOptions()) {
                 {
                     yamlConstructors.put(null, new AbstractConstruct() {
                         @Override

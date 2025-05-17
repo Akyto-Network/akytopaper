@@ -75,6 +75,7 @@ import org.bukkit.util.permissions.DefaultPermissions;
 import org.github.paperspigot.BukkitConfig;
 import org.github.paperspigot.PaperSpigotConfig;
 import org.github.paperspigot.SharedConfig;
+import org.yaml.snakeyaml.LoaderOptions;
 import org.yaml.snakeyaml.Yaml;
 import org.yaml.snakeyaml.constructor.SafeConstructor;
 import org.yaml.snakeyaml.error.MarkedYAMLException;
@@ -108,7 +109,7 @@ public final class CraftServer implements Server {
     protected final MinecraftServer console;
     protected final DedicatedPlayerList playerList;
     private final Map<String, World> worlds = new LinkedHashMap<String, World>();
-    private final Yaml yaml = new Yaml(new SafeConstructor());
+    private final Yaml yaml = new Yaml(new SafeConstructor(new LoaderOptions()));
     private final Map<UUID, OfflinePlayer> offlinePlayers = new MapMaker().softValues().makeMap();
     private final EntityMetadataStore entityMetadata = new EntityMetadataStore();
     private final PlayerMetadataStore playerMetadata = new PlayerMetadataStore();

@@ -1,6 +1,7 @@
 package org.bukkit.configuration.file;
 
 import org.bukkit.configuration.serialization.ConfigurationSerialization;
+import org.yaml.snakeyaml.LoaderOptions;
 import org.yaml.snakeyaml.constructor.SafeConstructor;
 import org.yaml.snakeyaml.error.YAMLException;
 import org.yaml.snakeyaml.nodes.Node;
@@ -12,7 +13,8 @@ import java.util.Map;
 public class YamlConstructor extends SafeConstructor {
 
     public YamlConstructor() {
-        this.yamlConstructors.put(Tag.MAP, new ConstructCustomObject());
+		super(new LoaderOptions());
+		this.yamlConstructors.put(Tag.MAP, new ConstructCustomObject());
     }
 
     private class ConstructCustomObject extends ConstructYamlMap {
