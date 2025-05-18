@@ -1,6 +1,5 @@
 package net.minecraft.server;
 
-import com.google.common.base.Objects;
 import com.google.common.base.Predicate;
 import org.bukkit.event.block.BlockRedstoneEvent;
 
