@@ -68,7 +68,7 @@ public class EntityEnderPearl extends EntityProjectile {
                     Location location = getBukkitEntity().getLocation();
                     if (aSpigot.INSTANCE.getConfig().isAntiglitchPearl()){
                         if (landEvent.getReason().equals(EnderpearlLandEvent.Reason.BLOCK)) {
-                            this.addToLocation(Objects.requireNonNull(PearlUtils.direction(location)), location, 0.85d);
+                            this.addToLocation(Objects.requireNonNull(PearlUtils.direction(location)), location, 0.5d);
                         }
                         if (PearlUtils.risky(location)) {
                             location = lastValidLocation.clone();
@@ -153,20 +153,12 @@ public class EntityEnderPearl extends EntityProjectile {
         }
     }
 
-    private Location getLowestSafeLocation(Location start) {
-        Location loc = start.clone();
-
-        int x = loc.getBlockX();
-        int z = loc.getBlockZ();
-
+    private void getLowestSafeLocation(Location loc) {
         for (int y = loc.getBlockY(); y > 0; y--) {
-            Location checkLoc = new Location(loc.getWorld(), x + 0.5, y, z + 0.5);
-            if (checkLoc.getBlock().getType().isSolid()) {
-                checkLoc.setY(y + 1);
-                return checkLoc;
+            if (loc.getBlock().getType().isSolid()) {
+                loc.setY(y + 1);
             }
         }
-        return start;
     }
 
     public void t_() {
@@ -175,6 +167,7 @@ public class EntityEnderPearl extends EntityProjectile {
             this.die();
             return;
         }
+        this.getBoundingBox().grow(-0.2d, -0.2d, -0.2d);
         if (aSpigot.INSTANCE.getConfig().isAntiglitchPearl() && this.world.getCubes(this, this.getBoundingBox().grow(0.225D, 0.1D, 0.225D)).isEmpty()) {
             this.lastValidLocation = getBukkitEntity().getLocation();
         }

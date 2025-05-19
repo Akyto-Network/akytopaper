@@ -2088,7 +2088,47 @@ public class CraftPlayer extends CraftHumanEntity implements Player {
             entity.fallDistance = 0.0f;
         }
     }
+
     // Kohi end
+
+
+    // Immanity Vanish Patch Start
+
+    public boolean isEntityVanished(Entity entity) {
+        return !isEntityAppearing(entity);
+    }
+
+    public boolean isEntityAppearing(Entity entity) {
+        Entity nmsEntity = entity;
+
+        if (nmsEntity instanceof EntityProjectile) {
+            EntityProjectile entityProjectile = (EntityProjectile)nmsEntity;
+
+            if (entityProjectile.getShooter() instanceof EntityPlayer) {
+                return canSee(((EntityPlayer)entityProjectile.getShooter()).getBukkitEntity());
+            }
+        }
+
+        if (nmsEntity instanceof EntityItem) {
+            EntityItem entityItem = (EntityItem)nmsEntity;
+
+            if (entityItem.getOwner() instanceof EntityPlayer) {
+                return canSee(((EntityPlayer)entityItem.getOwner()).getBukkitEntity());
+            }
+        }
+
+        if (nmsEntity instanceof EntityArrow) {
+            EntityArrow entityProjectile = (EntityArrow)nmsEntity;
+
+            if (entityProjectile.shooter instanceof EntityPlayer) {
+                return canSee(((EntityPlayer)entityProjectile.shooter).getBukkitEntity());
+            }
+        }
+
+        return (!(entity instanceof Player) || canSee((Player)entity));
+    }
+
+    // Immanity Vanish Patch End
 
     // SportPaper end
 }

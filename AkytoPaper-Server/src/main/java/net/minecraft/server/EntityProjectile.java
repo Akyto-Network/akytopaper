@@ -132,7 +132,8 @@ public abstract class EntityProjectile extends Entity implements IProjectile {
 
                 if (entity1.ad() && (entity1 != entityliving || this.ar >= 5)) {
                     float f = 0.3F;
-                    AxisAlignedBB axisalignedbb = entity1.getBoundingBox().grow((double) f, (double) f, (double) f);
+                    AxisAlignedBB axisalignedbb = entity1.getBoundingBox().grow(f, f, f);
+                    System.out.println(entity1.getBukkitEntity().getType());
                     MovingObjectPosition movingobjectposition1 = axisalignedbb.a(vec3d, vec3d1);
 
                     if (aSpigot.INSTANCE.getConfig().isSmoothPotting() &&

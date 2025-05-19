@@ -742,21 +742,21 @@ public abstract class EntityLiving extends Entity {
                 // CraftBukkit - Moved into d(DamageSource, float)
                 this.aB = 1.5F;
                 boolean flag = true;
-
+                boolean shouldIgnore = (damagesource instanceof EntityDamageSourceIndirect && (((EntityDamageSourceIndirect)damagesource).getProximateDamageSource() instanceof EntityArrow || ((EntityDamageSourceIndirect)damagesource).getProximateDamageSource() instanceof EntityFishingHook));
                 int maxNoDamageTicks = this.maxNoDamageTicks;
 
-                if ((float) this.noDamageTicks > maxNoDamageTicks / 2.0F) {
+                if (!shouldIgnore && (float) this.noDamageTicks > maxNoDamageTicks / 2.0F) {
                     if (f <= this.lastDamage) {
                         this.forceExplosionKnockback = true; // CraftBukkit - SPIGOT-949 - for vanilla consistency, cooldown does not prevent explosion knockback
                         return false;
                     }
 
                     //Akyto - fix double hit
-                    final Long nextHitTick = aSpigot.nextHitTick.getOrDefault(this, 0L);
-                    if (nextHitTick != 0L && nextHitTick  > System.currentTimeMillis()) {
-                        return false;
-                    }
-                    aSpigot.updateNextHitTick(this);
+//                    final Long nextHitTick = aSpigot.nextHitTick.getOrDefault(this, 0L);
+//                    if (nextHitTick != 0L && nextHitTick  > System.currentTimeMillis()) {
+//                        return false;
+//                    }
+//                    aSpigot.updateNextHitTick(this);
 
                     //CraftBukkit start
                     if (!this.d(damagesource, f - this.lastDamage)) {
@@ -775,6 +775,7 @@ public abstract class EntityLiving extends Entity {
                     this.noDamageTicks = maxNoDamageTicks;
                     // CraftBukkit end
                     this.hurtTicks = this.av = 10;
+                    this.activatedTick = MinecraftServer.currentTick + this.maxNoDamageTicks * 2L;
                 }
 
                 // CraftBukkit start
@@ -1084,7 +1085,7 @@ public abstract class EntityLiving extends Entity {
                 public Double apply(Double f) {
                     if (human) {
                         if (!damagesource.ignoresArmor() && ((EntityHuman) EntityLiving.this).isBlocking() && f > 0.0F) {
-                            return -(f - ((1.0F + f) * world.paperSpigotConfig.playerBlockingDamageMultiplier));
+                            return -(f - ((0.5F + f) * world.paperSpigotConfig.playerBlockingDamageMultiplier));
                         }
                     }
                     return -0.0;
