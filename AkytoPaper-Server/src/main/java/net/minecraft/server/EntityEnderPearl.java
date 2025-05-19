@@ -13,6 +13,8 @@ import org.bukkit.event.entity.EnderpearlLandEvent;
 import org.bukkit.event.player.PlayerTeleportEvent;
 import org.github.paperspigot.PaperSpigotWorldConfig;
 
+import java.util.Objects;
+
 // CraftBukkit end
 
 public class EntityEnderPearl extends EntityProjectile {
@@ -64,16 +66,19 @@ public class EntityEnderPearl extends EntityProjectile {
                         return;
                     }
                     Location location = getBukkitEntity().getLocation();
-                    location.setYaw(entityplayer.yaw);
-                    location.setPitch(entityplayer.pitch);
                     if (aSpigot.INSTANCE.getConfig().isAntiglitchPearl()){
-                        this.addToLocation(PearlUtils.direction(location), location, 0.85d);
+                        if (landEvent.getReason().equals(EnderpearlLandEvent.Reason.BLOCK)) {
+                            this.addToLocation(Objects.requireNonNull(PearlUtils.direction(location)), location, 0.85d);
+                        }
                         if (PearlUtils.risky(location)) {
                             location = lastValidLocation.clone();
-                            location.setYaw(entityplayer.yaw);
-                            location.setPitch(entityplayer.pitch);
+                        }
+                        if (landEvent.getReason().equals(EnderpearlLandEvent.Reason.ENTITY)) {
+                            this.getLowestSafeLocation(location);
                         }
                     }
+                    location.setYaw(entityplayer.yaw);
+                    location.setPitch(entityplayer.pitch);
                     for (int i = 0; i < 32; ++i) {
                         this.world.addParticle(EnumParticle.PORTAL, location.getX(), location.getY() + this.random.nextDouble() * 2.0D, location.getZ(), this.random.nextGaussian(), 0.0D, this.random.nextGaussian(), new int[0]);
                     }
@@ -146,6 +151,22 @@ public class EntityEnderPearl extends EntityProjectile {
                 break;
             }
         }
+    }
+
+    private Location getLowestSafeLocation(Location start) {
+        Location loc = start.clone();
+
+        int x = loc.getBlockX();
+        int z = loc.getBlockZ();
+
+        for (int y = loc.getBlockY(); y > 0; y--) {
+            Location checkLoc = new Location(loc.getWorld(), x + 0.5, y, z + 0.5);
+            if (checkLoc.getBlock().getType().isSolid()) {
+                checkLoc.setY(y + 1);
+                return checkLoc;
+            }
+        }
+        return start;
     }
 
     public void t_() {
