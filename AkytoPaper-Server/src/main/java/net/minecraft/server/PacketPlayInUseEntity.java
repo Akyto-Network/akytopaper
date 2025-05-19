@@ -4,10 +4,7 @@ import akyto.spigot.aSpigot;
 import org.bukkit.Bukkit;
 
 import java.io.IOException;
-import java.util.HashMap;
-import java.util.Map;
 import java.util.UUID;
-import java.util.concurrent.ConcurrentHashMap;
 
 import static akyto.spigot.aSpigot.lastClickTimes;
 
