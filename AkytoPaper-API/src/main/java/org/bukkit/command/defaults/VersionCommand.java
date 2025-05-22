@@ -28,17 +28,7 @@ public class VersionCommand extends BukkitCommand {
         if (!testPermission(sender)) return true;
 
         if (args.length == 0) {
-            sender.sendMessage(new String[] {
-                    ChatColor.GRAY + ChatColor.STRIKETHROUGH.toString() + "------------------------------------",
-                    ChatColor.DARK_GRAY + "Akyto-Spigot" + ChatColor.GRAY + " - " + ChatColor.RED + "version 1.0",
-                    " ",
-                    ChatColor.DARK_RED + "Options" + ChatColor.GRAY + ":",
-                    ChatColor.RED + "Multi-Arena" + ChatColor.GRAY + ": " + ChatColor.GREEN + "enabled",
-                    ChatColor.RED + "Bypass-Packet-Queue" + ChatColor.GRAY + ": " + ChatColor.RED + "disabled",
-                    ChatColor.RED + "Pearls Utils" + ChatColor.GRAY + ": " + ChatColor.GREEN + "enabled",
-                    ChatColor.RED + "Smooth-Potting" + ChatColor.GRAY + ": " + ChatColor.GREEN + "enabled",
-                    ChatColor.GRAY + ChatColor.STRIKETHROUGH.toString() + "------------------------------------"
-            });
+            sender.sendMessage(ChatColor.WHITE + "This server is running " + ChatColor.RED + Bukkit.getName() + ChatColor.WHITE + " version " + ChatColor.RED + Bukkit.getVersion() + ChatColor.WHITE + " (Implementing API version " + ChatColor.RED + Bukkit.getBukkitVersion() + ChatColor.GRAY + ")");
         } else {
             StringBuilder name = new StringBuilder();
 

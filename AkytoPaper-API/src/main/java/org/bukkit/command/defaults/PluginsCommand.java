@@ -22,9 +22,9 @@ public class PluginsCommand extends BukkitCommand {
     public boolean execute(CommandSender sender, String currentAlias, String[] args) {
         if (!testPermission(sender)) return true;
 
-        sender.sendMessage(ChatColor.GRAY + ChatColor.STRIKETHROUGH.toString() + "--------------------------");
+        sender.sendMessage(" ");
         sender.sendMessage(getPluginList());
-        sender.sendMessage(ChatColor.GRAY + ChatColor.STRIKETHROUGH.toString() + "--------------------------");
+        sender.sendMessage(" ");
         return true;
     }
 
@@ -33,7 +33,7 @@ public class PluginsCommand extends BukkitCommand {
         TreeMap<String, String> plugins = new TreeMap<>(String.CASE_INSENSITIVE_ORDER);
         for (Plugin plugin : Bukkit.getPluginManager().getPlugins()) {
             plugins.put((plugin.isEnabled() ? ChatColor.GREEN : ChatColor.RED) + plugin.getDescription().getName(),
-                    ChatColor.GRAY + "[" + ChatColor.DARK_RED + plugin.getDescription().getVersion() + ChatColor.GRAY + "]");
+                    ChatColor.GRAY + "[" + ChatColor.WHITE + plugin.getDescription().getVersion() + ChatColor.GRAY + "]");
         }
 
         StringBuilder pluginList = new StringBuilder();
@@ -48,7 +48,7 @@ public class PluginsCommand extends BukkitCommand {
         }
 
         return new String[] {
-                ChatColor.DARK_GRAY + "Plugins " + ChatColor.GRAY + "(" + ChatColor.RED + plugins.size() + ChatColor.GRAY + "):",
+                ChatColor.DARK_RED.toString() + ChatColor.BOLD + "Plugins " + ChatColor.GRAY + "(" + ChatColor.RED + plugins.size() + ChatColor.GRAY + "):",
                 " ",
                 pluginList.toString()
         };
