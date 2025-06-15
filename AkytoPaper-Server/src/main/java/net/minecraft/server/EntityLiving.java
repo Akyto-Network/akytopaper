@@ -745,7 +745,7 @@ public abstract class EntityLiving extends Entity {
                 boolean shouldIgnore = (damagesource instanceof EntityDamageSourceIndirect && (((EntityDamageSourceIndirect)damagesource).getProximateDamageSource() instanceof EntityArrow || ((EntityDamageSourceIndirect)damagesource).getProximateDamageSource() instanceof EntityFishingHook));
                 int maxNoDamageTicks = this.maxNoDamageTicks;
 
-                if (!shouldIgnore && (float) this.noDamageTicks > maxNoDamageTicks / 2.0F) {
+                if ((float) this.noDamageTicks > maxNoDamageTicks / 2.0F) {
                     if (f <= this.lastDamage) {
                         this.forceExplosionKnockback = true; // CraftBukkit - SPIGOT-949 - for vanilla consistency, cooldown does not prevent explosion knockback
                         return false;
