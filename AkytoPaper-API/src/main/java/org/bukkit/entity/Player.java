@@ -1393,13 +1393,6 @@ public interface Player extends HumanEntity, Conversable, CommandSender, Offline
      */
     int getPing();
 
-    /**
-     * Get the player's click per second.
-     *
-     * @return The player's click per second
-     */
-    int getCps();
-
     // aSpigot Start
     <T> void sendPacket(T packet) throws RuntimeException;
     // aSpigot End

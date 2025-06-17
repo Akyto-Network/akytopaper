@@ -1483,7 +1483,7 @@ public class PlayerConnection implements PacketListenerPlayIn, IUpdatePlayerList
             double d0 = 36.0D;
 
             if (!flag) {
-                d0 = (aSpigot.INSTANCE.getConfig().isHitDetect()) ? 12.75D : 9.0D;
+                d0 = (aSpigot.INSTANCE.getConfig().isHitDetect()) ? 10.75D : 9.0D;
             }
 
             if (this.player.distanceSqrdAccurate(entity) <= d0) {
