@@ -24,6 +24,12 @@ public enum aSpigot {
     private final Set<MovementHandler> movementHandlers = new HashSet<>();
 	private final LagCompensator lagCompensator = new LagCompensator();
 
+	public static final Map<Entity, Long> nextHitTick = new ConcurrentHashMap<>();
+
+	public static void updateNextHitTick(final Entity entity) {
+		nextHitTick.replace(entity, System.currentTimeMillis() + 500L);
+	}
+
 	public void addPacketHandler(PacketHandler handler) {
 		this.packetHandlers.add(handler);
 	}

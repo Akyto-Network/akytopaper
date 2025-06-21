@@ -742,6 +742,8 @@ public abstract class EntityLiving extends Entity {
                 // CraftBukkit - Moved into d(DamageSource, float)
                 this.aB = 1.5F;
                 boolean flag = true;
+                final Long nextHitTick = aSpigot.nextHitTick.getOrDefault(this, 0L);
+//                final boolean canHit = nextHitTick != 0L && nextHitTick  > System.currentTimeMillis();
                 boolean shouldIgnore = (damagesource instanceof EntityDamageSourceIndirect && (((EntityDamageSourceIndirect)damagesource).getProximateDamageSource() instanceof EntityArrow || ((EntityDamageSourceIndirect)damagesource).getProximateDamageSource() instanceof EntityFishingHook));
                 int maxNoDamageTicks = this.maxNoDamageTicks;
 
@@ -750,12 +752,6 @@ public abstract class EntityLiving extends Entity {
                         this.forceExplosionKnockback = true; // CraftBukkit - SPIGOT-949 - for vanilla consistency, cooldown does not prevent explosion knockback
                         return false;
                     }
-
-                    //Akyto - fix double hit
-//                    final Long nextHitTick = aSpigot.nextHitTick.getOrDefault(this, 0L);
-//                    if (nextHitTick != 0L && nextHitTick  > System.currentTimeMillis()) {
-//                        return false;
-//                    }
 //                    aSpigot.updateNextHitTick(this);
 
                     //CraftBukkit start
