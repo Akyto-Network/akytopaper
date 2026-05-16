@@ -42,11 +42,6 @@
 
     <repositories>
         <repository>
-            <id>velocity-repo</id>
-            <url>https://repo.velocitypowered.com/snapshots/</url>
-        </repository>
-
-        <repository>
             <id>maven_central</id>
             <name>Maven Central</name>
             <url>https://repo.maven.apache.org/maven2/</url>
